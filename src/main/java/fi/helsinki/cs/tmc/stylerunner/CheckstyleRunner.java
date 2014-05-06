@@ -4,5 +4,8 @@ public final class CheckstyleRunner {
 
     private CheckstyleRunner() {}
 
-    public static void check() {}
+    public static void check() {
+
+        throw new RuntimeException("Fix this!");
+    }
 }
