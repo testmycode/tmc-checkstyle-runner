@@ -9,6 +9,6 @@ public final class Main {
 
     public static void main(String[] args) throws CheckstyleException {
 
-        new CheckstyleRunner(new File("./")).run();
+        new CheckstyleRunner(new File(".")).run();
     }
 }
