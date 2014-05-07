@@ -10,20 +10,31 @@ import com.puppycrawl.tools.checkstyle.api.Configuration;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.List;
+import org.apache.commons.io.FileUtils;
+import org.xml.sax.InputSource;
 
 public final class CheckstyleRunner {
 
-    private final Configuration config;
     private final Checker checker;
     private final List<File> files;
 
-    public CheckstyleRunner(final List<File> files) throws CheckstyleException {
+    public CheckstyleRunner(final File projectDirectory) throws CheckstyleException {
 
-        config = ConfigurationLoader.loadConfiguration("./src/main/resources/default-checkstyle.xml",
-                                                            new PropertiesExpander(System.getProperties()));
+        // Default configuration
+        final InputSource inputSource = new InputSource(this.getClass()
+                                                            .getClassLoader()
+                                                            .getResourceAsStream("default-checkstyle.xml"));
+
+        final Configuration config = ConfigurationLoader.loadConfiguration(inputSource,
+                                                                           new PropertiesExpander(System.getProperties()),
+                                                                           false);
+
         checker = new Checker();
-        this.files = files;
 
+        // Get all .java files from project directory
+        this.files = (List<File>) FileUtils.listFiles(projectDirectory, new String[] { "java" }, true);
+
+        // Configuration
         checker.setModuleClassLoader(Checker.class.getClassLoader());
         checker.configure(config);
     }
