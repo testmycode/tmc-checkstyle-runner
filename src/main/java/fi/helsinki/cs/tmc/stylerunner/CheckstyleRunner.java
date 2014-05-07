@@ -32,7 +32,7 @@ public final class CheckstyleRunner {
         checker = new Checker();
 
         // Get all .java files from project directory
-        this.files = (List<File>) FileUtils.listFiles(projectDirectory, new String[] { "java" }, true);
+        files = (List<File>) FileUtils.listFiles(projectDirectory, new String[] { "java" }, true);
 
         // Configuration
         checker.setModuleClassLoader(Checker.class.getClassLoader());
