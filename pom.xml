@@ -17,6 +17,17 @@
         <maven.compiler.target>1.6</maven.compiler.target>
     </properties>
 
+    <dependencies>
+
+        <!-- Checkstyle -->
+        <dependency>
+            <groupId>com.puppycrawl.tools</groupId>
+            <artifactId>checkstyle</artifactId>
+            <version>5.7</version>
+        </dependency>
+
+    </dependencies>
+
     <build>
 
         <plugins>
