@@ -38,7 +38,7 @@ public final class CheckstyleRunner {
         checker.configure(config);
     }
 
-    public Map<File, List<AuditEvent>> run() throws CheckstyleException {
+    public Map<File, List<AuditEvent>> run() {
 
         // Listener
         final CheckstyleResultListener listener = new CheckstyleResultListener();
