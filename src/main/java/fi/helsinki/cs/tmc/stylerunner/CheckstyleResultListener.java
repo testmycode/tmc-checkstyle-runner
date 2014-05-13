@@ -5,12 +5,7 @@ import com.puppycrawl.tools.checkstyle.api.AuditListener;
 
 public final class CheckstyleResultListener implements AuditListener {
 
-    private final CheckstyleResult result;
-
-    public CheckstyleResultListener() {
-
-        result = new CheckstyleResult();
-    }
+    private final CheckstyleResult result = new CheckstyleResult();
 
     @Override
     public void auditStarted(final AuditEvent auditEvent) {}
