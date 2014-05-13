@@ -30,12 +30,26 @@ public final class CheckstyleRunner {
 
         checker = new Checker();
 
-        // Get all .java files from project directory
-        files = (List<File>) FileUtils.listFiles(projectDirectory, new String[] { "java" }, true);
+        // Get all .java files from project’s source directory
+        final File sourceDirectory = getSourceDirectory(projectDirectory);
+        files = (List<File>) FileUtils.listFiles(sourceDirectory, new String[] { "java" }, true);
 
         // Configuration
         checker.setModuleClassLoader(Checker.class.getClassLoader());
         checker.configure(config);
+    }
+
+    private File getSourceDirectory(final File projectDirectory) {
+
+        // Maven-project
+        File sourceDirectory = new File(projectDirectory, "src/main");
+
+        // Ant-project
+        if (!sourceDirectory.exists()) {
+            sourceDirectory = new File(projectDirectory, "src/");
+        }
+
+        return sourceDirectory;
     }
 
     public Map<File, List<AuditEvent>> run() {
