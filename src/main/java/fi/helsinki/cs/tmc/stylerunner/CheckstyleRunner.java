@@ -3,12 +3,10 @@ package fi.helsinki.cs.tmc.stylerunner;
 import com.puppycrawl.tools.checkstyle.Checker;
 import com.puppycrawl.tools.checkstyle.ConfigurationLoader;
 import com.puppycrawl.tools.checkstyle.PropertiesExpander;
-import com.puppycrawl.tools.checkstyle.api.AuditEvent;
 import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
 import com.puppycrawl.tools.checkstyle.api.Configuration;
 import java.io.File;
 import java.util.List;
-import java.util.Map;
 import org.apache.commons.io.FileUtils;
 import org.xml.sax.InputSource;
 
@@ -42,7 +40,7 @@ public final class CheckstyleRunner {
     private File getSourceDirectory(final File projectDirectory) throws CheckstyleException {
 
         // Maven-project
-        File sourceDirectory = new File(projectDirectory, "src/main");
+        File sourceDirectory = new File(projectDirectory, "src/main/");
 
         // Ant-project
         if (!sourceDirectory.exists()) {
@@ -57,7 +55,7 @@ public final class CheckstyleRunner {
         return sourceDirectory;
     }
 
-    public Map<File, List<AuditEvent>> run() {
+    public CheckstyleResult run() {
 
         // Listener
         final CheckstyleResultListener listener = new CheckstyleResultListener();

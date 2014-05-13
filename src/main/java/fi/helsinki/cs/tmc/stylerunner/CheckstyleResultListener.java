@@ -2,19 +2,14 @@ package fi.helsinki.cs.tmc.stylerunner;
 
 import com.puppycrawl.tools.checkstyle.api.AuditEvent;
 import com.puppycrawl.tools.checkstyle.api.AuditListener;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public final class CheckstyleResultListener implements AuditListener {
 
-    private final Map<File, List<AuditEvent>> results;
+    private final CheckstyleResult result;
 
     public CheckstyleResultListener() {
 
-        results = new HashMap<File, List<AuditEvent>>();
+        result = new CheckstyleResult();
     }
 
     @Override
@@ -32,20 +27,14 @@ public final class CheckstyleResultListener implements AuditListener {
     @Override
     public void addError(final AuditEvent auditEvent) {
 
-        final File file = new File(auditEvent.getFileName());
-
-        if (!results.containsKey(file)) {
-            results.put(file, new ArrayList<AuditEvent>());
-        }
-
-        results.get(file).add(auditEvent);
+        result.addError(auditEvent);
     }
 
     @Override
     public void addException(final AuditEvent auditEvent, final Throwable throwable) {}
 
-    public Map<File, List<AuditEvent>> getResults() {
+    public CheckstyleResult getResults() {
 
-        return results;
+        return result;
     }
 }
