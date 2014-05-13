@@ -2,14 +2,13 @@ package fi.helsinki.cs.tmc.stylerunner;
 
 import com.puppycrawl.tools.checkstyle.Checker;
 import com.puppycrawl.tools.checkstyle.ConfigurationLoader;
-import com.puppycrawl.tools.checkstyle.DefaultLogger;
 import com.puppycrawl.tools.checkstyle.PropertiesExpander;
-import com.puppycrawl.tools.checkstyle.api.AuditListener;
+import com.puppycrawl.tools.checkstyle.api.AuditEvent;
 import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
 import com.puppycrawl.tools.checkstyle.api.Configuration;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.List;
+import java.util.Map;
 import org.apache.commons.io.FileUtils;
 import org.xml.sax.InputSource;
 
@@ -39,19 +38,19 @@ public final class CheckstyleRunner {
         checker.configure(config);
     }
 
-    public void run() throws CheckstyleException {
+    public Map<File, List<AuditEvent>> run() throws CheckstyleException {
 
         // Listener
-        final ByteArrayOutputStream output = new ByteArrayOutputStream();
-        final AuditListener listener = new DefaultLogger(output, false);
+        final CheckstyleResultListener listener = new CheckstyleResultListener();
         checker.addListener(listener);
 
         // Process
         final int errors = checker.process(files);
-        System.out.println("Number of errors: " + errors);
-        System.out.println(output.toString());
 
         // Clean up
         checker.destroy();
+
+        System.out.println("Number of errors: " + errors);
+        return listener.getResults();
     }
 }
