@@ -39,7 +39,7 @@ public final class CheckstyleRunner {
         checker.configure(config);
     }
 
-    private File getSourceDirectory(final File projectDirectory) {
+    private File getSourceDirectory(final File projectDirectory) throws CheckstyleException {
 
         // Maven-project
         File sourceDirectory = new File(projectDirectory, "src/main");
@@ -47,6 +47,11 @@ public final class CheckstyleRunner {
         // Ant-project
         if (!sourceDirectory.exists()) {
             sourceDirectory = new File(projectDirectory, "src/");
+        }
+
+        // Invalid directory
+        if (!sourceDirectory.exists() || !sourceDirectory.isDirectory()) {
+            throw new CheckstyleException("Path does not contain a testable project.");
         }
 
         return sourceDirectory;
