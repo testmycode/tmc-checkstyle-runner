@@ -62,12 +62,11 @@ public final class CheckstyleRunner {
         checker.addListener(listener);
 
         // Process
-        final int errors = checker.process(files);
+        checker.process(files);
 
         // Clean up
         checker.destroy();
 
-        System.out.println("Number of errors: " + errors);
         return listener.getResults();
     }
 }
