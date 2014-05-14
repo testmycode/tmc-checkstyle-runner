@@ -40,12 +40,12 @@ public final class CheckstyleRunner {
 
     private File getSourceDirectory(final File projectDirectory) throws CheckstyleException {
 
-        // Maven-project
-        File sourceDirectory = new File(projectDirectory, "src/main/");
-
         // Ant-project
-        if (!sourceDirectory.exists()) {
-            sourceDirectory = new File(projectDirectory, "src/");
+        File sourceDirectory = new File(projectDirectory, "src/");
+
+        // Maven-project
+        if (new File(projectDirectory, "pom.xml").exists()) {
+            sourceDirectory = new File(projectDirectory, "src/main/");
         }
 
         // Invalid directory
