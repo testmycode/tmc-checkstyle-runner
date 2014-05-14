@@ -8,23 +8,24 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public final class CheckstyleResult {
+public final class CheckstyleResult implements ValidationResult {
 
-    private final Map<File, List<AuditEvent>> results = new HashMap<File, List<AuditEvent>>();
+    private final Map<File, List<ValidationError>> validationErrors = new HashMap<File, List<ValidationError>>();
 
     public void addError(final AuditEvent auditEvent) {
 
         final File file = new File(auditEvent.getFileName());
 
-        if (!results.containsKey(file)) {
-            results.put(file, new ArrayList<AuditEvent>());
+        if (!validationErrors.containsKey(file)) {
+            validationErrors.put(file, new ArrayList<ValidationError>());
         }
 
-        results.get(file).add(auditEvent);
+        validationErrors.get(file).add(new CheckstyleError(auditEvent));
     }
 
-    public Map<File, List<AuditEvent>> getResults() {
+    @Override
+    public Map<File, List<ValidationError>> getValidationErrors() {
 
-        return results;
+        return validationErrors;
     }
 }

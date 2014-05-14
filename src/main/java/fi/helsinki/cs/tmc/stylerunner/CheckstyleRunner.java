@@ -68,6 +68,6 @@ public final class CheckstyleRunner {
         // Clean up
         checker.destroy();
 
-        return listener.getResults();
+        return listener.getResult();
     }
 }

@@ -28,7 +28,7 @@ public final class CheckstyleResultListener implements AuditListener {
     @Override
     public void addException(final AuditEvent auditEvent, final Throwable throwable) {}
 
-    public CheckstyleResult getResults() {
+    public CheckstyleResult getResult() {
 
         return result;
     }
