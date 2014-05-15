@@ -124,6 +124,7 @@
 
         <module name='UpperEll' />
         <module name='ArrayTypeStyle' />
+        <module name='FinalParameters' />
         <module name='Indentation' />
         <module name='TrailingComment' />
         <module name='OuterTypeFilename' />
