@@ -45,8 +45,8 @@ public final class Main {
 
         try {
             readProperties();
-            final File projectDirectory = new File(projectDirectory);
-            final CheckstyleResult results = new CheckstyleRunner(projectDirectory).run();
+            final File projectFile = new File(projectDirectory);
+            final CheckstyleResult results = new CheckstyleRunner(projectFile).run();
             writeResults(results);
         } catch (CheckstyleException exception) {
             exitWithException(exception);
