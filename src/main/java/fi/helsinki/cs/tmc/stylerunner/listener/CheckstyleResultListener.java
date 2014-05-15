@@ -1,7 +1,9 @@
-package fi.helsinki.cs.tmc.stylerunner;
+package fi.helsinki.cs.tmc.stylerunner.listener;
 
 import com.puppycrawl.tools.checkstyle.api.AuditEvent;
 import com.puppycrawl.tools.checkstyle.api.AuditListener;
+
+import fi.helsinki.cs.tmc.stylerunner.validation.CheckstyleResult;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

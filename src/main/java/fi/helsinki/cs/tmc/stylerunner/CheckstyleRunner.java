@@ -6,6 +6,9 @@ import com.puppycrawl.tools.checkstyle.PropertiesExpander;
 import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
 import com.puppycrawl.tools.checkstyle.api.Configuration;
 
+import fi.helsinki.cs.tmc.stylerunner.listener.CheckstyleResultListener;
+import fi.helsinki.cs.tmc.stylerunner.validation.CheckstyleResult;
+
 import java.io.File;
 import java.util.List;
 

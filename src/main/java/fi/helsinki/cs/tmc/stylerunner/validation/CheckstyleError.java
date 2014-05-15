@@ -1,4 +1,4 @@
-package fi.helsinki.cs.tmc.stylerunner;
+package fi.helsinki.cs.tmc.stylerunner.validation;
 
 import com.puppycrawl.tools.checkstyle.api.AuditEvent;
 
