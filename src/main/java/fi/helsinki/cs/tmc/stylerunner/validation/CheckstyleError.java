@@ -1,9 +1,12 @@
 package fi.helsinki.cs.tmc.stylerunner.validation;
 
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.puppycrawl.tools.checkstyle.api.AuditEvent;
 
 public final class CheckstyleError implements ValidationError {
 
+    @JsonIgnore
     private final AuditEvent auditEvent;
 
     public CheckstyleError(final AuditEvent auditEvent) {
@@ -22,4 +25,5 @@ public final class CheckstyleError implements ValidationError {
 
         return auditEvent.getMessage();
     }
+
 }
