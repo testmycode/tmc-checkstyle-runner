@@ -1,49 +1,86 @@
+
 package fi.helsinki.cs.tmc.stylerunner;
 
 import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
-
+import fi.helsinki.cs.tmc.stylerunner.validation.CheckstyleResult;
 import java.io.File;
+import java.io.IOException;
+import java.io.PrintStream;
+
+
 
 public final class Main {
+
+    private String resultsFilename;
+    private String sourceDirectory;
 
     private Main() {}
 
     private static void printUsage() {
 
-        System.out.println("Usage: PATH");
-    }
-
-    private static void exitWithException(final Exception exception) {
-
-        System.err.println(exception.getMessage());
-        System.exit(1);
-    }
-
-    private static void validateArguments(final String[] args) {
-
-        // No arguments
-        if (args.length == 0) {
-            printUsage();
-            System.exit(0);
-        }
-
-        // Wrong amount of arguments
-        if (args.length != 1) {
-            System.err.println("Wrong amount or arguments.");
-            System.exit(1);
-        }
+        final PrintStream out = System.out;
+        out.println("Incorrect usage!");
+        // TODO: tartteeko:
+        out.println("1. Give as parameters a list of test methods with points like");
+        out.println("  \"fully.qualified.ClassName.methodName{point1,point2,etc}\"");
+        out.println();
+        out.println("2. Define the following properties (java -Dprop=value)");
+        out.println("  tmc.source_dir    The place to read source files from.");
+        out.println("  tmc.validations_file    A file to write validation results to.");
+        out.println();
     }
 
     public static void main(final String[] args) {
+        try {
+            new Main().run(args);
+        } catch (IOException t) {
+            System.err.print("Uncaught exception in main thread: ");
+            t.printStackTrace(System.err);
+        }
+        // Ensure non-daemon threads exit
+        System.exit(0);
+    }
 
-        validateArguments(args);
-
-        final File projectDirectory = new File(args[0]);
+    private void run(final String[] args) throws IOException {
 
         try {
-            new CheckstyleRunner(projectDirectory).run();
+            readProperties();
+            final File projectDirectory = new File(sourceDirectory);
+            final CheckstyleResult results = new CheckstyleRunner(projectDirectory).run();
+            writeResults(results);
         } catch (CheckstyleException exception) {
             exitWithException(exception);
+        } catch (IllegalArgumentException exception) {
+            exitWithException(exception);
         }
+
+    }
+
+    private static void exitWithException(final Exception exception) {
+        System.out.println(exception.getMessage());
+        System.out.println();
+        printUsage();
+        System.exit(1);
+    }
+
+    private void readProperties() {
+
+        resultsFilename = requireProperty("tmc.results_file");
+        sourceDirectory = requireProperty("tmc.source_dir");
+    }
+
+    private String requireProperty(final String name) {
+
+        final String prop = System.getProperty(name);
+        if (prop != null) {
+            return prop;
+        } else {
+            throw new IllegalArgumentException("Missing property: " + name);
+        }
+    }
+
+    private void writeResults(final CheckstyleResult results) throws IOException {
+
+        results.writeToJsonFile(new File(resultsFilename));
     }
 }
