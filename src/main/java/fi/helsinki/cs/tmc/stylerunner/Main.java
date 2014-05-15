@@ -65,7 +65,7 @@ public final class Main {
 
     private void readProperties() {
 
-        resultsFilename = requireProperty("tmc.results_file");
+        resultsFilename = requireProperty("tmc.validations_file");
         sourceDirectory = requireProperty("tmc.source_dir");
     }
 
