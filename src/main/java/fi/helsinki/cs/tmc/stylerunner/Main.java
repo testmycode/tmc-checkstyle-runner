@@ -12,7 +12,7 @@ import java.io.PrintStream;
 public final class Main {
 
     private String resultsFilename;
-    private String sourceDirectory;
+    private String projectDirectory;
 
     private Main() {}
 
@@ -25,7 +25,7 @@ public final class Main {
         out.println("  \"fully.qualified.ClassName.methodName{point1,point2,etc}\"");
         out.println();
         out.println("2. Define the following properties (java -Dprop=value)");
-        out.println("  tmc.source_dir    The place to read source files from.");
+        out.println("  tmc.project_dir    The place to read source files from.");
         out.println("  tmc.validations_file    A file to write validation results to.");
         out.println();
     }
@@ -45,7 +45,7 @@ public final class Main {
 
         try {
             readProperties();
-            final File projectDirectory = new File(sourceDirectory);
+            final File projectDirectory = new File(projectDirectory);
             final CheckstyleResult results = new CheckstyleRunner(projectDirectory).run();
             writeResults(results);
         } catch (CheckstyleException exception) {
@@ -66,7 +66,7 @@ public final class Main {
     private void readProperties() {
 
         resultsFilename = requireProperty("tmc.validations_file");
-        sourceDirectory = requireProperty("tmc.source_dir");
+        projectDirectory = requireProperty("tmc.project_dir");
     }
 
     private String requireProperty(final String name) {
