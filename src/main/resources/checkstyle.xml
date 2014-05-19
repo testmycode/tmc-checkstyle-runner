@@ -45,8 +45,9 @@
         <!-- Class Design -->
 
         <module name='VisibilityModifier'>
-            <property name="publicMemberPattern" value="^csExclude"/>
+            <property name='publicMemberPattern' value='^public' />
         </module>
+
         <module name='FinalClass' />
         <module name='InterfaceIsType' />
         <module name='HideUtilityClassConstructor' />
