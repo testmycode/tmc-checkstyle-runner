@@ -44,7 +44,9 @@
 
         <!-- Class Design -->
 
-        <module name='VisibilityModifier' />
+        <module name='VisibilityModifier'>
+            <property name="publicMemberPattern" value="exit"/>
+        </module>
         <module name='FinalClass' />
         <module name='InterfaceIsType' />
         <module name='HideUtilityClassConstructor' />
