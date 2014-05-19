@@ -34,7 +34,7 @@ public final class CheckstyleResult implements ValidationResult {
     }
 
     @JsonIgnore
-    public void writeJsonToFile(final File file) throws IOException {
+    public void writeToFile(final File file) throws IOException {
 
         new ObjectMapper().writeValue(file, this);
     }

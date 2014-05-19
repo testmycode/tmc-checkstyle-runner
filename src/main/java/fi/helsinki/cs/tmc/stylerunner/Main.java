@@ -3,7 +3,6 @@ package fi.helsinki.cs.tmc.stylerunner;
 import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
 
 import java.io.File;
-import java.io.PrintStream;
 
 public final class Main {
 
@@ -11,12 +10,10 @@ public final class Main {
 
     private static void printUsage() {
 
-        final PrintStream stdout = System.out;
-
-        stdout.println("Usage:");
-        stdout.println("Properties (java -Dproperty=value)");
-        stdout.println("  tmc.project_dir — The path for the project directory.");
-        stdout.println("  tmc.validations_file — A path to a file to write the validation results.");
+        System.out.println("Usage:");
+        System.out.println("Properties (java -Dproperty=value)");
+        System.out.println("  tmc.project_dir — The path for the project directory.");
+        System.out.println("  tmc.validations_file — A path to a file to write the validation results.");
     }
 
     private static void exitWithException(final Exception exception) {
@@ -40,9 +37,10 @@ public final class Main {
 
     public static void main(final String[] args) {
 
+        final File projectDirectory = new File(requireProperty("tmc.project_dir"));
+        final File output = new File(requireProperty("tmc.validations_file"));
+
         try {
-            final File projectDirectory = new File(requireProperty("tmc.project_dir"));
-            final File output = new File(requireProperty("tmc.validations_file"));
             new CheckstyleRunner(projectDirectory).run(output);
         } catch (CheckstyleException exception) {
             exitWithException(exception);

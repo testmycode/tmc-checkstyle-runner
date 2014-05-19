@@ -80,7 +80,8 @@ public final class CheckstyleRunner {
         final CheckstyleResult result = run();
 
         try {
-            result.writeJsonToFile(output);
+            // TODO: What if output already exists?
+            result.writeToFile(output);
         } catch (IOException exception) {
             // TODO: Handle exception
             System.out.println(exception.getMessage());
