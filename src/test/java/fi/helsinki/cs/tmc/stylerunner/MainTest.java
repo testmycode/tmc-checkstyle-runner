@@ -44,15 +44,15 @@ public final class MainTest {
             @Override
             public void checkAssertion() {
 
-                final String expectedMessage = "Usage:\n" +
-                                               "Properties (java -Dproperty=value)\n" +
-                                               "  tmc.project_dir — The path for the project directory.\n" +
-                                               "  tmc.validations_file — A path to a file to write the validation results.\n";
+                final String expected = "Usage:\n" +
+                                        "Properties (java -Dproperty=value)\n" +
+                                        "  tmc.project_dir — The path for the project directory.\n" +
+                                        "  tmc.validations_file — A path to a file to write the validation results.\n";
 
-                assertEquals(expectedMessage, stdout.toString());
+                assertEquals(expected, stdout.toString());
             }
         });
 
-        Main.main(new String[]{});
+        Main.main(new String[0]);
     }
 }
