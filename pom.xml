@@ -148,9 +148,11 @@
 
             <!-- PIT -->
             <plugin>
+
                 <groupId>org.pitest</groupId>
                 <artifactId>pitest-maven</artifactId>
                 <version>1.0.0</version>
+
                 <configuration>
                     <targetClasses>
                         <param>fi.helsinki.cs.tmc.stylerunner*</param>
@@ -159,6 +161,16 @@
                         <param>fi.helsinki.cs.tmc.stylerunner*</param>
                     </targetTests>
                 </configuration>
+
+                <executions>
+                    <execution>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>mutationCoverage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+
             </plugin>
 
         </plugins>
