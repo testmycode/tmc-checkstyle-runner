@@ -53,8 +53,6 @@ public final class MainTest {
             }
         });
 
-        final String[] args = new String[0];
-
-        Main.main(args);
+        Main.main(new String[]{});
     }
 }
