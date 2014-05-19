@@ -1,6 +1,7 @@
 package fi.helsinki.cs.tmc.stylerunner.validation;
 
-import com.google.gson.GsonBuilder;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.puppycrawl.tools.checkstyle.api.AuditEvent;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -34,9 +35,9 @@ public final class CheckstyleResult implements ValidationResult {
         return validationErrors;
     }
 
-    public String getJson() {
+    public String getJson() throws JsonProcessingException {
 
-        return new GsonBuilder().create().toJson(this);
+        return new ObjectMapper().writeValueAsString(this);
     }
 
     public void writeToJsonFile(final File f) throws IOException {
