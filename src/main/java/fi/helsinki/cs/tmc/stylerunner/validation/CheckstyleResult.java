@@ -2,7 +2,9 @@ package fi.helsinki.cs.tmc.stylerunner.validation;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import com.puppycrawl.tools.checkstyle.api.AuditEvent;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -31,20 +33,9 @@ public final class CheckstyleResult implements ValidationResult {
         return validationErrors;
     }
 
-
-//    @JsonIgnore
-//    public String getJson() throws JsonProcessingException {
-//
-//        return new ObjectMapper().writeValueAsString(this);
-//    }
-
     @JsonIgnore
-    public void writeToJsonFile(final File f) throws IOException {
+    public void writeJsonToFile(final File file) throws IOException {
 
-        new ObjectMapper().writeValue(f, this);
-//        final Writer w = new OutputStreamWriter(new BufferedOutputStream(new FileOutputStream(f)), "UTF-8");
-//        w.write(getJson());
-//        System.out.println("JSON: " + getJson());
-//        w.close();
+        new ObjectMapper().writeValue(file, this);
     }
 }

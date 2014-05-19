@@ -10,6 +10,7 @@ import fi.helsinki.cs.tmc.stylerunner.listener.CheckstyleResultListener;
 import fi.helsinki.cs.tmc.stylerunner.validation.CheckstyleResult;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
@@ -72,5 +73,14 @@ public final class CheckstyleRunner {
         checker.destroy();
 
         return listener.getResult();
+    }
+
+    public void run(final File output) {
+
+        final CheckstyleResult result = run();
+
+        try {
+            result.writeJsonToFile(output);
+        } catch (IOException exception) {}
     }
 }

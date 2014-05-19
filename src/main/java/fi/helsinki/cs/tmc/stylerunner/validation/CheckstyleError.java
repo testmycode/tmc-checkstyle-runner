@@ -1,6 +1,5 @@
 package fi.helsinki.cs.tmc.stylerunner.validation;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.puppycrawl.tools.checkstyle.api.AuditEvent;
 
