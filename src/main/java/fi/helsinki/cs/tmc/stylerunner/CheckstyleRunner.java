@@ -82,6 +82,7 @@ public final class CheckstyleRunner {
         try {
             result.writeJsonToFile(output);
         } catch (IOException exception) {
+            // TODO: Handle exception
             System.out.println(exception.getMessage());
         }
     }
