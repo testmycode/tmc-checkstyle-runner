@@ -1,6 +1,5 @@
 package fi.helsinki.cs.tmc.stylerunner.validation;
 
-import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.puppycrawl.tools.checkstyle.api.AuditEvent;
 import java.io.BufferedOutputStream;
@@ -35,14 +34,16 @@ public final class CheckstyleResult implements ValidationResult {
         return validationErrors;
     }
 
+    public String getJson() {
+
+        return new GsonBuilder().create().toJson(this);
+    }
+
     public void writeToJsonFile(final File f) throws IOException {
 
-        final  Gson gson = new GsonBuilder()
-//                .registerTypeAdapter(StackTraceElement.class, new StackTraceSerializer())
-                .create();
-
         final Writer w = new OutputStreamWriter(new BufferedOutputStream(new FileOutputStream(f)), "UTF-8");
-        gson.toJson(getValidationErrors(), w);
+        w.write(getJson());
+        System.out.println("JSON: " + getJson());
         w.close();
     }
 }

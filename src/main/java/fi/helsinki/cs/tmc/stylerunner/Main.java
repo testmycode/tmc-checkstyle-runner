@@ -53,12 +53,11 @@ public final class Main {
         } catch (IllegalArgumentException exception) {
             exitWithException(exception);
         }
-
     }
 
     private static void exitWithException(final Exception exception) {
+
         System.out.println(exception.getMessage());
-        System.out.println();
         printUsage();
         System.exit(1);
     }
