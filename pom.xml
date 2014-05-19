@@ -140,6 +140,21 @@
                 </executions>
             </plugin>
 
+            <!-- PIT -->
+            <plugin>
+                <groupId>org.pitest</groupId>
+                <artifactId>pitest-maven</artifactId>
+                <version>0.30</version>
+                <configuration>
+                    <targetClasses>
+                        <param>fi.helsinki.cs.tmc.stylerunner*</param>
+                    </targetClasses>
+                    <targetTests>
+                        <param>fi.helsinki.cs.tmc.stylerunner*</param>
+                    </targetTests>
+                </configuration>
+            </plugin>
+
         </plugins>
 
     </build>
