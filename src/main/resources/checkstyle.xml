@@ -45,7 +45,7 @@
         <!-- Class Design -->
 
         <module name='VisibilityModifier'>
-            <property name="publicMemberPattern" value="exit"/>
+            <property name="publicMemberPattern" value="^csExclude"/>
         </module>
         <module name='FinalClass' />
         <module name='InterfaceIsType' />

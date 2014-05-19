@@ -15,7 +15,7 @@ import static org.junit.Assert.*;
 public final class MainTest {
 
     @Rule
-    public final ExpectedSystemExit exit = ExpectedSystemExit.none();
+    public final ExpectedSystemExit csExcludeExit = ExpectedSystemExit.none();
 
     private final ByteArrayOutputStream stdout = new ByteArrayOutputStream();
     private final ByteArrayOutputStream stderr = new ByteArrayOutputStream();
@@ -37,9 +37,9 @@ public final class MainTest {
     @Test
     public void shouldPrintUsageOnNoArguments() {
 
-        exit.expectSystemExitWithStatus(0);
+        csExcludeExit.expectSystemExitWithStatus(0);
 
-        exit.checkAssertionAfterwards(new Assertion() {
+        csExcludeExit.checkAssertionAfterwards(new Assertion() {
 
             @Override
             public void checkAssertion() {
