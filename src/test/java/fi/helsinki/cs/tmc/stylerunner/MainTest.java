@@ -24,7 +24,7 @@ public final class MainTest {
     public final ExpectedSystemExit publicExit = ExpectedSystemExit.none();
 
     @Rule
-    public final RestoreSystemProperties publicDirProperty = new RestoreSystemProperties("tmc.project_dir");
+    public final RestoreSystemProperties publicDirectoryProperty = new RestoreSystemProperties("tmc.project_dir");
 
     @Rule
     public final RestoreSystemProperties publicValidationsProperty = new RestoreSystemProperties("tmc.validations_file");
@@ -43,9 +43,9 @@ public final class MainTest {
             public void checkAssertion() {
 
                 final String expected = "Usage:\n" +
-                        "Properties (java -Dproperty=value)\n" +
-                        "  tmc.project_dir — The path for the project directory.\n" +
-                        "  tmc.validations_file — A path to a file to write the validation results.\n";
+                                        "Properties (java -Dproperty=value)\n" +
+                                        "  tmc.project_dir — The path for the project directory.\n" +
+                                        "  tmc.validations_file — A path to a file to write the validation results.\n";
 
                 assertEquals(expected, stdout.toString());
             }
@@ -64,6 +64,7 @@ public final class MainTest {
         try {
             assertEquals("{\"validationErrors\":{}}", line);
         } finally {
+            scanner.close();
             file.delete();
         }
     }
@@ -73,6 +74,7 @@ public final class MainTest {
 
         outputStream = System.out;
         errorStream = System.err;
+
         System.setOut(new PrintStream(stdout));
         System.setErr(new PrintStream(stderr));
     }
@@ -82,6 +84,17 @@ public final class MainTest {
 
         System.setOut(outputStream);
         System.setErr(errorStream);
+    }
+
+    @Test
+    public void shouldNotThrowAnyExceptionsWhenRunningMain() throws NoSuchMethodException,
+                                                                    IllegalAccessException,
+                                                                    InvocationTargetException,
+                                                                    InstantiationException {
+
+        final Constructor constructor = Main.class.getDeclaredConstructor((Class<?>[]) null);
+        constructor.setAccessible(true);
+        constructor.newInstance(null);
     }
 
     @Test
@@ -160,13 +173,5 @@ public final class MainTest {
         final String expected = "nonexistent/output.txt (No such file or directory)\n";
 
         assertEquals(expected, stderr.toString());
-    }
-
-    @Test
-    public void shouldNotThrowAnyExceptionsWhenRunningMain() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
-
-        final Constructor constructor = Main.class.getDeclaredConstructor((Class<?>[]) null);
-        constructor.setAccessible(true);
-        constructor.newInstance(null);
     }
 }

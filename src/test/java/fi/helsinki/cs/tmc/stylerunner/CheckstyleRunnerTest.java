@@ -28,14 +28,14 @@ public class CheckstyleRunnerTest {
 
         try {
 
-            final File tmpDir = Files.createTempDir();
-            final File srcJavaFile = new File(tmpDir + File.separator + "src/Main.java");
-            Files.createParentDirs(srcJavaFile);
+            final File tmp = Files.createTempDir();
+            final File srcFile = new File(tmp, "src/Main.java");
+            Files.createParentDirs(srcFile);
 
-            return tmpDir;
+            return tmp;
 
-        } catch (IOException ex) {
-            fail(ex.getMessage());
+        } catch (IOException exception) {
+            fail(exception.getMessage());
         }
 
         return null;
@@ -45,17 +45,17 @@ public class CheckstyleRunnerTest {
 
         try {
 
-            final File tmpDir = Files.createTempDir();
-            final File srcJavaFile = new File(tmpDir + File.separator + "src/Main/Main.java");
-            final File testJavaFile = new File(tmpDir + File.separator + "src/Test/MainTest.java");
+            final File tmp = Files.createTempDir();
+            final File srcFile = new File(tmp, "src/Main/Main.java");
+            final File testFile = new File(tmp, "src/Test/MainTest.java");
 
-            Files.createParentDirs(srcJavaFile);
-            Files.createParentDirs(testJavaFile);
+            Files.createParentDirs(srcFile);
+            Files.createParentDirs(testFile);
 
-            return tmpDir;
+            return tmp;
 
-        } catch (IOException ex) {
-            fail(ex.getMessage());
+        } catch (IOException exception) {
+            fail(exception.getMessage());
         }
 
         return null;
@@ -64,13 +64,14 @@ public class CheckstyleRunnerTest {
     @Test
     public void shouldWorkWithAntProjects() throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
 
+        final File tmp = createAntProjectMock();
+
         final Method method = CheckstyleRunner.class.getDeclaredMethod("getSourceDirectory", File.class);
         method.setAccessible(true);
-        final File tmpDir = createAntProjectMock();
 
         try {
-            method.invoke(new CheckstyleRunner(tmpDir), tmpDir);
-        } catch (CheckstyleException e) {
+            method.invoke(new CheckstyleRunner(tmp), tmp);
+        } catch (CheckstyleException exception) {
             fail();
         }
     }
@@ -78,28 +79,33 @@ public class CheckstyleRunnerTest {
     @Test
     public void shouldWorkWithMavenProjects() throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
 
+        final File tmp = createMavenProjectMock();
+
         final Method method = CheckstyleRunner.class.getDeclaredMethod("getSourceDirectory", File.class);
         method.setAccessible(true);
-        final File tmpDir = createMavenProjectMock();
 
         try {
-            method.invoke(new CheckstyleRunner(tmpDir), tmpDir);
+            method.invoke(new CheckstyleRunner(tmp), tmp);
         } catch (CheckstyleException e) {
             fail();
         }
     }
 
     @Test
-    public void shouldNotWorkWhenDirNotInCorrectFormat() throws IllegalAccessException, InvocationTargetException, NoSuchMethodException, CheckstyleException {
+    public void shouldNotWorkWhenDirectoryNotInCorrectFormat() throws IllegalAccessException,
+                                                                      InvocationTargetException,
+                                                                      NoSuchMethodException,
+                                                                      CheckstyleException {
+
+        final File tmp = Files.createTempDir();
 
         final Method method = CheckstyleRunner.class.getDeclaredMethod("getSourceDirectory", File.class);
         method.setAccessible(true);
-        final File tmpDir = Files.createTempDir();
 
         publicThrown.expect(CheckstyleException.class);
         publicThrown.expectMessage("Path does not contain a testable project.");
 
-        method.invoke(new CheckstyleRunner(tmpDir), tmpDir);
+        method.invoke(new CheckstyleRunner(tmp), tmp);
     }
 
     @Test
@@ -119,21 +125,21 @@ public class CheckstyleRunnerTest {
     }
 
     @Test
-    public void shouldNotHaveErrors() throws CheckstyleException {
+    public void shouldNotHaveValidationErrors() throws CheckstyleException {
 
         final CheckstyleResult result = new CheckstyleRunner(new File(".")).run();
         assertTrue(result.getValidationErrors().isEmpty());
     }
 
     @Test
-    public void shouldNotHaveErrorsOnAntTestProject() throws CheckstyleException {
+    public void shouldNotHaveValidationErrorsOnAntTestProject() throws CheckstyleException {
 
         final CheckstyleResult result = new CheckstyleRunner(new File("test-projects/valid/trivial")).run();
         assertTrue(result.getValidationErrors().isEmpty());
     }
 
     @Test
-    public void shouldHaveErrorsOnAntTestProject() throws CheckstyleException {
+    public void shouldHaveValidationErrorsOnAntTestProject() throws CheckstyleException {
 
         final CheckstyleResult result = new CheckstyleRunner(new File("test-projects/invalid/trivial")).run();
         assertFalse(result.getValidationErrors().isEmpty());
@@ -152,27 +158,29 @@ public class CheckstyleRunnerTest {
         assertEquals(2, errors.size());
 
         String expected = "method def modifier at indentation level 5 not at correct indentation, 4";
-        assertEquals(expected, errors.get(0).getMessage());
+
+        assertEquals("com.puppycrawl.tools.checkstyle.checks.indentation.IndentationCheck", errors.get(0).getSourceName());
         assertEquals(4, errors.get(0).getLine());
         assertEquals(0, errors.get(0).getColumn());
-        assertEquals("com.puppycrawl.tools.checkstyle.checks.indentation.IndentationCheck", errors.get(0).getSourceName());
+        assertEquals(expected, errors.get(0).getMessage());
 
         expected = "method def child at indentation level 9 not at correct indentation, 8";
-        assertEquals(expected, errors.get(1).getMessage());
+
+        assertEquals("com.puppycrawl.tools.checkstyle.checks.indentation.IndentationCheck", errors.get(1).getSourceName());
         assertEquals(5, errors.get(1).getLine());
         assertEquals(0, errors.get(1).getColumn());
-        assertEquals("com.puppycrawl.tools.checkstyle.checks.indentation.IndentationCheck", errors.get(1).getSourceName());
+        assertEquals(expected, errors.get(1).getMessage());
     }
 
     @Test
-    public void shouldNotHaveErrorsOnMavenTestProject() throws CheckstyleException {
+    public void shouldNotHaveValidationErrorsOnMavenTestProject() throws CheckstyleException {
 
         final CheckstyleResult result = new CheckstyleRunner(new File("test-projects/valid/maven_exercise")).run();
         assertTrue(result.getValidationErrors().isEmpty());
     }
 
     @Test
-    public void shouldHaveErrorsOnMavenTestProject() throws CheckstyleException {
+    public void shouldHaveValidationErrorsOnMavenTestProject() throws CheckstyleException {
 
         final CheckstyleResult result = new CheckstyleRunner(new File("test-projects/invalid/maven_exercise")).run();
         assertFalse(result.getValidationErrors().isEmpty());
@@ -191,9 +199,10 @@ public class CheckstyleRunnerTest {
         assertEquals(1, errors.size());
 
         final String expected = "method def modifier at indentation level 5 not at correct indentation, 4";
-        assertEquals(expected, errors.get(0).getMessage());
+
+        assertEquals("com.puppycrawl.tools.checkstyle.checks.indentation.IndentationCheck", errors.get(0).getSourceName());
         assertEquals(4, errors.get(0).getLine());
         assertEquals(0, errors.get(0).getColumn());
-        assertEquals("com.puppycrawl.tools.checkstyle.checks.indentation.IndentationCheck", errors.get(0).getSourceName());
+        assertEquals(expected, errors.get(0).getMessage());
     }
 }

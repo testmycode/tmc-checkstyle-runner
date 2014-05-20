@@ -36,8 +36,8 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
             <version>${slf4j.version}</version>
+            <scope>runtime</scope>
         </dependency>
-        
 
         <!-- Commons IO -->
         <dependency>
@@ -86,7 +86,7 @@
     </dependencies>
 
     <build>
-     
+
         <plugins>
 
             <!-- Build with dependencies and set main class -->
@@ -145,10 +145,12 @@
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>cobertura-maven-plugin</artifactId>
                 <version>2.6</version>
+
                 <configuration>
                     <format>xml</format>
                     <maxmem>256m</maxmem>
                 </configuration>
+
                 <executions>
                     <execution>
                         <phase>verify</phase>
@@ -157,6 +159,7 @@
                         </goals>
                     </execution>
                 </executions>
+
             </plugin>
 
             <!-- Coveralls-->
