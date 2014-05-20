@@ -56,7 +56,6 @@ public class CheckstyleRunnerTest {
         final Method method = CheckstyleRunner.class.getDeclaredMethod("getSourceDirectory", File.class);
         method.setAccessible(true);
         final File tmpDir = Files.createTempDir();
-        boolean hadError = false;
         publicThrown.expect(CheckstyleException.class);
         publicThrown.expectMessage("Path does not contain a testable project.");
         method.invoke(new CheckstyleRunner(tmpDir), tmpDir);
