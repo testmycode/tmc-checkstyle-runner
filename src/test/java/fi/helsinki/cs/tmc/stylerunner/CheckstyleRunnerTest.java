@@ -24,12 +24,50 @@ public class CheckstyleRunnerTest {
     @Rule
     public ExpectedException publicThrown = ExpectedException.none();
 
+    private File createAntProjectMock() {
+
+        try {
+
+            final File tmpDir = Files.createTempDir();
+            final File srcJavaFile = new File(tmpDir + File.separator + "src/Main.java");
+            Files.createParentDirs(srcJavaFile);
+
+            return tmpDir;
+
+        } catch (IOException ex) {
+            fail(ex.getMessage());
+        }
+
+        return null;
+    }
+
+    private File createMavenProjectMock() {
+
+        try {
+
+            final File tmpDir = Files.createTempDir();
+            final File srcJavaFile = new File(tmpDir + File.separator + "src/Main/Main.java");
+            final File testJavaFile = new File(tmpDir + File.separator + "src/Test/MainTest.java");
+
+            Files.createParentDirs(srcJavaFile);
+            Files.createParentDirs(testJavaFile);
+
+            return tmpDir;
+
+        } catch (IOException ex) {
+            fail(ex.getMessage());
+        }
+
+        return null;
+    }
+
     @Test
     public void shouldWorkWithAntProjects() throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
 
         final Method method = CheckstyleRunner.class.getDeclaredMethod("getSourceDirectory", File.class);
         method.setAccessible(true);
         final File tmpDir = createAntProjectMock();
+
         try {
             method.invoke(new CheckstyleRunner(tmpDir), tmpDir);
         } catch (CheckstyleException e) {
@@ -51,50 +89,18 @@ public class CheckstyleRunnerTest {
         }
     }
 
-    private void shouldNotWorkWhenDirNotInCorrectFormat() throws IllegalAccessException, InvocationTargetException, NoSuchMethodException, CheckstyleException {
+    @Test
+    public void shouldNotWorkWhenDirNotInCorrectFormat() throws IllegalAccessException, InvocationTargetException, NoSuchMethodException, CheckstyleException {
 
         final Method method = CheckstyleRunner.class.getDeclaredMethod("getSourceDirectory", File.class);
         method.setAccessible(true);
         final File tmpDir = Files.createTempDir();
+
         publicThrown.expect(CheckstyleException.class);
         publicThrown.expectMessage("Path does not contain a testable project.");
+
         method.invoke(new CheckstyleRunner(tmpDir), tmpDir);
-
     }
-
-    private File createAntProjectMock() {
-
-        try {
-            final File tmpDir = Files.createTempDir();
-            final File srcJavaFile = new File(tmpDir + File.separator + "src/Main.java");
-            Files.createParentDirs(srcJavaFile);
-
-            return tmpDir;
-
-        } catch (IOException ex) {
-            fail(ex.getMessage());
-        }
-        return null;
-    }
-
-    private File createMavenProjectMock() {
-
-        try {
-            final File tmpDir = Files.createTempDir();
-            final File srcJavaFile = new File(tmpDir + File.separator + "src/Main/Main.java");
-            final File testJavaFile = new File(tmpDir + File.separator + "src/Test/MainTest.java");
-            final File pomFile = new File(tmpDir + File.separator + "pom.xml");
-
-            Files.createParentDirs(srcJavaFile);
-            Files.createParentDirs(testJavaFile);
-
-            return tmpDir;
-        } catch (IOException ex) {
-            fail(ex.getMessage());
-        }
-        return null;
-    }
-
 
     @Test
     public void shouldThrowExceptionOnInvalidProjectDirectory() throws CheckstyleException {

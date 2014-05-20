@@ -37,4 +37,5 @@ public final class CheckstyleError implements ValidationError {
 
         return auditEvent.getSourceName();
     }
+
 }

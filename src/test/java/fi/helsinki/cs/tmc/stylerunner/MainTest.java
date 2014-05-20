@@ -32,6 +32,9 @@ public final class MainTest {
     private final ByteArrayOutputStream stdout = new ByteArrayOutputStream();
     private final ByteArrayOutputStream stderr = new ByteArrayOutputStream();
 
+    private PrintStream outputStream;
+    private PrintStream errorStream;
+
     private Assertion createAssertionForUsage() {
 
         return new Assertion() {
@@ -40,9 +43,9 @@ public final class MainTest {
             public void checkAssertion() {
 
                 final String expected = "Usage:\n" +
-                                        "Properties (java -Dproperty=value)\n" +
-                                        "  tmc.project_dir — The path for the project directory.\n" +
-                                        "  tmc.validations_file — A path to a file to write the validation results.\n";
+                        "Properties (java -Dproperty=value)\n" +
+                        "  tmc.project_dir — The path for the project directory.\n" +
+                        "  tmc.validations_file — A path to a file to write the validation results.\n";
 
                 assertEquals(expected, stdout.toString());
             }
@@ -68,6 +71,8 @@ public final class MainTest {
     @Before
     public void setUp() {
 
+        outputStream = System.out;
+        errorStream = System.err;
         System.setOut(new PrintStream(stdout));
         System.setErr(new PrintStream(stderr));
     }
@@ -75,8 +80,8 @@ public final class MainTest {
     @After
     public void tearDown() {
 
-        System.setOut(null);
-        System.setErr(null);
+        System.setOut(outputStream);
+        System.setErr(errorStream);
     }
 
     @Test
