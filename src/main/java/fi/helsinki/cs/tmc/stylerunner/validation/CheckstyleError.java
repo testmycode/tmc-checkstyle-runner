@@ -25,4 +25,16 @@ public final class CheckstyleError implements ValidationError {
 
         return auditEvent.getMessage();
     }
+
+    @Override
+    public String getSourceName() {
+
+        return auditEvent.getSourceName();
+    }
+
+    @Override
+    public int getColumn() {
+
+        return auditEvent.getColumn();
+    }
 }
