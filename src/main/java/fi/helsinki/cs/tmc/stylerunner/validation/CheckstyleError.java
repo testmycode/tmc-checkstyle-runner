@@ -15,6 +15,12 @@ public final class CheckstyleError implements ValidationError {
     }
 
     @Override
+    public int getColumn() {
+
+        return auditEvent.getColumn();
+    }
+
+    @Override
     public int getLine() {
 
         return auditEvent.getLine();
@@ -32,9 +38,4 @@ public final class CheckstyleError implements ValidationError {
         return auditEvent.getSourceName();
     }
 
-    @Override
-    public int getColumn() {
-
-        return auditEvent.getColumn();
-    }
 }
