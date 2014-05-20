@@ -21,3 +21,6 @@ notifications:
             - '%{repository}#%{build_number} (%{branch} - %{commit} : %{author}): %{commit_message}'
             - 'Build details : %{build_url}'
             - '**'
+
+after_success:
+    - mvn clean cobertura:cobertura coveralls:cobertura
