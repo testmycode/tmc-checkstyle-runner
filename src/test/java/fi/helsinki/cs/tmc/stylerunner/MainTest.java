@@ -30,6 +30,39 @@ public final class MainTest {
     private final ByteArrayOutputStream stdout = new ByteArrayOutputStream();
     private final ByteArrayOutputStream stderr = new ByteArrayOutputStream();
 
+    private Assertion createAssertionForUsage() {
+
+        return new Assertion() {
+
+            @Override
+            public void checkAssertion() {
+
+                final String expected = "Usage:\n" +
+                                        "Properties (java -Dproperty=value)\n" +
+                                        "  tmc.project_dir — The path for the project directory.\n" +
+                                        "  tmc.validations_file — A path to a file to write the validation results.\n";
+
+                assertEquals(expected, stdout.toString());
+            }
+        };
+    }
+
+    private void readAndDeleteOutputFile() throws FileNotFoundException {
+
+        final File file = new File("target/output.txt");
+
+        assertTrue(file.exists());
+
+        final Scanner scanner = new Scanner(file);
+        final String line = scanner.nextLine();
+
+        try {
+            assertEquals("{\"validationErrors\":{}}", line);
+        } finally {
+            file.delete();
+        }
+    }
+
     @Before
     public void setUp() {
 
@@ -48,20 +81,18 @@ public final class MainTest {
     public void shouldPrintUsageOnNoArguments() {
 
         publicExit.expectSystemExitWithStatus(0);
+        publicExit.checkAssertionAfterwards(createAssertionForUsage());
 
-        publicExit.checkAssertionAfterwards(new Assertion() {
+        Main.main(new String[0]);
+    }
 
-            @Override
-            public void checkAssertion() {
+    @Test
+    public void shouldPrintUsageOnInvalidProperties() {
 
-                final String expected = "Usage:\n" +
-                                        "Properties (java -Dproperty=value)\n" +
-                                        "  tmc.project_dir — The path for the project directory.\n" +
-                                        "  tmc.validations_file — A path to a file to write the validation results.\n";
+        publicExit.expectSystemExitWithStatus(0);
+        publicExit.checkAssertionAfterwards(createAssertionForUsage());
 
-                assertEquals(expected, stdout.toString());
-            }
-        });
+        System.setProperty("tmc.invalid", "valid");
 
         Main.main(new String[0]);
     }
@@ -74,18 +105,19 @@ public final class MainTest {
 
         Main.main(new String[0]);
 
-        final File file = new File("target/output.txt");
+        readAndDeleteOutputFile();
+    }
 
-        assertTrue(file.exists());
+    @Test
+    public void shouldCreateJsonFileOnAdditionalInvalidProperties() throws FileNotFoundException {
 
-        final Scanner scanner = new Scanner(file);
-        final String line = scanner.nextLine();
+        System.setProperty("tmc.project_dir", ".");
+        System.setProperty("tmc.validations_file", "target/output.txt");
+        System.setProperty("tmc.invalid", "valid");
 
-        try {
-            assertEquals("{\"validationErrors\":{}}", line);
-        } finally {
-            file.delete();
-        }
+        Main.main(new String[0]);
+
+        readAndDeleteOutputFile();
     }
 
     @Test
