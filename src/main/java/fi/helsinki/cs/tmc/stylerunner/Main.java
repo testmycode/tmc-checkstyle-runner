@@ -44,8 +44,6 @@ public final class Main {
             new CheckstyleRunner(projectDirectory).run(output);
         } catch (CheckstyleException exception) {
             exitWithException(exception);
-        } catch (IllegalArgumentException exception) {
-            exitWithException(exception);
         }
     }
 }
