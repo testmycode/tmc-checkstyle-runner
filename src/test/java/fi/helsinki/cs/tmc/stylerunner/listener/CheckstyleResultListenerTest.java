@@ -25,51 +25,6 @@ public class CheckstyleResultListenerTest {
     private final AuditEvent audit = createNewAuditEvent("tiedosto", 0, 1, "viesti", "testi");
     private final AuditEvent audit2 = createNewAuditEvent("tiedosto2", 1, 1, "Viesti 2", "test2");
 
-    private void containsErrors(final AuditEvent... errors) {
-
-        final Map<File, List<ValidationError>> validationErrors = this.resultListener.getResult().getValidationErrors();
-
-        assertEquals(errors.length, countErrorsFromMap(validationErrors));
-
-        final Set<String> files = new TreeSet<String>();
-
-        for (final AuditEvent error : errors) {
-            files.add(error.getFileName());
-            assertTrue(containsError(validationErrors, error));
-        }
-
-        assertEquals(files.size(), validationErrors.size());
-    }
-
-    private int countErrorsFromMap(final Map<File, List<ValidationError>> validationErrors) {
-
-        int errors = 0;
-
-        for (final Collection<ValidationError> errorCollection : validationErrors.values()) {
-            errors += errorCollection.size();
-        }
-
-        return errors;
-    }
-
-    private boolean containsError(final Map<File, List<ValidationError>> validationErrors, final AuditEvent error) {
-
-        for (Entry<File, List<ValidationError>> entry : validationErrors.entrySet()) {
-
-            for (ValidationError validationError : entry.getValue()) {
-
-                if (validationError.getSourceName().equals(error.getSourceName()) &&
-                    validationError.getLine() == error.getLine() &&
-                    validationError.getColumn() == error.getColumn() &&
-                    validationError.getSourceName().equals(error.getSourceName())) {
-                    return true;
-                }
-            }
-        }
-
-        return false;
-    }
-
     @Before
     public void setUp() {
 
@@ -132,5 +87,50 @@ public class CheckstyleResultListenerTest {
                                                                          null,
                                                                          String.class,
                                                                          message));
+    }
+
+    private void containsErrors(final AuditEvent... errors) {
+
+        final Map<File, List<ValidationError>> validationErrors = this.resultListener.getResult().getValidationErrors();
+
+        assertEquals(errors.length, countErrorsFromMap(validationErrors));
+
+        final Set<String> files = new TreeSet<String>();
+
+        for (final AuditEvent error : errors) {
+            files.add(error.getFileName());
+            assertTrue(containsError(validationErrors, error));
+        }
+
+        assertEquals(files.size(), validationErrors.size());
+    }
+
+    private int countErrorsFromMap(final Map<File, List<ValidationError>> validationErrors) {
+
+        int errors = 0;
+
+        for (final Collection<ValidationError> errorCollection : validationErrors.values()) {
+            errors += errorCollection.size();
+        }
+
+        return errors;
+    }
+
+    private boolean containsError(final Map<File, List<ValidationError>> validationErrors, final AuditEvent error) {
+
+        for (Entry<File, List<ValidationError>> entry : validationErrors.entrySet()) {
+
+            for (ValidationError validationError : entry.getValue()) {
+
+                if (validationError.getSourceName().equals(error.getSourceName()) &&
+                    validationError.getLine() == error.getLine() &&
+                    validationError.getColumn() == error.getColumn() &&
+                    validationError.getSourceName().equals(error.getSourceName())) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 }
