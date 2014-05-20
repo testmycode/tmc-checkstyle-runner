@@ -13,7 +13,6 @@ import org.junit.Test;
 import org.junit.contrib.java.lang.system.Assertion;
 import org.junit.contrib.java.lang.system.ExpectedSystemExit;
 import org.junit.contrib.java.lang.system.RestoreSystemProperties;
-import org.junit.rules.TemporaryFolder;
 
 import static org.junit.Assert.*;
 
@@ -27,9 +26,6 @@ public final class MainTest {
 
     @Rule
     public final RestoreSystemProperties publicValidationsProperty = new RestoreSystemProperties("tmc.validations_file");
-
-    @Rule
-    public final TemporaryFolder publicTestFolder = new TemporaryFolder();
 
     private final ByteArrayOutputStream stdout = new ByteArrayOutputStream();
     private final ByteArrayOutputStream stderr = new ByteArrayOutputStream();
@@ -59,9 +55,9 @@ public final class MainTest {
             public void checkAssertion() {
 
                 final String expected = "Usage:\n" +
-                        "Properties (java -Dproperty=value)\n" +
-                        "  tmc.project_dir — The path for the project directory.\n" +
-                        "  tmc.validations_file — A path to a file to write the validation results.\n";
+                                        "Properties (java -Dproperty=value)\n" +
+                                        "  tmc.project_dir — The path for the project directory.\n" +
+                                        "  tmc.validations_file — A path to a file to write the validation results.\n";
 
                 assertEquals(expected, stdout.toString());
             }
