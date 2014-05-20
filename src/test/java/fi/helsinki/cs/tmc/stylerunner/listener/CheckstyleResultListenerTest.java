@@ -15,9 +15,23 @@ import java.util.TreeSet;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+
+import static org.mockito.Mockito.verify;
+
+import static org.powermock.api.mockito.PowerMockito.mock;
+import static org.powermock.api.mockito.PowerMockito.mockStatic;
+import static org.powermock.api.mockito.PowerMockito.when;
+
+@RunWith(PowerMockRunner.class)
+@PrepareForTest({CheckstyleResultListener.class, LoggerFactory.class })
 
 public class CheckstyleResultListenerTest {
 
@@ -71,6 +85,17 @@ public class CheckstyleResultListenerTest {
         resultListener.addError(audit2);
 
         containsErrors(audit, audit, audit2, audit2);
+    }
+
+    @Test
+    public void shouldBeAbleToAddNewException() {
+
+        mockStatic(LoggerFactory.class);
+        final Logger logger = mock(Logger.class);
+        when(LoggerFactory.getLogger(CheckstyleResultListener.class)).thenReturn(logger);
+        new CheckstyleResultListener().addException(audit, new Throwable("error"));
+
+        verify(logger).error("Exception while audit: {}", "error");
     }
 
     private AuditEvent createNewAuditEvent(final String filename,
