@@ -4,6 +4,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Scanner;
 
 import org.junit.After;
@@ -153,5 +155,13 @@ public final class MainTest {
         final String expected = "nonexistent/output.txt (No such file or directory)\n";
 
         assertEquals(expected, stderr.toString());
+    }
+
+    @Test
+    public void shouldNotThrowAnyExceptionsWhenRunningMain() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+
+        final Constructor constructor = Main.class.getDeclaredConstructor((Class<?>[]) null);
+        constructor.setAccessible(true);
+        constructor.newInstance(null);
     }
 }
