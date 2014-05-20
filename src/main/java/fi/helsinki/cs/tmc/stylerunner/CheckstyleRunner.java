@@ -84,7 +84,7 @@ public final class CheckstyleRunner {
             result.writeToFile(output);
         } catch (IOException exception) {
             // TODO: Handle exception
-            System.out.println(exception.getMessage());
+            System.err.println(exception.getMessage());
         }
     }
 }
