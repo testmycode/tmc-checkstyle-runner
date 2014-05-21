@@ -157,14 +157,14 @@ public class CheckstyleRunnerTest {
         assertFalse(result.getValidationErrors().isEmpty());
         assertEquals(2, errors.size());
 
-        String expected = "method def modifier at indentation level 5 not at correct indentation, 4";
+        String expected = "Indentation incorrect. Expected 4, but was 5.";
 
         assertEquals("com.puppycrawl.tools.checkstyle.checks.indentation.IndentationCheck", errors.get(0).getSourceName());
         assertEquals(4, errors.get(0).getLine());
         assertEquals(0, errors.get(0).getColumn());
         assertEquals(expected, errors.get(0).getMessage());
 
-        expected = "method def child at indentation level 9 not at correct indentation, 8";
+        expected = "Indentation incorrect. Expected 8, but was 9.";
 
         assertEquals("com.puppycrawl.tools.checkstyle.checks.indentation.IndentationCheck", errors.get(1).getSourceName());
         assertEquals(5, errors.get(1).getLine());
@@ -198,7 +198,7 @@ public class CheckstyleRunnerTest {
         assertFalse(result.getValidationErrors().isEmpty());
         assertEquals(1, errors.size());
 
-        final String expected = "method def modifier at indentation level 5 not at correct indentation, 4";
+        final String expected = "Indentation incorrect. Expected 4, but was 5.";
 
         assertEquals("com.puppycrawl.tools.checkstyle.checks.indentation.IndentationCheck", errors.get(0).getSourceName());
         assertEquals(4, errors.get(0).getLine());

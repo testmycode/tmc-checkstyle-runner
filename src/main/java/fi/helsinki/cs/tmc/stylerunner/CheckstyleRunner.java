@@ -5,6 +5,7 @@ import com.puppycrawl.tools.checkstyle.ConfigurationLoader;
 import com.puppycrawl.tools.checkstyle.PropertiesExpander;
 import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
 import com.puppycrawl.tools.checkstyle.api.Configuration;
+import com.puppycrawl.tools.checkstyle.api.LocalizedMessage;
 
 import fi.helsinki.cs.tmc.stylerunner.listener.CheckstyleResultListener;
 import fi.helsinki.cs.tmc.stylerunner.validation.CheckstyleResult;
@@ -12,6 +13,7 @@ import fi.helsinki.cs.tmc.stylerunner.validation.CheckstyleResult;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Locale;
 
 import org.apache.commons.io.FileUtils;
 
@@ -40,6 +42,9 @@ public final class CheckstyleRunner {
         // Configuration
         checker.setModuleClassLoader(Checker.class.getClassLoader());
         checker.configure(config);
+
+        // Configure localisation locale
+        LocalizedMessage.setLocale(Locale.ENGLISH);
     }
 
     private File getSourceDirectory(final File projectDirectory) throws CheckstyleException {
