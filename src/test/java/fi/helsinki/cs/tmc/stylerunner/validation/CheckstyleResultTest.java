@@ -45,13 +45,13 @@ public class CheckstyleResultTest {
         assertFalse(result.getValidationErrors().isEmpty());
         assertEquals(2, errors.size());
 
-        String expected = "method def modifier at indentation level 5 not at correct indentation, 4";
+        String expected = "Indentation incorrect. Expected 4, but was 5.";
 
         assertEquals(4, errors.get(0).getLine());
         assertEquals(0, errors.get(0).getColumn());
         assertEquals(expected, errors.get(0).getMessage());
 
-        expected = "method def child at indentation level 9 not at correct indentation, 8";
+        expected = "Indentation incorrect. Expected 8, but was 9.";
 
         assertEquals(5, errors.get(1).getLine());
         assertEquals(0, errors.get(1).getColumn());
