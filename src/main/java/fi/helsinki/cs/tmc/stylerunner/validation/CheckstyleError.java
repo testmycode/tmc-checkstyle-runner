@@ -4,57 +4,52 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.puppycrawl.tools.checkstyle.api.AuditEvent;
-import com.puppycrawl.tools.checkstyle.api.LocalizedMessage;
 
 public final class CheckstyleError implements ValidationError {
 
-    private final AuditEvent auditEvent;
+    private final int column;
+    private final int line;
+    private final String message;
+    private final String sourceName;
 
     @JsonCreator
-    public CheckstyleError(@JsonProperty("line") final int lineNumber,
-                             @JsonProperty("column") final int columnNumber,
-                             @JsonProperty("message") final String message,
-                             @JsonProperty("sourceName") final String sourceName) {
+    public CheckstyleError(@JsonProperty("column") final int column,
+                           @JsonProperty("line") final int line,
+                           @JsonProperty("message") final String message,
+                           @JsonProperty("sourceName") final String sourceName) {
 
-        this(new AuditEvent(sourceName,
-                            null,
-                            new LocalizedMessage(lineNumber,
-                                                 columnNumber,
-                                                 null,
-                                                 null,
-                                                 null,
-                                                 null,
-                                                 String.class,
-                                                 message)));
+        this.column = column;
+        this.line = line;
+        this.message = message;
+        this.sourceName = sourceName;
     }
 
     public CheckstyleError(final AuditEvent auditEvent) {
 
-        this.auditEvent = auditEvent;
+        this(auditEvent.getColumn(), auditEvent.getLine(), auditEvent.getMessage(), auditEvent.getSourceName());
     }
 
     @Override
     public int getColumn() {
 
-        return auditEvent.getColumn();
+        return column;
     }
 
     @Override
     public int getLine() {
 
-        return auditEvent.getLine();
+        return line;
     }
 
     @Override
     public String getMessage() {
 
-        return auditEvent.getMessage();
+        return message;
     }
 
     @Override
     public String getSourceName() {
 
-        return auditEvent.getSourceName();
+        return sourceName;
     }
-
 }
