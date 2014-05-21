@@ -28,7 +28,7 @@ public final class CheckstyleResultListener implements AuditListener {
     @Override
     public void fileStarted(final AuditEvent auditEvent) {
 
-        logger.info("Auditing file " +  auditEvent.getFileName() + "...");
+        logger.info("Auditing file {}...", auditEvent.getFileName());
     }
 
     @Override
@@ -40,7 +40,11 @@ public final class CheckstyleResultListener implements AuditListener {
     @Override
     public void addError(final AuditEvent auditEvent) {
 
-        logger.info("Validation error {}: In {} ({}).", auditEvent.getSourceName(), auditEvent.getMessage(),  auditEvent.getFileName(), auditEvent.getLine(), auditEvent.getColumn());
+        logger.info("Validation error {}: In {} ({}).", auditEvent.getSourceName(),
+                                                        auditEvent.getMessage(),
+                                                        auditEvent.getFileName(),
+                                                        auditEvent.getLine(),
+                                                        auditEvent.getColumn());
 
         result.addError(auditEvent);
     }
