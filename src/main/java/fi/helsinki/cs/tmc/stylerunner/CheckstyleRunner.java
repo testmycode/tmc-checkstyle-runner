@@ -75,16 +75,18 @@ public final class CheckstyleRunner {
         return listener.getResult();
     }
 
-    public void run(final File output) {
+    public void run(final File outputFile) throws CheckstyleException {
 
         final CheckstyleResult result = run();
 
+        if (outputFile.exists()) {
+            throw new CheckstyleException("Output file already exists.");
+        }
+
         try {
-            // TODO: What if output already exists?
-            result.writeToFile(output);
+            result.writeToFile(outputFile);
         } catch (IOException exception) {
-            // TODO: Handle exception
-            System.err.println(exception.getMessage());
+            throw new CheckstyleException("Exception while writing to output file.", exception);
         }
     }
 }

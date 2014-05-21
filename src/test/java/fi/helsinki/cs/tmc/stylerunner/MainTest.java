@@ -20,14 +20,17 @@ import static org.junit.Assert.*;
 
 public final class MainTest {
 
+    private static final String PROJECT_DIRECTORY_PROPERTY = "tmc.project_dir";
+    private static final String VALIDATIONS_FILE_PROPERTY = "tmc.validations_file";
+
     @Rule
     public final ExpectedSystemExit publicExit = ExpectedSystemExit.none();
 
     @Rule
-    public final RestoreSystemProperties publicDirectoryProperty = new RestoreSystemProperties("tmc.project_dir");
+    public final RestoreSystemProperties publicDirectoryProperty = new RestoreSystemProperties(PROJECT_DIRECTORY_PROPERTY);
 
     @Rule
-    public final RestoreSystemProperties publicValidationsProperty = new RestoreSystemProperties("tmc.validations_file");
+    public final RestoreSystemProperties publicValidationsProperty = new RestoreSystemProperties(VALIDATIONS_FILE_PROPERTY);
 
     private final ByteArrayOutputStream stdout = new ByteArrayOutputStream();
     private final ByteArrayOutputStream stderr = new ByteArrayOutputStream();
@@ -120,8 +123,8 @@ public final class MainTest {
     @Test
     public void shouldCreateJsonFileWithCorrectProperties() throws FileNotFoundException {
 
-        System.setProperty("tmc.project_dir", ".");
-        System.setProperty("tmc.validations_file", "target/output.txt");
+        System.setProperty(PROJECT_DIRECTORY_PROPERTY, ".");
+        System.setProperty(VALIDATIONS_FILE_PROPERTY, "target/output.txt");
 
         Main.main(new String[0]);
 
@@ -131,8 +134,8 @@ public final class MainTest {
     @Test
     public void shouldCreateJsonFileOnAdditionalInvalidProperties() throws FileNotFoundException {
 
-        System.setProperty("tmc.project_dir", ".");
-        System.setProperty("tmc.validations_file", "target/output.txt");
+        System.setProperty(PROJECT_DIRECTORY_PROPERTY, ".");
+        System.setProperty(VALIDATIONS_FILE_PROPERTY, "target/output.txt");
         System.setProperty("tmc.invalid", "valid");
 
         Main.main(new String[0]);
@@ -156,8 +159,30 @@ public final class MainTest {
             }
         });
 
-        System.setProperty("tmc.project_dir", "nonexistent");
-        System.setProperty("tmc.validations_file", "target/output.txt");
+        System.setProperty(PROJECT_DIRECTORY_PROPERTY, "nonexistent");
+        System.setProperty(VALIDATIONS_FILE_PROPERTY, "target/output.txt");
+
+        Main.main(new String[0]);
+    }
+
+    @Test
+    public void shouldThrowExceptionWithExistingValidationsFilePath() {
+
+        publicExit.expectSystemExitWithStatus(1);
+
+        publicExit.checkAssertionAfterwards(new Assertion() {
+
+            @Override
+            public void checkAssertion() {
+
+                final String expected = "Output file already exists.\n";
+
+                assertEquals(expected, stderr.toString());
+            }
+        });
+
+        System.setProperty(PROJECT_DIRECTORY_PROPERTY, ".");
+        System.setProperty(VALIDATIONS_FILE_PROPERTY, "README.md");
 
         Main.main(new String[0]);
     }
@@ -165,13 +190,22 @@ public final class MainTest {
     @Test
     public void shouldThrowExceptionWithIncorrectValidationsFilePath() {
 
-        System.setProperty("tmc.project_dir", ".");
-        System.setProperty("tmc.validations_file", "nonexistent/output.txt");
+        publicExit.expectSystemExitWithStatus(1);
+
+        publicExit.checkAssertionAfterwards(new Assertion() {
+
+            @Override
+            public void checkAssertion() {
+
+                final String expected = "Exception while writing to output file.\n";
+
+                assertEquals(expected, stderr.toString());
+            }
+        });
+
+        System.setProperty(PROJECT_DIRECTORY_PROPERTY, ".");
+        System.setProperty(VALIDATIONS_FILE_PROPERTY, "nonexistent/output.txt");
 
         Main.main(new String[0]);
-
-        final String expected = "nonexistent/output.txt (No such file or directory)\n";
-
-        assertEquals(expected, stderr.toString());
     }
 }

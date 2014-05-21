@@ -74,8 +74,9 @@
             <groupId>org.mockito</groupId>
             <artifactId>mockito-all</artifactId>
             <version>1.9.5</version>
+            <scope>test</scope>
         </dependency>
-        
+
         <!-- PowerMock -->
         <dependency>
             <groupId>org.powermock</groupId>
@@ -83,6 +84,7 @@
             <version>${powermock.version}</version>
             <scope>test</scope>
         </dependency>
+
         <dependency>
             <groupId>org.powermock</groupId>
             <artifactId>powermock-api-mockito</artifactId>
@@ -182,9 +184,6 @@
                 <groupId>org.eluder.coveralls</groupId>
                 <artifactId>coveralls-maven-plugin</artifactId>
                 <version>2.2.0</version>
-                <configuration>
-                    <repoToken>jTuPrAQqycQhRPrjWjnyDFiMscDd18QoI</repoToken>
-                </configuration>
             </plugin>
 
             <!-- PIT -->
