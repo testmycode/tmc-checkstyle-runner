@@ -14,9 +14,9 @@ public final class CheckstyleError implements ValidationError {
 
     @JsonCreator
     public CheckstyleError(@JsonProperty("column") final int column,
-                           @JsonProperty("line") final int line,
-                           @JsonProperty("message") final String message,
-                           @JsonProperty("sourceName") final String sourceName) {
+                            @JsonProperty("line") final int line,
+                            @JsonProperty("message") final String message,
+                            @JsonProperty("sourceName") final String sourceName) {
 
         this.column = column;
         this.line = line;
