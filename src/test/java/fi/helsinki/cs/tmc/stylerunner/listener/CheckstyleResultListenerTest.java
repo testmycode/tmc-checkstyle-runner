@@ -45,6 +45,51 @@ public class CheckstyleResultListenerTest {
         resultListener = new CheckstyleResultListener();
     }
 
+    private void containsErrors(final AuditEvent... errors) {
+
+        final Map<File, List<ValidationError>> validationErrors = this.resultListener.getResult().getValidationErrors();
+
+        assertEquals(errors.length, countErrorsFromMap(validationErrors));
+
+        final Set<String> files = new TreeSet<String>();
+
+        for (final AuditEvent error : errors) {
+            files.add(error.getFileName());
+            assertTrue(containsError(validationErrors, error));
+        }
+
+        assertEquals(files.size(), validationErrors.size());
+    }
+
+    private int countErrorsFromMap(final Map<File, List<ValidationError>> validationErrors) {
+
+        int errors = 0;
+
+        for (final Collection<ValidationError> errorCollection : validationErrors.values()) {
+            errors += errorCollection.size();
+        }
+
+        return errors;
+    }
+
+    private boolean containsError(final Map<File, List<ValidationError>> validationErrors, final AuditEvent error) {
+
+        for (Entry<File, List<ValidationError>> entry : validationErrors.entrySet()) {
+
+            for (ValidationError validationError : entry.getValue()) {
+
+                if (validationError.getSourceName().equals(error.getSourceName()) &&
+                    validationError.getLine() == error.getLine() &&
+                    validationError.getColumn() == error.getColumn() &&
+                    validationError.getSourceName().equals(error.getSourceName())) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
     @Test
     public void shouldContainZeroErrorsOnCreate() {
 
@@ -99,10 +144,10 @@ public class CheckstyleResultListenerTest {
     }
 
     private AuditEvent createNewAuditEvent(final String filename,
-                                           final int lineNumber,
-                                           final int columnNumber,
-                                           final String message,
-                                           final String sourceName) {
+                                             final int lineNumber,
+                                             final int columnNumber,
+                                             final String message,
+                                             final String sourceName) {
 
         return new AuditEvent(sourceName, filename, new LocalizedMessage(lineNumber,
                                                                          columnNumber,
@@ -112,50 +157,5 @@ public class CheckstyleResultListenerTest {
                                                                          null,
                                                                          String.class,
                                                                          message));
-    }
-
-    private void containsErrors(final AuditEvent... errors) {
-
-        final Map<File, List<ValidationError>> validationErrors = this.resultListener.getResult().getValidationErrors();
-
-        assertEquals(errors.length, countErrorsFromMap(validationErrors));
-
-        final Set<String> files = new TreeSet<String>();
-
-        for (final AuditEvent error : errors) {
-            files.add(error.getFileName());
-            assertTrue(containsError(validationErrors, error));
-        }
-
-        assertEquals(files.size(), validationErrors.size());
-    }
-
-    private int countErrorsFromMap(final Map<File, List<ValidationError>> validationErrors) {
-
-        int errors = 0;
-
-        for (final Collection<ValidationError> errorCollection : validationErrors.values()) {
-            errors += errorCollection.size();
-        }
-
-        return errors;
-    }
-
-    private boolean containsError(final Map<File, List<ValidationError>> validationErrors, final AuditEvent error) {
-
-        for (Entry<File, List<ValidationError>> entry : validationErrors.entrySet()) {
-
-            for (ValidationError validationError : entry.getValue()) {
-
-                if (validationError.getSourceName().equals(error.getSourceName()) &&
-                    validationError.getLine() == error.getLine() &&
-                    validationError.getColumn() == error.getColumn() &&
-                    validationError.getSourceName().equals(error.getSourceName())) {
-                    return true;
-                }
-            }
-        }
-
-        return false;
     }
 }

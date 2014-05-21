@@ -35,6 +35,23 @@ public final class MainTest {
     private PrintStream outputStream;
     private PrintStream errorStream;
 
+    @Before
+    public void setUp() {
+
+        outputStream = System.out;
+        errorStream = System.err;
+
+        System.setOut(new PrintStream(stdout));
+        System.setErr(new PrintStream(stderr));
+    }
+
+    @After
+    public void tearDown() {
+
+        System.setOut(outputStream);
+        System.setErr(errorStream);
+    }
+
     private Assertion createAssertionForUsage() {
 
         return new Assertion() {
@@ -67,23 +84,6 @@ public final class MainTest {
             scanner.close();
             file.delete();
         }
-    }
-
-    @Before
-    public void setUp() {
-
-        outputStream = System.out;
-        errorStream = System.err;
-
-        System.setOut(new PrintStream(stdout));
-        System.setErr(new PrintStream(stderr));
-    }
-
-    @After
-    public void tearDown() {
-
-        System.setOut(outputStream);
-        System.setErr(errorStream);
     }
 
     @Test
