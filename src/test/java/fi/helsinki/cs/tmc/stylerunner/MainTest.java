@@ -182,7 +182,7 @@ public final class MainTest {
         });
 
         System.setProperty(PROJECT_DIRECTORY_PROPERTY, ".");
-        System.setProperty(VALIDATIONS_FILE_PROPERTY, "README.md");
+        System.setProperty(VALIDATIONS_FILE_PROPERTY, "test-projects/valid/maven_exercise/pom.xml");
 
         Main.main(new String[0]);
     }
