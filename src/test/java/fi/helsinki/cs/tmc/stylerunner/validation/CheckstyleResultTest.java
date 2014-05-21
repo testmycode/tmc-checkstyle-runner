@@ -41,8 +41,6 @@ public class CheckstyleResultTest {
                                                                               "src/Trivial.java"));
 
         assertFalse(result.getValidationErrors().isEmpty());
-        assertEquals("[/home/kennyhei/kesapojat/tmc-checkstyle-runner/test-projects/invalid/trivial/src/Trivial.java]",
-                     result.getValidationErrors().keySet().toString());
 
         assertFalse(result.getValidationErrors().isEmpty());
         assertEquals(2, errors.size());
