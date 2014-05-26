@@ -4,11 +4,146 @@
 
 <module name='Checker'>
 
-    <property name='localeLanguage' value='en' />
-
     <module name='TreeWalker'>
 
+        <property name='tabWidth' value='4' />
+
+        <!-- Annotations -->
+
+        <module name='AnnotationUseStyle' />
+        <module name='MissingOverride' /> <!-- Reasonable? -->
+
+        <!-- Block Checks -->
+
+        <module name='EmptyBlock' />
+        <module name='LeftCurly' />
+        <module name='NeedBraces' />
+        <module name='RightCurly' />
+        <module name='AvoidNestedBlocks' />
+
+        <!-- Class Design -->
+
+        <module name='VisibilityModifier' /> <!-- Reasonable? -->
+        <module name='FinalClass' />
+        <module name='InterfaceIsType' />
+        <module name='HideUtilityClassConstructor' />
+
+        <!-- Coding -->
+
+        <module name='CovariantEquals' />
+        <module name='EmptyStatement' />
+        <module name='EqualsHashCode' />
+
+        <module name='HiddenField'> <!-- Reasonable? -->
+            <property name='ignoreConstructorParameter' value='true' />
+            <property name='ignoreSetter' value='true' />
+            <property name='ignoreAbstractMethods' value='true' />
+        </module>
+
+        <module name='InnerAssignment' />
+        <module name='MissingSwitchDefault' />
+        <module name='ModifiedControlVariable' /> <!-- Reasonable? -->
+        <module name='RedundantThrows' />
+        <module name='SimplifyBooleanExpression' />
+        <module name='SimplifyBooleanReturn' /> <!-- Reasonable? -->
+        <module name='StringLiteralEquality' />
+        <!-- Nesting depth, reasonable? -->
+        <module name='NoClone' />
+        <module name='NoFinalizer' />
+        <module name='IllegalCatch' /> <!-- Reasonable? -->
+        <module name='IllegalThrows' /> <!-- Reasonable? -->
+
+        <module name='ReturnCount'> <!-- Reasonable? -->
+            <property name='max' value='4' />
+        </module>
+
+        <module name='IllegalType' />
+        <module name='DeclarationOrder' /> <!-- Reasonable? -->
+        <module name='ParameterAssignment' /> <!-- Reasonable? -->
+        <module name='ExplicitInitialization' />
+        <module name='DefaultComesLast' />
+        <module name='FallThrough' /> <!-- Reasonable? -->
+        <module name='MultipleVariableDeclarations' /> <!-- Reasonable? -->
+        <module name='UnnecessaryParentheses' />
+        <module name='OneStatementPerLine' />
+
+        <!-- Imports -->
+
+        <module name='IllegalImport' />
+        <module name='RedundantImport' />
+        <module name='UnusedImports' />
+        <module name='ImportOrder' />
+
+        <!-- Javadoc Comments -->
+
+        <module name='JavadocStyle' />
+
+        <!-- Metrics -->
+
+        <!-- Complexity, reasonable? -->
+        <module name='BooleanExpressionComplexity' />
+
+        <!-- Miscellaneous -->
+
+        <module name='UpperEll' />
+        <module name='ArrayTypeStyle' />
         <module name='Indentation' />
+        <module name='OuterTypeFilename' />
+
+        <!-- Modifiers -->
+
+        <module name='ModifierOrder' />
+        <module name='RedundantModifier' />
+
+        <!--- Naming Conventions -->
+
+        <module name='AbstractClassName' />
+        <module name='ClassTypeParameterName' />
+        <module name='ConstantName' />
+        <module name='LocalFinalVariableName' />
+        <module name='LocalVariableName' />
+        <module name='MemberName' />
+        <module name='MethodName' />
+        <module name='MethodTypeParameterName' />
+
+        <module name='PackageName'>
+            <property name='format' value='^[a-z]+(\.[a-z][a-z0-9]*)*$' />
+        </module>
+
+        <module name='ParameterName' />
+        <module name='StaticVariableName' />
+        <module name='TypeName' />
+
+        <!-- Size violations, reasonable? -->
+
+        <!-- Whitespace -->
+
+        <module name='GenericWhitespace' />
+        <module name='EmptyForInitializerPad' />
+        <module name='EmptyForIteratorPad' />
+        <module name='MethodParamPad' />
+
+        <module name='NoWhitespaceAfter'>
+            <property name='tokens' value='BNOT, DEC, DOT, INC, LNOT, UNARY_MINUS, UNARY_PLUS' />
+        </module>
+
+        <module name='NoWhitespaceBefore'>
+            <property name='tokens' value='SEMI, DOT, POST_DEC, POST_INC' />
+            <property name='allowLineBreaks' value='true' />
+        </module>
+
+        <module name='OperatorWrap'>
+            <property name='option' value='eol' />
+        </module>
+
+        <module name='ParenPad' />
+        <module name='TypecastParenPad' />
+        <module name='WhitespaceAfter' />
+
+        <module name='WhitespaceAround'>
+            <property name='allowEmptyConstructors' value='true' />
+            <property name='allowEmptyMethods' value='true' />
+        </module>
 
     </module>
 
