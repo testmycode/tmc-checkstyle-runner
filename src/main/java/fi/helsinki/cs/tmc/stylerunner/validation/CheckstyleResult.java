@@ -47,6 +47,7 @@ public final class CheckstyleResult implements ValidationResult {
         return validationErrors;
     }
 
+    @JsonIgnore
     public String getStrategy() {
 
         return STRATEGY_FAIL;
