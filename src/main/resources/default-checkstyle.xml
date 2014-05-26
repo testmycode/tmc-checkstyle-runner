@@ -26,7 +26,6 @@
         <module name='VisibilityModifier' /> <!-- Reasonable? -->
         <module name='FinalClass' />
         <module name='InterfaceIsType' />
-        <module name='HideUtilityClassConstructor' />
 
         <!-- Coding -->
 
@@ -47,7 +46,9 @@
         <module name='SimplifyBooleanExpression' />
         <module name='SimplifyBooleanReturn' /> <!-- Reasonable? -->
         <module name='StringLiteralEquality' />
+
         <!-- Nesting depth, reasonable? -->
+
         <module name='NoClone' />
         <module name='NoFinalizer' />
         <module name='IllegalCatch' /> <!-- Reasonable? -->
@@ -80,7 +81,7 @@
 
         <!-- Metrics -->
 
-        <!-- Complexity, reasonable? -->
+        <!-- Other complexities, reasonable? -->
         <module name='BooleanExpressionComplexity' />
 
         <!-- Miscellaneous -->
