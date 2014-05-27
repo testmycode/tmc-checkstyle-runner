@@ -27,12 +27,11 @@ import static org.powermock.api.mockito.PowerMockito.mock;
 @PrepareForTest({ TMCConfigurationBuilder.class, LoggerFactory.class })
 public class TMCConfigurationBuilderTest {
 
-    private Logger logger;
+    private final Logger logger = mock(Logger.class);;
 
     @Before
     public void setUp() {
 
-        logger = mock(Logger.class);
         Whitebox.setInternalState(TMCConfigurationBuilder.class, logger);
     }
 
