@@ -31,10 +31,7 @@ public final class CheckstyleResult implements ValidationResult {
 
     public void addError(final AuditEvent auditEvent) {
 
-        final String fileName = auditEvent.getFileName();
-        final int startIndex = fileName.indexOf("/src/") + 1;
-        final int endIndex = fileName.length();
-        final File file = new File(fileName.substring(startIndex, endIndex));
+        final File file = new File(auditEvent.getFileName());
 
         if (!validationErrors.containsKey(file)) {
             validationErrors.put(file, new ArrayList<ValidationError>());
