@@ -21,4 +21,6 @@ public final class TMCConfiguration {
 
         return rule;
     }
+
+    // TODO: Return InputSource of checkstyle.xml
 }
