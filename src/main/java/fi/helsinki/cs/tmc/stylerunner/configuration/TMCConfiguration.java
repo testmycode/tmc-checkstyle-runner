@@ -7,6 +7,7 @@ public final class TMCConfiguration {
 
     public TMCConfiguration() {
 
+        // Default configuration
         enabled = true;
         rule = "default-checkstyle.xml";
     }

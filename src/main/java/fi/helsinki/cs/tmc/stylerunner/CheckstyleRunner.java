@@ -25,9 +25,12 @@ public final class CheckstyleRunner {
     private final Checker checker = new Checker();
     private final List<File> files;
 
-    public CheckstyleRunner(final File projectDirectory) throws CheckstyleException, IOException {
+    public CheckstyleRunner(final File projectDirectory) throws CheckstyleException {
 
-        TMCConfiguration configuration = TMCConfigurationBuilder.build(projectDirectory);
+        // Check that directory is legit
+        final File sourceDirectory = getSourceDirectory(projectDirectory);
+
+        final TMCConfiguration configuration = TMCConfigurationBuilder.build(projectDirectory);
 
         // Default configuration
         final InputSource inputSource = new InputSource(this.getClass()
@@ -39,7 +42,6 @@ public final class CheckstyleRunner {
                                                                            false);
 
         // Get all .java files from project’s source directory
-        final File sourceDirectory = getSourceDirectory(projectDirectory);
         files = (List<File>) FileUtils.listFiles(sourceDirectory, new String[] { "java" }, true);
 
         // Configuration

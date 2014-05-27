@@ -1,6 +1,10 @@
 package fi.helsinki.cs.tmc.stylerunner.configuration;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
 
 import java.io.File;
 import java.io.IOException;
@@ -38,10 +42,24 @@ public final class TMCConfigurationBuilder {
         return new ArrayList<File>(matchingFiles).get(0);
     }
 
-    public static TMCConfiguration build(final File projectDirectory) throws IOException {
+    public static TMCConfiguration build(final File projectDirectory) throws CheckstyleException {
 
         final File configuration = getConfigurationFile(projectDirectory);
 
-        return new ObjectMapper().readValue(configuration, TMCConfiguration.class);
+        if (configuration == null) {
+            return null;
+        }
+
+        try {
+            final ObjectMapper mapper = new ObjectMapper();
+            mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+
+            final JsonNode rootNode = mapper.readTree(configuration);
+
+            return mapper.treeToValue(rootNode.path("checkstyle"), TMCConfiguration.class);
+        } catch (IOException exception) {
+            exception.printStackTrace();
+            throw new CheckstyleException("Exception while creating TMCConfiguration file.", exception);
+        }
     }
 }
