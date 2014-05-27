@@ -7,6 +7,8 @@ import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
 import com.puppycrawl.tools.checkstyle.api.Configuration;
 import com.puppycrawl.tools.checkstyle.api.LocalizedMessage;
 
+import fi.helsinki.cs.tmc.stylerunner.configuration.TMCConfiguration;
+import fi.helsinki.cs.tmc.stylerunner.configuration.TMCConfigurationBuilder;
 import fi.helsinki.cs.tmc.stylerunner.listener.CheckstyleResultListener;
 import fi.helsinki.cs.tmc.stylerunner.validation.CheckstyleResult;
 
@@ -16,7 +18,6 @@ import java.util.List;
 import java.util.Locale;
 
 import org.apache.commons.io.FileUtils;
-
 import org.xml.sax.InputSource;
 
 public final class CheckstyleRunner {
@@ -24,7 +25,9 @@ public final class CheckstyleRunner {
     private final Checker checker = new Checker();
     private final List<File> files;
 
-    public CheckstyleRunner(final File projectDirectory) throws CheckstyleException {
+    public CheckstyleRunner(final File projectDirectory) throws CheckstyleException, IOException {
+
+        TMCConfiguration configuration = TMCConfigurationBuilder.build(projectDirectory);
 
         // Default configuration
         final InputSource inputSource = new InputSource(this.getClass()
