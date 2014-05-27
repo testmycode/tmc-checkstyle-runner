@@ -59,10 +59,8 @@ public final class TMCConfigurationBuilder {
             mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
             final JsonNode rootNode = mapper.readTree(configurationFile);
-            final TMCConfiguration configuration = mapper.treeToValue(rootNode.path("checkstyle"),
-                                                                      TMCConfiguration.class);
 
-            return configuration;
+            return mapper.treeToValue(rootNode.path("checkstyle"), TMCConfiguration.class);
 
         } catch (IOException exception) {
             throw new CheckstyleException("Exception while deserialising TMCConfiguration.", exception);
