@@ -1,6 +1,7 @@
 package fi.helsinki.cs.tmc.stylerunner.configuration;
 
 import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 
