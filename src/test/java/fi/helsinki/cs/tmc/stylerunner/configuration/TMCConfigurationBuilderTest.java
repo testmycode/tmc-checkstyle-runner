@@ -23,7 +23,7 @@ import static org.powermock.api.mockito.PowerMockito.mock;
 
 @RunWith(PowerMockRunner.class)
 @SuppressStaticInitializationFor("fi.helsinki.cs.tmc.stylerunner.configuration.TMCConfigurationBuilder")
-@PrepareForTest({TMCConfigurationBuilder.class, LoggerFactory.class })
+@PrepareForTest({ TMCConfigurationBuilder.class, LoggerFactory.class })
 public class TMCConfigurationBuilderTest {
 
     private Logger logger;
@@ -36,22 +36,23 @@ public class TMCConfigurationBuilderTest {
     }
 
     @Test
-    public void shouldReturnNullOnUnexistentConfiguration() throws CheckstyleException {
+    public void shouldReturnDefaultTMCConfigurationOnNonexistentConfiguration() throws CheckstyleException {
 
         final TMCConfiguration config = TMCConfigurationBuilder.build(new File("test-projects/valid/trivial"));
 
-        assertNull(config);
+        assertNotNull(config);
     }
 
     @Test
     public void shouldReturnTMCConfiguration() throws CheckstyleException, FileNotFoundException {
 
-        final TMCConfiguration config = TMCConfigurationBuilder.build(new File("test-projects/valid/trivial_with_configuration"));
+        final File projectDirectory = new File("test-projects/valid/trivial_with_configuration");
+        final TMCConfiguration config = TMCConfigurationBuilder.build(projectDirectory);
 
         assertNotNull(config);
         assertEquals("mooc-checkstyle.xml", config.getRule());
         assertFalse(config.isEnabled());
-        assertNotNull(config.getInputSource());
+        assertNotNull(config.getInputSource(projectDirectory));
     }
 
     @Test
@@ -59,7 +60,7 @@ public class TMCConfigurationBuilderTest {
 
         final TMCConfiguration config = TMCConfigurationBuilder.build(new File("test-projects/valid/trivial_with_configuration"));
 
-        verify(logger).warn("Multiple configuration files found, using the first matching.");
+        verify(logger).warn("Multiple TMC-configuration files found, using the first matching.");
 
         assertEquals("mooc-checkstyle.xml", config.getRule());
     }

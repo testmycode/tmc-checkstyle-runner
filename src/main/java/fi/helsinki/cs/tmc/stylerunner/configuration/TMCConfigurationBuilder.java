@@ -21,22 +21,24 @@ import org.slf4j.LoggerFactory;
 public final class TMCConfigurationBuilder {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TMCConfigurationBuilder.class);
+    private static final String TMC_CONFIGURATION = "tmc.json";
 
     private TMCConfigurationBuilder() {}
 
     private static File getConfigurationFile(final File projectDirectory) {
 
+        // Find TMC-configuration from project
         final Collection<File> matchingFiles = FileUtils.listFiles(projectDirectory,
-                                                                   FileFilterUtils.nameFileFilter("tmc.json"),
+                                                                   FileFilterUtils.nameFileFilter(TMC_CONFIGURATION),
                                                                    TrueFileFilter.INSTANCE);
 
-        // No configuration file found
+        // No TMC-configuration file found
         if (matchingFiles.isEmpty()) {
             return null;
         }
 
         if (matchingFiles.size() > 1) {
-            LOGGER.warn("Multiple configuration files found, using the first matching.");
+            LOGGER.warn("Multiple TMC-configuration files found, using the first matching.");
         }
 
         return new ArrayList<File>(matchingFiles).get(0);
@@ -44,25 +46,26 @@ public final class TMCConfigurationBuilder {
 
     public static TMCConfiguration build(final File projectDirectory) throws CheckstyleException {
 
-        final File configuration = getConfigurationFile(projectDirectory);
+        final File configurationFile = getConfigurationFile(projectDirectory);
 
-        if (configuration == null) {
-            return null;
+        // No TMC-configuration found, use default
+        if (configurationFile == null) {
+            return new TMCConfiguration();
         }
 
         try {
+
             final ObjectMapper mapper = new ObjectMapper();
             mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
-            final JsonNode rootNode = mapper.readTree(configuration);
+            final JsonNode rootNode = mapper.readTree(configurationFile);
+            final TMCConfiguration configuration = mapper.treeToValue(rootNode.path("checkstyle"),
+                                                                      TMCConfiguration.class);
 
-            final TMCConfiguration tmcConfig = mapper.treeToValue(rootNode.path("checkstyle"), TMCConfiguration.class);
-            tmcConfig.setProjectDirectory(projectDirectory);
+            return configuration;
 
-            return tmcConfig;
         } catch (IOException exception) {
-            exception.printStackTrace();
-            throw new CheckstyleException("Exception while creating TMCConfiguration file.", exception);
+            throw new CheckstyleException("Exception while deserialising TMCConfiguration.", exception);
         }
     }
 }

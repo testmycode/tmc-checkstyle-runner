@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Locale;
 
 import org.apache.commons.io.FileUtils;
+
 import org.xml.sax.InputSource;
 
 public final class CheckstyleRunner {
@@ -27,24 +28,11 @@ public final class CheckstyleRunner {
 
     public CheckstyleRunner(final File projectDirectory) throws CheckstyleException {
 
-        // Check that given directory is legit
+        // Get source directory and check that the project is testable
         final File sourceDirectory = getSourceDirectory(projectDirectory);
 
         final TMCConfiguration configuration = TMCConfigurationBuilder.build(projectDirectory);
-
-        final InputSource inputSource;
-
-        if (configuration == null || !configuration.isEnabled()) {
-
-            // Default configuration
-            inputSource = new InputSource(this.getClass()
-                                              .getClassLoader()
-                                              .getResourceAsStream("default-checkstyle.xml"));
-
-        } else {
-
-            inputSource = configuration.getInputSource();
-        }
+        final InputSource inputSource = configuration.getInputSource(projectDirectory);
 
         final Configuration config = ConfigurationLoader.loadConfiguration(inputSource,
                                                                            new PropertiesExpander(System.getProperties()),
