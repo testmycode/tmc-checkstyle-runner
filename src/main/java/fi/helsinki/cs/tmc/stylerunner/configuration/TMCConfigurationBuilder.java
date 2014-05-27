@@ -56,7 +56,10 @@ public final class TMCConfigurationBuilder {
 
             final JsonNode rootNode = mapper.readTree(configuration);
 
-            return mapper.treeToValue(rootNode.path("checkstyle"), TMCConfiguration.class);
+            final TMCConfiguration tmcConfig = mapper.treeToValue(rootNode.path("checkstyle"), TMCConfiguration.class);
+            tmcConfig.setProjectDirectory(projectDirectory);
+
+            return tmcConfig;
         } catch (IOException exception) {
             exception.printStackTrace();
             throw new CheckstyleException("Exception while creating TMCConfiguration file.", exception);

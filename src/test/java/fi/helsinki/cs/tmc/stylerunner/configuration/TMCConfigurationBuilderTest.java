@@ -2,6 +2,7 @@ package fi.helsinki.cs.tmc.stylerunner.configuration;
 
 import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
 import java.io.File;
+import java.io.FileNotFoundException;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -43,13 +44,14 @@ public class TMCConfigurationBuilderTest {
     }
 
     @Test
-    public void shouldReturnTMCConfiguration() throws CheckstyleException {
+    public void shouldReturnTMCConfiguration() throws CheckstyleException, FileNotFoundException {
 
         final TMCConfiguration config = TMCConfigurationBuilder.build(new File("test-projects/valid/trivial_with_configuration"));
 
         assertNotNull(config);
         assertEquals("mooc-checkstyle.xml", config.getRule());
         assertFalse(config.isEnabled());
+        assertNull(config.getInputSource());
     }
 
     @Test
