@@ -29,6 +29,7 @@ public class TMCConfigurationBuilderTest {
 
     @Before
     public void setUp() {
+
         logger = mock(Logger.class);
         Whitebox.setInternalState(TMCConfigurationBuilder.class, logger);
     }
@@ -47,7 +48,7 @@ public class TMCConfigurationBuilderTest {
         final TMCConfiguration config = TMCConfigurationBuilder.build(new File("test-projects/valid/trivial_with_configuration"));
 
         assertNotNull(config);
-        assertEquals("first-checkstyle.xml", config.getRule());
+        assertEquals("mooc-checkstyle.xml", config.getRule());
         assertFalse(config.isEnabled());
     }
 
@@ -58,7 +59,7 @@ public class TMCConfigurationBuilderTest {
 
         verify(logger).warn("Multiple configuration files found, using the first matching.");
 
-        assertEquals("first-checkstyle.xml", config.getRule());
+        assertEquals("mooc-checkstyle.xml", config.getRule());
     }
 
     @Test
