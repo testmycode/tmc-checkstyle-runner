@@ -27,7 +27,7 @@ import static org.powermock.api.mockito.PowerMockito.mock;
 @PrepareForTest({ TMCConfigurationBuilder.class, LoggerFactory.class })
 public class TMCConfigurationBuilderTest {
 
-    private final Logger logger = mock(Logger.class);;
+    private final Logger logger = mock(Logger.class);
 
     @Before
     public void setUp() {
