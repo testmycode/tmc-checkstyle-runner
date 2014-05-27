@@ -44,6 +44,7 @@ public final class CheckstyleRunner {
         // Configuration
         checker.setModuleClassLoader(Checker.class.getClassLoader());
         checker.configure(config);
+        checker.setBasedir(sourceDirectory.getAbsolutePath());
 
         // Configure localisation locale
         LocalizedMessage.setLocale(Locale.ENGLISH);
@@ -56,7 +57,7 @@ public final class CheckstyleRunner {
 
         // Maven-project
         if (new File(projectDirectory, "pom.xml").exists()) {
-            sourceDirectory = new File(projectDirectory, "src/main/");
+            sourceDirectory = new File(projectDirectory, "src/main/java/");
         }
 
         // Invalid directory

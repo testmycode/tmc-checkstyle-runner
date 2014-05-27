@@ -151,8 +151,7 @@ public class CheckstyleRunnerTest {
         final File testProject = new File("test-projects/invalid/trivial");
         final CheckstyleResult result = new CheckstyleRunner(testProject).run();
 
-        final List<ValidationError> errors = result.getValidationErrors().get(new File(testProject.getAbsolutePath(),
-                                                                              "src/Trivial.java"));
+        final List<ValidationError> errors = result.getValidationErrors().get(new File("Trivial.java"));
 
         assertFalse(result.getValidationErrors().isEmpty());
         assertEquals(2, errors.size());
@@ -192,8 +191,7 @@ public class CheckstyleRunnerTest {
         final File testProject = new File("test-projects/invalid/maven_exercise");
         final CheckstyleResult result = new CheckstyleRunner(testProject).run();
 
-        final List<ValidationError> errors = result.getValidationErrors().get(new File(testProject.getAbsolutePath(),
-                                                                              "src/main/java/fi/helsinki/cs/maventest/App.java"));
+        final List<ValidationError> errors = result.getValidationErrors().get(new File("fi/helsinki/cs/maventest/App.java"));
 
         assertFalse(result.getValidationErrors().isEmpty());
         assertEquals(1, errors.size());
