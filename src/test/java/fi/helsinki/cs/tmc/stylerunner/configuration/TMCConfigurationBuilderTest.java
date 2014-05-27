@@ -51,7 +51,7 @@ public class TMCConfigurationBuilderTest {
         assertNotNull(config);
         assertEquals("mooc-checkstyle.xml", config.getRule());
         assertFalse(config.isEnabled());
-        assertNull(config.getInputSource());
+        assertNotNull(config.getInputSource());
     }
 
     @Test
