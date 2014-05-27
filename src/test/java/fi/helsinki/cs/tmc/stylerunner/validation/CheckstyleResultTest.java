@@ -37,8 +37,7 @@ public class CheckstyleResultTest {
 
         final CheckstyleResult result = CheckstyleResult.build(builder.toString());
 
-        final List<ValidationError> errors = result.getValidationErrors().get(new File(testProject.getAbsolutePath(),
-                                                                              "src/Trivial.java"));
+        final List<ValidationError> errors = result.getValidationErrors().get(new File("src/Trivial.java"));
 
         assertFalse(result.getValidationErrors().isEmpty());
 
