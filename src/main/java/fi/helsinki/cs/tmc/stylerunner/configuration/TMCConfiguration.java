@@ -2,6 +2,8 @@ package fi.helsinki.cs.tmc.stylerunner.configuration;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -44,12 +46,16 @@ public final class TMCConfiguration {
         this.projectDirectory = projectDirectory;
     }
 
-    public InputSource getInputSource() throws FileNotFoundException {
+    public InputSource getInputSource() throws CheckstyleException {
 
         final Collection<File> matchingFiles = FileUtils.listFiles(projectDirectory,
                                                                    FileFilterUtils.nameFileFilter(rule),
                                                                    TrueFileFilter.INSTANCE);
 
-        return new InputSource(new FileInputStream(new ArrayList<File>(matchingFiles).get(0)));
+        try {
+            return new InputSource(new FileInputStream(new ArrayList<File>(matchingFiles).get(0)));
+        } catch (FileNotFoundException exception) {
+            throw new CheckstyleException("Exception while loading checkstyle configuration.", exception);
+        }
     }
 }

@@ -27,15 +27,24 @@ public final class CheckstyleRunner {
 
     public CheckstyleRunner(final File projectDirectory) throws CheckstyleException {
 
-        // Check that directory is legit
+        // Check that given directory is legit
         final File sourceDirectory = getSourceDirectory(projectDirectory);
 
         final TMCConfiguration configuration = TMCConfigurationBuilder.build(projectDirectory);
 
-        // Default configuration
-        final InputSource inputSource = new InputSource(this.getClass()
-                                                            .getClassLoader()
-                                                            .getResourceAsStream("default-checkstyle.xml"));
+        final InputSource inputSource;
+
+        if (configuration == null || !configuration.isEnabled()) {
+
+            // Default configuration
+            inputSource = new InputSource(this.getClass()
+                                              .getClassLoader()
+                                              .getResourceAsStream("default-checkstyle.xml"));
+
+        } else {
+
+            inputSource = configuration.getInputSource();
+        }
 
         final Configuration config = ConfigurationLoader.loadConfiguration(inputSource,
                                                                            new PropertiesExpander(System.getProperties()),
