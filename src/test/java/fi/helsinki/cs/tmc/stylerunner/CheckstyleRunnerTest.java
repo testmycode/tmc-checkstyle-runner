@@ -225,10 +225,14 @@ public class CheckstyleRunnerTest {
 
         assertFalse(result.getValidationErrors().isEmpty());
 
-        assertEquals(4, errors.size());
+        assertEquals(2, errors.size());
         assertEquals(2, errors.get(0).getLine());
         assertEquals(0, errors.get(0).getColumn());
-        assertEquals("Indentation incorrect. Expected 0, but was 1.", errors.get(0).getMessage());
+        assertEquals("Missing package declaration.", errors.get(0).getMessage());
+
+        assertEquals(2, errors.get(1).getLine());
+        assertEquals(22, errors.get(1).getColumn());
+        assertEquals("'{' is not preceded with whitespace.", errors.get(1).getMessage());
 
         setFinalStatic(TMCCheckstyleConfigurationBuilder.class.getDeclaredField("TMC_CONFIGURATION"), "tmc.json");
     }
