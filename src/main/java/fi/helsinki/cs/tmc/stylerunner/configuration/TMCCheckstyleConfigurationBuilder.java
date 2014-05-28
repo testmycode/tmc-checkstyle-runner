@@ -11,6 +11,7 @@ import java.io.IOException;
 
 public final class TMCCheckstyleConfigurationBuilder {
 
+    // Create string as object instead of literal for testing purposes
     private static final String TMC_CONFIGURATION = new String("tmc.json");
 
     private TMCCheckstyleConfigurationBuilder() {}
