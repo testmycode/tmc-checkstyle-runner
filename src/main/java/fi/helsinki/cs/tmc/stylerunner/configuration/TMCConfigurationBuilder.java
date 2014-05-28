@@ -8,19 +8,9 @@ import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.filefilter.FileFilterUtils;
-import org.apache.commons.io.filefilter.TrueFileFilter;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public final class TMCConfigurationBuilder {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(TMCConfigurationBuilder.class);
     private static final String TMC_CONFIGURATION = "tmc.json";
 
     private TMCConfigurationBuilder() {}
@@ -28,20 +18,14 @@ public final class TMCConfigurationBuilder {
     private static File getConfigurationFile(final File projectDirectory) {
 
         // Find TMC-configuration from project
-        final Collection<File> matchingFiles = FileUtils.listFiles(projectDirectory,
-                                                                   FileFilterUtils.nameFileFilter(TMC_CONFIGURATION),
-                                                                   TrueFileFilter.INSTANCE);
+        final File matchingFile = new File(projectDirectory, TMC_CONFIGURATION);
 
         // No TMC-configuration file found
-        if (matchingFiles.isEmpty()) {
+        if (!matchingFile.exists()) {
             return null;
         }
 
-        if (matchingFiles.size() > 1) {
-            LOGGER.warn("Multiple TMC-configuration files found, using the first matching.");
-        }
-
-        return new ArrayList<File>(matchingFiles).get(0);
+        return matchingFile;
     }
 
     public static TMCConfiguration build(final File projectDirectory) throws CheckstyleException {
