@@ -1,7 +1,6 @@
 package fi.helsinki.cs.tmc.stylerunner.configuration;
 
 import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 
@@ -17,14 +16,18 @@ import org.powermock.reflect.Whitebox;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import org.xml.sax.InputSource;
+
 import static org.junit.Assert.*;
 
 import static org.mockito.Mockito.verify;
 import static org.powermock.api.mockito.PowerMockito.mock;
+import static org.powermock.api.mockito.PowerMockito.mockStatic;
+import static org.powermock.api.mockito.PowerMockito.when;
 
 @RunWith(PowerMockRunner.class)
 @SuppressStaticInitializationFor("fi.helsinki.cs.tmc.stylerunner.configuration.TMCConfigurationBuilder")
-@PrepareForTest({ TMCConfigurationBuilder.class, LoggerFactory.class })
+@PrepareForTest(LoggerFactory.class)
 public class TMCConfigurationBuilderTest {
 
     private final Logger logger = mock(Logger.class);
@@ -83,5 +86,21 @@ public class TMCConfigurationBuilderTest {
         assertNotNull(config);
         assertEquals("mooc-checkstyle.xml", config.getRule());
         assertFalse(config.isEnabled());
+    }
+
+    @Test
+    public void shouldSelectFirstCheckstyleConfigurationIfMultipleConfigurationsExist() throws CheckstyleException {
+
+        mockStatic(LoggerFactory.class);
+        when(LoggerFactory.getLogger(TMCConfiguration.class)).thenReturn(logger);
+
+        final File projectDirectory = new File("test-projects/valid/maven_exercise_with_configuration");
+
+        final TMCConfiguration config = TMCConfigurationBuilder.build(projectDirectory);
+        final InputSource inputSource = config.getInputSource(projectDirectory);
+
+        verify(logger).warn("Multiple Checkstyle-configuration files found, using the first matching.");
+
+        assertNotNull(inputSource);
     }
 }
