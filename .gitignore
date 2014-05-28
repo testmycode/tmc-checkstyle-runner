@@ -13,3 +13,5 @@ test-projects/invalid/trivial/build/
 test-projects/invalid/trivial/nbproject/private/
 test-projects/valid/trivial/build/
 test-projects/valid/trivial/nbproject/private/
+
+*.class
