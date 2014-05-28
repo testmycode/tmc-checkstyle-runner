@@ -41,7 +41,7 @@ CheckstyleResult result = runner.run();
 Running Checkstyle validations from the command line can be accomplished by passing the project directory and output file paths as properties. The output file will contain the `CheckstyleResult` serialised as JSON.
 
 ```bash
-java -jar tmc-checkstyle-runner-1.0-SNAPSHOT.jar -Dtmc.project_dir=[PROJECT-DIRECTORY-PATH] -Dtmc.validations_file=[OUTPUT-FILE-PATH]
+java -Dtmc.project_dir=[PROJECT-DIRECTORY-PATH] -Dtmc.validations_file=[OUTPUT-FILE-PATH] -jar tmc-checkstyle-runner-1.0-SNAPSHOT.jar
 ```
 
 ## Configuration
