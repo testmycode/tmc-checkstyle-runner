@@ -31,7 +31,7 @@ Running Checkstyle validations can be accomplished programmatically or from the 
 Create a `CheckstyleRunner` and pass the project directory as a file to the constructor. Running will return a `CheckstyleResult`.
 
 ```java
-File projectDirectory = new File("path/to/project-directory");
+File projectDirectory = new File("path/to/project-directory/");
 CheckstyleRunner runner = new CheckstyleRunner(projectDirectory);
 CheckstyleResult result = runner.run();
 ```
@@ -46,7 +46,7 @@ java -jar tmc-checkstyle-runner-1.0-SNAPSHOT.jar -Dtmc.project_dir=[PROJECT-DIRE
 
 ## Configuration
 
-Running Checkstyle validations works as is with default settings. No configuration is needed. However you can configure the runner by creating a `tmc.json`-configuration file to the root of the project to be tested.
+Running Checkstyle validations works as is with default settings. No configuration is needed. However, you can configure the runner by creating a `tmc.json`-configuration file to the root of the project to be tested.
 
 ```json
 {
