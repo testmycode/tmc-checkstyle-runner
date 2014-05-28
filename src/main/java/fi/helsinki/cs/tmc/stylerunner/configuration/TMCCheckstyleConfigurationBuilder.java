@@ -44,7 +44,7 @@ public final class TMCCheckstyleConfigurationBuilder {
 
             final JsonNode rootNode = mapper.readTree(configurationFile);
 
-            // Invalid TMC-configuration, use default
+            // No Checkstyle-configuration found, use default
             if (rootNode.findValue("checkstyle") == null) {
                 return new TMCCheckstyleConfiguration();
             }
