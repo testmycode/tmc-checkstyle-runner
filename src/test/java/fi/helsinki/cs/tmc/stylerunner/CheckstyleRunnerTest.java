@@ -237,7 +237,7 @@ public class CheckstyleRunnerTest {
         setFinalStatic(TMCCheckstyleConfigurationBuilder.class.getDeclaredField("TMC_CONFIGURATION"), "tmc.json");
     }
 
-    static void setFinalStatic(final Field field, final Object newValue) throws NoSuchFieldException, IllegalAccessException {
+    private static void setFinalStatic(final Field field, final Object newValue) throws IllegalAccessException, NoSuchFieldException {
 
         field.setAccessible(true);
 
