@@ -5,11 +5,16 @@ import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
 import java.io.File;
 import java.io.FileNotFoundException;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import static org.junit.Assert.*;
 
 public class TMCCheckstyleConfigurationBuilderTest {
+
+    @Rule
+    public ExpectedException publicThrown = ExpectedException.none();
 
     @Test
     public void shouldReturnDefaultTMCConfigurationOnNonexistentConfiguration() throws CheckstyleException {
@@ -58,5 +63,14 @@ public class TMCCheckstyleConfigurationBuilderTest {
 
         assertEquals("default-checkstyle.xml", config.getRule());
         assertTrue(config.isEnabled());
+    }
+
+    @Test
+    public void shouldThrowExceptionOnInvalidJSONPropertyValue() throws CheckstyleException {
+
+        publicThrown.expect(CheckstyleException.class);
+        publicThrown.expectMessage("Exception while deserialising TMCConfiguration.");
+
+        final TMCCheckstyleConfiguration config = TMCCheckstyleConfigurationBuilder.build(new File("test-projects/invalid/trivial_with_configuration2"));
     }
 }
