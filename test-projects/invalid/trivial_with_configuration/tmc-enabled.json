@@ -1,0 +1,6 @@
+{
+	"checkstyle": {
+		"enabled": true,
+		"rule": "mooc-checkstyle.xml"
+	}
+}

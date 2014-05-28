@@ -4,13 +4,16 @@ import com.google.common.io.Files;
 
 import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
 
+import fi.helsinki.cs.tmc.stylerunner.configuration.TMCCheckstyleConfigurationBuilder;
 import fi.helsinki.cs.tmc.stylerunner.validation.CheckstyleResult;
 import fi.helsinki.cs.tmc.stylerunner.validation.ValidationError;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.List;
 
 import org.junit.Rule;
@@ -93,9 +96,9 @@ public class CheckstyleRunnerTest {
 
     @Test
     public void shouldNotWorkWhenDirectoryNotInCorrectFormat() throws IllegalAccessException,
-                                                                      InvocationTargetException,
-                                                                      NoSuchMethodException,
-                                                                      CheckstyleException {
+            InvocationTargetException,
+            NoSuchMethodException,
+            CheckstyleException {
 
         final File tmp = Files.createTempDir();
 
@@ -209,5 +212,35 @@ public class CheckstyleRunnerTest {
 
         final CheckstyleResult result = new CheckstyleRunner(new File("test-projects/invalid/trivial_with_configuration")).run();
         assertTrue(result.getValidationErrors().isEmpty());
+    }
+
+    @Test
+    public void shouldReturnValidationErrorsWhenCheckstyleIsEnabled() throws CheckstyleException, NoSuchFieldException, IllegalAccessException {
+
+        setFinalStatic(TMCCheckstyleConfigurationBuilder.class.getDeclaredField("TMC_CONFIGURATION"), "tmc-enabled.json");
+
+        final CheckstyleResult result = new CheckstyleRunner(new File("test-projects/invalid/trivial_with_configuration")).run();
+
+        final List<ValidationError> errors = result.getValidationErrors().get(new File("Trivial.java"));
+
+        assertFalse(result.getValidationErrors().isEmpty());
+
+        assertEquals(4, errors.size());
+        assertEquals(2, errors.get(0).getLine());
+        assertEquals(0, errors.get(0).getColumn());
+        assertEquals("Indentation incorrect. Expected 0, but was 1.", errors.get(0).getMessage());
+
+        setFinalStatic(TMCCheckstyleConfigurationBuilder.class.getDeclaredField("TMC_CONFIGURATION"), "tmc.json");
+    }
+
+    static void setFinalStatic(final Field field, final Object newValue) throws NoSuchFieldException, IllegalAccessException {
+
+        field.setAccessible(true);
+
+        final Field modifiersField = Field.class.getDeclaredField("modifiers");
+        modifiersField.setAccessible(true);
+        modifiersField.setInt(field, field.getModifiers() & ~Modifier.FINAL);
+
+        field.set(null, newValue);
     }
 }
