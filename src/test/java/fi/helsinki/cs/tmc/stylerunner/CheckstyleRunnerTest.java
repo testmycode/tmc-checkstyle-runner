@@ -96,9 +96,9 @@ public class CheckstyleRunnerTest {
 
     @Test
     public void shouldNotWorkWhenDirectoryNotInCorrectFormat() throws IllegalAccessException,
-                                                                           InvocationTargetException,
-                                                                           NoSuchMethodException,
-                                                                           CheckstyleException {
+                                                                      InvocationTargetException,
+                                                                      NoSuchMethodException,
+                                                                      CheckstyleException {
 
         final File tmp = Files.createTempDir();
 
