@@ -8,14 +8,14 @@ import java.io.FileNotFoundException;
 
 import org.xml.sax.InputSource;
 
-public final class TMCConfiguration {
+public final class TMCCheckstyleConfiguration {
 
     private static final String DEFAULT_CHECKSTYLE_CONFIGURATION = "default-checkstyle.xml";
 
     private final boolean enabled;
     private final String rule;
 
-    public TMCConfiguration() {
+    public TMCCheckstyleConfiguration() {
 
         // Default configuration
         enabled = true;

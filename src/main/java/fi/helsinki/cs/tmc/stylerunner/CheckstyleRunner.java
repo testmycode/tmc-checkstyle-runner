@@ -7,8 +7,8 @@ import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
 import com.puppycrawl.tools.checkstyle.api.Configuration;
 import com.puppycrawl.tools.checkstyle.api.LocalizedMessage;
 
-import fi.helsinki.cs.tmc.stylerunner.configuration.TMCConfiguration;
-import fi.helsinki.cs.tmc.stylerunner.configuration.TMCConfigurationBuilder;
+import fi.helsinki.cs.tmc.stylerunner.configuration.TMCCheckstyleConfiguration;
+import fi.helsinki.cs.tmc.stylerunner.configuration.TMCCheckstyleConfigurationBuilder;
 import fi.helsinki.cs.tmc.stylerunner.listener.CheckstyleResultListener;
 import fi.helsinki.cs.tmc.stylerunner.validation.CheckstyleResult;
 
@@ -23,6 +23,7 @@ import org.xml.sax.InputSource;
 
 public final class CheckstyleRunner {
 
+    private final TMCCheckstyleConfiguration checkstyleConfiguration;
     private final Checker checker = new Checker();
     private final List<File> files;
 
@@ -31,8 +32,8 @@ public final class CheckstyleRunner {
         // Get source directory and check that the project is testable
         final File sourceDirectory = getSourceDirectory(projectDirectory);
 
-        final TMCConfiguration configuration = TMCConfigurationBuilder.build(projectDirectory);
-        final InputSource inputSource = configuration.getInputSource(projectDirectory);
+        checkstyleConfiguration = TMCCheckstyleConfigurationBuilder.build(projectDirectory);
+        final InputSource inputSource = checkstyleConfiguration.getInputSource(projectDirectory);
 
         final Configuration config = ConfigurationLoader.loadConfiguration(inputSource,
                                                                            new PropertiesExpander(System.getProperties()),
@@ -69,6 +70,11 @@ public final class CheckstyleRunner {
     }
 
     public CheckstyleResult run() {
+
+        // Checkstyle disabled, return empty result
+        if (!checkstyleConfiguration.isEnabled()) {
+            return new CheckstyleResult();
+        }
 
         // Listener
         final CheckstyleResultListener listener = new CheckstyleResultListener();

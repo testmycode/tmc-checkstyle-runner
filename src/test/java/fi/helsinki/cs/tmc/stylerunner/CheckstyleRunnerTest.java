@@ -203,4 +203,11 @@ public class CheckstyleRunnerTest {
         assertEquals(0, errors.get(0).getColumn());
         assertEquals(expected, errors.get(0).getMessage());
     }
+
+    @Test
+    public void shouldReturnEmptyCheckstyleResultWhenCheckstyleIsDisabled() throws CheckstyleException {
+
+        final CheckstyleResult result = new CheckstyleRunner(new File("test-projects/invalid/trivial_with_configuration")).run();
+        assertTrue(result.getValidationErrors().isEmpty());
+    }
 }

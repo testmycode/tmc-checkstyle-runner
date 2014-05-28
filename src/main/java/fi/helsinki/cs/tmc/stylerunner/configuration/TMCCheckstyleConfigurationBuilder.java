@@ -9,11 +9,11 @@ import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
 import java.io.File;
 import java.io.IOException;
 
-public final class TMCConfigurationBuilder {
+public final class TMCCheckstyleConfigurationBuilder {
 
     private static final String TMC_CONFIGURATION = "tmc.json";
 
-    private TMCConfigurationBuilder() {}
+    private TMCCheckstyleConfigurationBuilder() {}
 
     private static File getConfigurationFile(final File projectDirectory) {
 
@@ -28,13 +28,13 @@ public final class TMCConfigurationBuilder {
         return matchingFile;
     }
 
-    public static TMCConfiguration build(final File projectDirectory) throws CheckstyleException {
+    public static TMCCheckstyleConfiguration build(final File projectDirectory) throws CheckstyleException {
 
         final File configurationFile = getConfigurationFile(projectDirectory);
 
         // No TMC-configuration found, use default
         if (configurationFile == null) {
-            return new TMCConfiguration();
+            return new TMCCheckstyleConfiguration();
         }
 
         try {
@@ -46,10 +46,10 @@ public final class TMCConfigurationBuilder {
 
             // Invalid TMC-configuration, use default
             if (rootNode.findValue("checkstyle") == null) {
-                return new TMCConfiguration();
+                return new TMCCheckstyleConfiguration();
             }
 
-            return mapper.treeToValue(rootNode.path("checkstyle"), TMCConfiguration.class);
+            return mapper.treeToValue(rootNode.path("checkstyle"), TMCCheckstyleConfiguration.class);
 
         } catch (IOException exception) {
             throw new CheckstyleException("Exception while deserialising TMCConfiguration.", exception);
