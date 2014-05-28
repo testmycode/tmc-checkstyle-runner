@@ -44,6 +44,11 @@ public final class TMCConfigurationBuilder {
 
             final JsonNode rootNode = mapper.readTree(configurationFile);
 
+            // Invalid TMC-configuration, use default
+            if (rootNode.findValue("checkstyle") == null) {
+                return new TMCConfiguration();
+            }
+
             return mapper.treeToValue(rootNode.path("checkstyle"), TMCConfiguration.class);
 
         } catch (IOException exception) {

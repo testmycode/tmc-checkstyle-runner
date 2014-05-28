@@ -50,4 +50,13 @@ public class TMCConfigurationBuilderTest {
         assertEquals("mooc-checkstyle.xml", config.getRule());
         assertFalse(config.isEnabled());
     }
+
+    @Test
+    public void shouldReturnDefaultTMCConfigurationIfConfigurationIsInvalid() throws CheckstyleException {
+
+        final TMCConfiguration config = TMCConfigurationBuilder.build(new File("test-projects/invalid/maven_with_configuration"));
+
+        assertEquals("default-checkstyle.xml", config.getRule());
+        assertTrue(config.isEnabled());
+    }
 }
