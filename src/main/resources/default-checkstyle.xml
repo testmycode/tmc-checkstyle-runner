@@ -11,7 +11,6 @@
         <!-- Annotations -->
 
         <module name='AnnotationUseStyle' />
-        <module name='MissingOverride' /> <!-- Reasonable? -->
 
         <!-- Block Checks -->
 
@@ -23,8 +22,7 @@
 
         <!-- Class Design -->
 
-        <module name='VisibilityModifier' /> <!-- Reasonable? -->
-        <module name='FinalClass' />
+        <module name='VisibilityModifier' />
         <module name='InterfaceIsType' />
 
         <!-- Coding -->
@@ -33,7 +31,7 @@
         <module name='EmptyStatement' />
         <module name='EqualsHashCode' />
 
-        <module name='HiddenField'> <!-- Reasonable? -->
+        <module name='HiddenField'>
             <property name='ignoreConstructorParameter' value='true' />
             <property name='ignoreSetter' value='true' />
             <property name='ignoreAbstractMethods' value='true' />
@@ -41,30 +39,28 @@
 
         <module name='InnerAssignment' />
         <module name='MissingSwitchDefault' />
-        <module name='ModifiedControlVariable' /> <!-- Reasonable? -->
+        <module name='ModifiedControlVariable' />
         <module name='RedundantThrows' />
         <module name='SimplifyBooleanExpression' />
-        <module name='SimplifyBooleanReturn' /> <!-- Reasonable? -->
+        <module name='SimplifyBooleanReturn' />
         <module name='StringLiteralEquality' />
 
-        <!-- Nesting depth, reasonable? -->
+        <!-- Nesting depth 2 -->
 
         <module name='NoClone' />
         <module name='NoFinalizer' />
-        <module name='IllegalCatch' /> <!-- Reasonable? -->
-        <module name='IllegalThrows' /> <!-- Reasonable? -->
 
-        <module name='ReturnCount'> <!-- Reasonable? -->
+        <module name='ReturnCount'>
             <property name='max' value='4' />
         </module>
 
         <module name='IllegalType' />
-        <module name='DeclarationOrder' /> <!-- Reasonable? -->
-        <module name='ParameterAssignment' /> <!-- Reasonable? -->
+        <module name='DeclarationOrder' />
+        <module name='ParameterAssignment' />
         <module name='ExplicitInitialization' />
         <module name='DefaultComesLast' />
-        <module name='FallThrough' /> <!-- Reasonable? -->
-        <module name='MultipleVariableDeclarations' /> <!-- Reasonable? -->
+        <module name='FallThrough' />
+        <module name='MultipleVariableDeclarations' />
         <module name='UnnecessaryParentheses' />
         <module name='OneStatementPerLine' />
 
@@ -73,15 +69,11 @@
         <module name='IllegalImport' />
         <module name='RedundantImport' />
         <module name='UnusedImports' />
-        <module name='ImportOrder' />
-
-        <!-- Javadoc Comments -->
-
-        <module name='JavadocStyle' />
 
         <!-- Metrics -->
 
-        <!-- Other complexities, reasonable? -->
+        <!-- Other complexities -->
+
         <module name='BooleanExpressionComplexity' />
 
         <!-- Miscellaneous -->
@@ -115,7 +107,7 @@
         <module name='StaticVariableName' />
         <module name='TypeName' />
 
-        <!-- Size violations, reasonable? -->
+        <!-- Size violations -->
 
         <!-- Whitespace -->
 
