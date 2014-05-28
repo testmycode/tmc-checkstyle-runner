@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/kesapojat/tmc-checkstyle-runner.svg?branch=master)](https://travis-ci.org/kesapojat/tmc-checkstyle-runner)
 [![Coverage Status](https://coveralls.io/repos/kesapojat/tmc-checkstyle-runner/badge.png)](https://coveralls.io/r/kesapojat/tmc-checkstyle-runner)
 
-This is a stand-alone Java-software for running Checkstyle validations on Java-code. It’s developed as an extension for [TMC](https://github.com/testmycode/), but also works separately. The extension is used in the [tmc-netbeans](https://github.com/testmycode/tmc-netbeans/) and [tmc-server](https://github.com/testmycode/tmc-server/) projects.
+tmc-checkstyle-runner is a stand-alone Java-software for running Checkstyle coding style validations on Java-code. It’s developed as an extension for [TMC](https://github.com/testmycode/), but also works separately. The extension is used in the [tmc-netbeans](https://github.com/testmycode/tmc-netbeans/) and [tmc-server](https://github.com/testmycode/tmc-server/) projects.
 
 ## Build
 
@@ -24,11 +24,11 @@ Add the dependency to your project’s `pom.xml`.
 </dependency>
 ```
 
-Running Checkstyle validations can be accomplished programmatically or from the command line.
+Running Checkstyle validations can be accomplished programmatically or by running the software from the command-line.
 
 ### Programmatically
 
-Create a `CheckstyleRunner` and pass the project directory as a file to the constructor. Running will return a `CheckstyleResult`.
+Create a `CheckstyleRunner` and pass the project directory to be tested as a file to the constructor. Running will return a `CheckstyleResult`. `CheckstyleResult`’s implement the `ValidationResult`-interface.
 
 ```java
 File projectDirectory = new File("path/to/project-directory/");
@@ -36,28 +36,32 @@ CheckstyleRunner runner = new CheckstyleRunner(projectDirectory);
 CheckstyleResult result = runner.run();
 ```
 
+The API also provides methods for writing the results to a file as JSON or deserialising JSON-results as `CheckstyleResult`’s. See `CheckstyleResult.build(json)` and `result.writeToFile(file)`.
+
 ### CLI
 
-Running Checkstyle validations from the command line can be accomplished by passing the project directory and output file paths as properties. The output file will contain the `CheckstyleResult` serialised as JSON.
+Running Checkstyle validations from the command-line can be accomplished by passing the project directory to be tested and output file paths as properties. The output file will contain the `CheckstyleResult` serialised as JSON.
 
-```bash
-java -Dtmc.project_dir=[PROJECT-DIRECTORY-PATH] -Dtmc.validations_file=[OUTPUT-FILE-PATH] -jar tmc-checkstyle-runner-1.0-SNAPSHOT.jar
-```
+    java -Dtmc.project_dir=[PROJECT-DIRECTORY-PATH] -Dtmc.validations_file=[OUTPUT-FILE-PATH] -jar tmc-checkstyle-runner-1.0-SNAPSHOT.jar
 
 ## Configuration
 
-Running Checkstyle validations works as is with default settings. No configuration is needed. However, you can configure the runner by creating a `tmc.json`-configuration file to the root of the project to be tested.
+Running Checkstyle validations work as is — with default settings. No configuration is needed. However, you can configure the runner by creating a `tmc.json`-configuration file to the root of the project to be tested.
 
 ```json
 {
     "checkstyle": {
+
         "enabled": false,
         "rule": "mooc-checkstyle.xml"
-	}
+
+    }
 }
 ```
 
-* `enabled` — whether running Checkstyle validations is enabled, true by default.
+### Options
+
+* `enabled` — whether running Checkstyle validations is enabled, `true` by default.
 * `rule` — the name of a custom [Checkstyle-configuration](http://checkstyle.sourceforge.net/config.html) file. Should be in the root of the project. See [default-checkstyle.xml](src/main/resources/default-checkstyle.xml) for the default configuration.
 
 ## Credits
