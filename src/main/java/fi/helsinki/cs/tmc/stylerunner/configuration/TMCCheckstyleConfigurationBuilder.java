@@ -11,7 +11,7 @@ import java.io.IOException;
 
 public final class TMCCheckstyleConfigurationBuilder {
 
-    private static final String TMC_CONFIGURATION = "tmc.json";
+    private static final String TMC_CONFIGURATION = new String("tmc.json");
 
     private TMCCheckstyleConfigurationBuilder() {}
 
