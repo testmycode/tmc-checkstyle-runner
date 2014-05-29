@@ -5,7 +5,8 @@
 <module name='Checker'>
 
     <property name='basedir' value='${basedir}' />
-    <property name='localeLanguage' value='en' />
+    <property name='localeCountry' value='' />
+    <property name='localeLanguage' value='' />
 
     <!-- Use spaces instead of tabs -->
     <module name='FileTabCharacter'>
