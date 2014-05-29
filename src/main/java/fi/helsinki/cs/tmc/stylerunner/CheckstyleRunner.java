@@ -48,7 +48,7 @@ public final class CheckstyleRunner {
         checker.setBasedir(sourceDirectory.getAbsolutePath());
 
         // Configure localisation locale
-        LocalizedMessage.setLocale(Locale.ENGLISH);
+        LocalizedMessage.setLocale(Locale.ROOT);
     }
 
     private File getSourceDirectory(final File projectDirectory) throws CheckstyleException {
