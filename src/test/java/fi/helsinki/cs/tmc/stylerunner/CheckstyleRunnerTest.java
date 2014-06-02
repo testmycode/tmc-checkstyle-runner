@@ -247,13 +247,4 @@ public class CheckstyleRunnerTest {
 
         field.set(null, newValue);
     }
-
-    @Test
-    public void shouldThrowExceptionOnNonexistentConfigurationFile() throws CheckstyleException {
-
-        publicThrown.expect(CheckstyleException.class);
-        publicThrown.expectMessage("Exception while loading Checkstyle-configuration.");
-
-        new CheckstyleRunner(new File("test-projects/invalid/trivial_with_configuration3"));
-    }
 }

@@ -90,7 +90,7 @@ public class TMCCheckstyleConfigurationBuilderTest {
     }
 
     @Test
-    public void shouldThrowExceptionOnInvalidJSONPropertyValue() throws CheckstyleException, IllegalAccessException {
+    public void shouldReturnDefaultConfigurationOnInvalidJSONPropertyValue() throws CheckstyleException, IllegalAccessException {
 
         final TMCCheckstyleConfiguration config = TMCCheckstyleConfigurationBuilder.build(new File("test-projects/invalid/trivial_with_configuration2"));
 
