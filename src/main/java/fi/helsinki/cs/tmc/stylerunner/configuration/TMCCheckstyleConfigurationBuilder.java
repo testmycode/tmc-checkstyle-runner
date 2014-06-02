@@ -9,7 +9,12 @@ import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
 import java.io.File;
 import java.io.IOException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public final class TMCCheckstyleConfigurationBuilder {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(TMCCheckstyleConfigurationBuilder.class);
 
     // Create string as object instead of literal for testing purposes
     private static final String TMC_CONFIGURATION = new String("tmc.json");
@@ -53,7 +58,9 @@ public final class TMCCheckstyleConfigurationBuilder {
             return mapper.treeToValue(rootNode.path("checkstyle"), TMCCheckstyleConfiguration.class);
 
         } catch (IOException exception) {
-            throw new CheckstyleException("Exception while deserialising TMCConfiguration.", exception);
+
+            LOGGER.error("Exception while deserialising TMCConfiguration.");
+            return new TMCCheckstyleConfiguration();
         }
     }
 }

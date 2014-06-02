@@ -32,7 +32,6 @@ import static org.powermock.api.mockito.PowerMockito.when;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({CheckstyleResultListener.class, LoggerFactory.class })
-
 public class CheckstyleResultListenerTest {
 
     private CheckstyleResultListener resultListener;

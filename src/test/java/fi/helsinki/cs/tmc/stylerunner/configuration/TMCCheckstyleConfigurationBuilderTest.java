@@ -5,16 +5,40 @@ import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
 import java.io.File;
 import java.io.FileNotFoundException;
 
-import org.junit.Rule;
+import org.junit.Before;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import org.junit.runner.RunWith;
+
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.core.classloader.annotations.SuppressStaticInitializationFor;
+import org.powermock.modules.junit4.PowerMockRunner;
+import org.powermock.reflect.Whitebox;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import static org.junit.Assert.*;
 
+import static org.mockito.Mockito.verify;
+import static org.powermock.api.mockito.PowerMockito.mock;
+
+@RunWith(PowerMockRunner.class)
+@SuppressStaticInitializationFor("fi.helsinki.cs.tmc.stylerunner.configuration.TMCCheckstyleConfigurationBuilder")
+@PrepareForTest({TMCCheckstyleConfigurationBuilder.class, LoggerFactory.class })
 public class TMCCheckstyleConfigurationBuilderTest {
 
-    @Rule
-    public ExpectedException publicThrown = ExpectedException.none();
+    private Logger logger;
+    private String configuration;
+
+    @Before
+    public void setUp() {
+
+        configuration = new String("tmc.json");
+        Whitebox.setInternalState(TMCCheckstyleConfigurationBuilder.class, configuration);
+
+        logger = mock(Logger.class);
+        Whitebox.setInternalState(TMCCheckstyleConfigurationBuilder.class, logger);
+    }
 
     @Test
     public void shouldReturnDefaultTMCConfigurationOnNonexistentConfiguration() throws CheckstyleException {
@@ -66,11 +90,10 @@ public class TMCCheckstyleConfigurationBuilderTest {
     }
 
     @Test
-    public void shouldThrowExceptionOnInvalidJSONPropertyValue() throws CheckstyleException {
-
-        publicThrown.expect(CheckstyleException.class);
-        publicThrown.expectMessage("Exception while deserialising TMCConfiguration.");
+    public void shouldReturnDefaultConfigurationOnInvalidJSONPropertyValue() throws CheckstyleException, IllegalAccessException {
 
         final TMCCheckstyleConfiguration config = TMCCheckstyleConfigurationBuilder.build(new File("test-projects/invalid/trivial_with_configuration2"));
+
+        verify(logger).error("Exception while deserialising TMCConfiguration.");
     }
 }
