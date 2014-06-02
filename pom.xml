@@ -14,6 +14,13 @@
     <description>Custom Checkstyle runner for TMC</description>
     <url>https://github.com/kesapojat/tmc-checkstyle-runner/</url>
 
+    <scm>
+        <connection>scm:git:https://github.com/kesapojat/tmc-checkstyle-runner.git</connection>
+        <developerConnection>scm:git:git@github.com:kesapojat/tmc-checkstyle-runner.git</developerConnection>
+        <url>https://github.com/kesapojat/tmc-checkstyle-runner/</url>
+        <tag>HEAD</tag>
+    </scm>
+
     <organization>
         <name>University of Helsinki, Department of Computer Science</name>
         <url>http://cs.helsinki.fi/en/</url>
@@ -171,6 +178,13 @@
                 </executions>
             </plugin>
 
+            <!-- Release -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>2.5</version>
+            </plugin>
+
             <!-- Checkstyle -->
             <plugin>
 
@@ -248,5 +262,24 @@
         </plugins>
 
     </build>
+
+    <!-- Deploy to maven.testmycode.net/nexus/ -->
+    <distributionManagement>
+
+        <!-- Release -->
+        <repository>
+            <id>tmc</id>
+            <name>TMC Releases</name>
+            <url>http://maven.testmycode.net/nexus/content/repositories/releases/</url>
+        </repository>
+
+        <!-- Snapshot -->
+        <snapshotRepository>
+            <id>tmc</id>
+            <name>TMC Snapshots</name>
+            <url>http://maven.testmycode.net/nexus/content/repositories/snapshots/</url>
+        </snapshotRepository>
+
+    </distributionManagement>
 
 </project>
