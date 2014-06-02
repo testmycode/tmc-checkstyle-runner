@@ -39,20 +39,15 @@ public final class TMCCheckstyleConfiguration {
 
     public InputSource getInputSource(final File projectDirectory) throws CheckstyleException {
 
-        // Use default Checkstyle-configuration
-        if (rule.equals(DEFAULT_CHECKSTYLE_CONFIGURATION)) {
-
-            // Default configuration
-            return new InputSource(this.getClass()
-                                       .getClassLoader()
-                                       .getResourceAsStream(DEFAULT_CHECKSTYLE_CONFIGURATION));
-        }
-
         // Find Checkstyle-configuration from project
         final File configuration = new File(projectDirectory, rule);
 
         if (!configuration.exists()) {
             logger.error("Configuration file not found, using default configuration.");
+        }
+
+        // Use default Checkstyle-configuration
+        if (!configuration.exists() || rule.equals(DEFAULT_CHECKSTYLE_CONFIGURATION)) {
 
             // Default configuration
             return new InputSource(this.getClass()
