@@ -44,9 +44,12 @@
         <module name='SimplifyBooleanExpression' />
         <module name='SimplifyBooleanReturn' />
         <module name='StringLiteralEquality' />
-
-        <!-- Nesting depth 2 -->
-
+        <module name='NestedForDepth' />
+        <module name='NestedIfDepth' />
+        
+        <module name='NestedTryDepth'>
+            <property name='max' value='0' />
+        </module>
         <module name='NoClone' />
         <module name='NoFinalizer' />
 
@@ -75,6 +78,13 @@
         <!-- Other complexities -->
 
         <module name='BooleanExpressionComplexity' />
+        <module name='ClassDataAbstractionCoupling' />
+        <module name='ClassFanOutComplexity' />
+        <module name='CyclomaticComplexity'>
+            <property name='max' value='8' />
+        </module>
+        <module name='NPathComplexity' />
+        <module name='JavaNCSS' />
 
         <!-- Miscellaneous -->
 
@@ -108,7 +118,33 @@
         <module name='TypeName' />
 
         <!-- Size violations -->
+        <module name='ExecutableStatementCount' />
+        
+        <module name='LineLength'>
+            <property name='max' value='120' />
+        </module>
+        
+        <module name='MethodLength'>
+            <property name='max' value='30' />
+            <property name='countEmpty' value='false' />
+        </module>
+        
+        <module name='AnonInnerLength' />
+        
+        <module name='ParameterNumber'>
+            <property name='max' value='4' />
+        </module>
 
+        <module name='OuterTypeNumber' />
+        
+        <module name='MethodCount'>
+            <property name='maxTotal' value='20' />
+            <property name='maxPrivate' value='20' />
+            <property name='maxPackage' value='20' />
+            <property name='maxProtected' value='20' />
+            <property name='maxPublic' value='20' />
+        </module>
+        
         <!-- Whitespace -->
 
         <module name='GenericWhitespace' />
@@ -139,5 +175,10 @@
         </module>
 
     </module>
+    
+    <module name='FileLength'>
+        <property name='max' value='300' />
+    </module>
 
 </module>
+
