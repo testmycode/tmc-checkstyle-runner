@@ -43,7 +43,6 @@ public final class TMCCheckstyleConfiguration {
         final File configuration = new File(projectDirectory, rule);
 
         if (!configuration.exists()) {
-
             logger.error("Configuration file not found, using default configuration.");
         }
 
