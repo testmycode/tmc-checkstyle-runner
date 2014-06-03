@@ -18,7 +18,7 @@ public class CheckstyleResultTest {
     @Test
     public void shouldConvertJsonToCheckstyleResult() throws CheckstyleException, IOException {
 
-        final File testProject = new File("test-projects/invalid/trivial");
+        final File testProject = new File("test-projects/invalid/trivial/");
         final CheckstyleRunner runner = new CheckstyleRunner(testProject);
 
         final File outputFile = new File("target/output.txt");

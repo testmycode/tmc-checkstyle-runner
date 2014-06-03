@@ -43,7 +43,7 @@ public class TMCCheckstyleConfigurationBuilderTest {
     @Test
     public void shouldReturnDefaultTMCConfigurationOnNonexistentConfiguration() throws CheckstyleException {
 
-        final TMCCheckstyleConfiguration config = TMCCheckstyleConfigurationBuilder.build(new File("test-projects/valid/trivial"));
+        final TMCCheckstyleConfiguration config = TMCCheckstyleConfigurationBuilder.build(new File("test-projects/valid/trivial/"));
 
         assertNotNull(config);
     }
@@ -51,7 +51,7 @@ public class TMCCheckstyleConfigurationBuilderTest {
     @Test
     public void shouldReturnTMCConfiguration() throws CheckstyleException, FileNotFoundException {
 
-        final File projectDirectory = new File("test-projects/valid/trivial_with_configuration");
+        final File projectDirectory = new File("test-projects/valid/trivial_with_configuration/");
         final TMCCheckstyleConfiguration config = TMCCheckstyleConfigurationBuilder.build(projectDirectory);
 
         assertNotNull(config);
@@ -63,7 +63,7 @@ public class TMCCheckstyleConfigurationBuilderTest {
     @Test
     public void shouldNotFailOnAdditionalAndInvalidJSONProperties() throws CheckstyleException {
 
-        final TMCCheckstyleConfiguration config = TMCCheckstyleConfigurationBuilder.build(new File("test-projects/invalid/trivial_with_configuration"));
+        final TMCCheckstyleConfiguration config = TMCCheckstyleConfigurationBuilder.build(new File("test-projects/invalid/trivial_with_configuration/"));
 
         assertNotNull(config);
         assertEquals("default-checkstyle.xml", config.getRule());
@@ -73,7 +73,7 @@ public class TMCCheckstyleConfigurationBuilderTest {
     @Test
     public void shouldNotFailOnAdditionalJSONRootProperties() throws CheckstyleException {
 
-        final TMCCheckstyleConfiguration config = TMCCheckstyleConfigurationBuilder.build(new File("test-projects/invalid/maven_exercise_with_configuration"));
+        final TMCCheckstyleConfiguration config = TMCCheckstyleConfigurationBuilder.build(new File("test-projects/invalid/maven_exercise_with_configuration/"));
 
         assertNotNull(config);
         assertEquals("mooc-checkstyle.xml", config.getRule());
@@ -83,7 +83,7 @@ public class TMCCheckstyleConfigurationBuilderTest {
     @Test
     public void shouldReturnDefaultTMCConfigurationIfConfigurationIsInvalid() throws CheckstyleException {
 
-        final TMCCheckstyleConfiguration config = TMCCheckstyleConfigurationBuilder.build(new File("test-projects/invalid/maven_with_configuration"));
+        final TMCCheckstyleConfiguration config = TMCCheckstyleConfigurationBuilder.build(new File("test-projects/invalid/maven_with_configuration/"));
 
         assertEquals("default-checkstyle.xml", config.getRule());
         assertTrue(config.isEnabled());
@@ -92,7 +92,7 @@ public class TMCCheckstyleConfigurationBuilderTest {
     @Test
     public void shouldReturnDefaultConfigurationOnInvalidJSONPropertyValue() throws CheckstyleException, IllegalAccessException {
 
-        final TMCCheckstyleConfiguration config = TMCCheckstyleConfigurationBuilder.build(new File("test-projects/invalid/trivial_with_configuration2"));
+        final TMCCheckstyleConfiguration config = TMCCheckstyleConfigurationBuilder.build(new File("test-projects/invalid/trivial_with_configuration2/"));
 
         verify(logger).error("Exception while deserialising TMCConfiguration.");
     }
