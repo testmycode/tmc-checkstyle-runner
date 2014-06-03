@@ -123,7 +123,7 @@ public final class MainTest {
     @Test
     public void shouldCreateJsonFileWithCorrectProperties() throws FileNotFoundException {
 
-        System.setProperty(PROJECT_DIRECTORY_PROPERTY, ".");
+        System.setProperty(PROJECT_DIRECTORY_PROPERTY, "test-projects/valid/trivial/");
         System.setProperty(VALIDATIONS_FILE_PROPERTY, "target/output.txt");
 
         Main.main(new String[0]);
@@ -134,7 +134,7 @@ public final class MainTest {
     @Test
     public void shouldCreateJsonFileOnAdditionalInvalidProperties() throws FileNotFoundException {
 
-        System.setProperty(PROJECT_DIRECTORY_PROPERTY, ".");
+        System.setProperty(PROJECT_DIRECTORY_PROPERTY, "test-projects/valid/trivial/");
         System.setProperty(VALIDATIONS_FILE_PROPERTY, "target/output.txt");
         System.setProperty("tmc.invalid", "valid");
 

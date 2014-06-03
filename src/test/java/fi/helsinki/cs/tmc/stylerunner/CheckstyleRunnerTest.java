@@ -130,7 +130,7 @@ public class CheckstyleRunnerTest {
     @Test
     public void shouldNotHaveValidationErrors() throws CheckstyleException {
 
-        final CheckstyleResult result = new CheckstyleRunner(new File(".")).run();
+        final CheckstyleResult result = new CheckstyleRunner(new File("test-projects/valid/trivial/")).run();
         assertTrue(result.getValidationErrors().isEmpty());
     }
 

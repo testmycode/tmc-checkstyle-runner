@@ -35,13 +35,12 @@ public final class CheckstyleRunner {
         checkstyleConfiguration = TMCCheckstyleConfigurationBuilder.build(projectDirectory);
         final InputSource inputSource = checkstyleConfiguration.getInputSource(projectDirectory);
 
-        final Configuration config = ConfigurationLoader
-                .loadConfiguration(inputSource,
-                        new PropertiesExpander(System.getProperties()),
-                        false);
+        final Configuration config = ConfigurationLoader.loadConfiguration(inputSource,
+                                                                           new PropertiesExpander(System.getProperties()),
+                                                                           false);
 
         // Get all .java files from project’s source directory
-        files = (List<File>) FileUtils.listFiles(sourceDirectory, new String[]{"java"}, true);
+        files = (List<File>) FileUtils.listFiles(sourceDirectory, new String[]{ "java" }, true);
 
         // Configuration
         checker.setModuleClassLoader(Checker.class.getClassLoader());
