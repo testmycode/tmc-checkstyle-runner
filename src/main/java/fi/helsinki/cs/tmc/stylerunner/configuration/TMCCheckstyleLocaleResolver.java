@@ -2,11 +2,11 @@ package fi.helsinki.cs.tmc.stylerunner.configuration;
 
 import java.util.Locale;
 
-public final class CheckstyleLocaleResolver {
+public final class TMCCheckstyleLocaleResolver {
 
     private static final Locale[] SUPPORTED_LOCALES = { new Locale("fi") };
 
-    private CheckstyleLocaleResolver() {}
+    private TMCCheckstyleLocaleResolver() {}
 
     public static Locale get(final Locale locale) {
 
@@ -19,5 +19,4 @@ public final class CheckstyleLocaleResolver {
 
         return Locale.ROOT;
     }
-
 }

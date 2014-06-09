@@ -41,7 +41,6 @@ public final class Main {
 
         final File projectDirectory = new File(requireProperty("tmc.project_dir"));
         final File output = new File(requireProperty("tmc.validations_file"));
-
         final Locale locale = new Locale(requireProperty("tmc.locale"));
 
         try {
