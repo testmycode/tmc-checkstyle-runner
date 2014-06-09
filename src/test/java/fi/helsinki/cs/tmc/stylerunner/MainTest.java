@@ -127,7 +127,7 @@ public final class MainTest {
 
         System.setProperty(PROJECT_DIRECTORY_PROPERTY, "test-projects/valid/trivial/");
         System.setProperty(VALIDATIONS_FILE_PROPERTY, "target/output.txt");
-        System.setProperty(LOCALE_PROPERTY, "en");
+        System.setProperty(LOCALE_PROPERTY, "fi");
 
         Main.main(new String[0]);
 
