@@ -7,6 +7,7 @@ import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
 import com.puppycrawl.tools.checkstyle.api.Configuration;
 import com.puppycrawl.tools.checkstyle.api.LocalizedMessage;
 
+import fi.helsinki.cs.tmc.stylerunner.configuration.CheckstyleLocaleResolver;
 import fi.helsinki.cs.tmc.stylerunner.configuration.TMCCheckstyleConfiguration;
 import fi.helsinki.cs.tmc.stylerunner.configuration.TMCCheckstyleConfigurationBuilder;
 import fi.helsinki.cs.tmc.stylerunner.listener.CheckstyleResultListener;
@@ -27,7 +28,7 @@ public final class CheckstyleRunner {
     private final Checker checker = new Checker();
     private final List<File> files;
 
-    public CheckstyleRunner(final File projectDirectory) throws CheckstyleException {
+    public CheckstyleRunner(final File projectDirectory, final Locale locale) throws CheckstyleException {
 
         // Get source directory and check that the project is testable
         final File sourceDirectory = getSourceDirectory(projectDirectory);
@@ -48,7 +49,7 @@ public final class CheckstyleRunner {
         checker.setBasedir(sourceDirectory.getAbsolutePath());
 
         // Configure localisation locale
-        LocalizedMessage.setLocale(Locale.ROOT);
+        LocalizedMessage.setLocale(CheckstyleLocaleResolver.get(locale));
     }
 
     private File getSourceDirectory(final File projectDirectory) throws CheckstyleException {

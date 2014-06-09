@@ -22,6 +22,7 @@ public final class MainTest {
 
     private static final String PROJECT_DIRECTORY_PROPERTY = "tmc.project_dir";
     private static final String VALIDATIONS_FILE_PROPERTY = "tmc.validations_file";
+    private static final String LOCALE_PROPERTY = "tmc.locale";
 
     @Rule
     public final ExpectedSystemExit publicExit = ExpectedSystemExit.none();
@@ -65,7 +66,8 @@ public final class MainTest {
                 final String expected = "Usage:\n" +
                                         "Properties (java -Dproperty=value)\n" +
                                         "  tmc.project_dir — The path for the project directory.\n" +
-                                        "  tmc.validations_file — A path to a file to write the validation results.\n";
+                                        "  tmc.validations_file — A path to a file to write the validation results.\n" +
+                                        "  tmc.locale — Locale for validation messages (ISO 639 standard).\n";
 
                 assertEquals(expected, stdout.toString());
             }
@@ -125,6 +127,7 @@ public final class MainTest {
 
         System.setProperty(PROJECT_DIRECTORY_PROPERTY, "test-projects/valid/trivial/");
         System.setProperty(VALIDATIONS_FILE_PROPERTY, "target/output.txt");
+        System.setProperty(LOCALE_PROPERTY, "en");
 
         Main.main(new String[0]);
 
@@ -136,6 +139,7 @@ public final class MainTest {
 
         System.setProperty(PROJECT_DIRECTORY_PROPERTY, "test-projects/valid/trivial/");
         System.setProperty(VALIDATIONS_FILE_PROPERTY, "target/output.txt");
+        System.setProperty(LOCALE_PROPERTY, "en");
         System.setProperty("tmc.invalid", "valid");
 
         Main.main(new String[0]);
@@ -161,6 +165,7 @@ public final class MainTest {
 
         System.setProperty(PROJECT_DIRECTORY_PROPERTY, "nonexistent");
         System.setProperty(VALIDATIONS_FILE_PROPERTY, "target/output.txt");
+        System.setProperty(LOCALE_PROPERTY, "en");
 
         Main.main(new String[0]);
     }
@@ -183,6 +188,7 @@ public final class MainTest {
 
         System.setProperty(PROJECT_DIRECTORY_PROPERTY, ".");
         System.setProperty(VALIDATIONS_FILE_PROPERTY, "test-projects/valid/maven_exercise/pom.xml");
+        System.setProperty(LOCALE_PROPERTY, "en");
 
         Main.main(new String[0]);
     }
@@ -205,6 +211,7 @@ public final class MainTest {
 
         System.setProperty(PROJECT_DIRECTORY_PROPERTY, ".");
         System.setProperty(VALIDATIONS_FILE_PROPERTY, "nonexistent/output.txt");
+        System.setProperty(LOCALE_PROPERTY, "en");
 
         Main.main(new String[0]);
     }

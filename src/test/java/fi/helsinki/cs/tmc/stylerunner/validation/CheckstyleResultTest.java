@@ -7,6 +7,7 @@ import fi.helsinki.cs.tmc.stylerunner.CheckstyleRunner;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Locale;
 import java.util.Scanner;
 
 import org.junit.Test;
@@ -19,7 +20,7 @@ public class CheckstyleResultTest {
     public void shouldConvertJsonToCheckstyleResult() throws CheckstyleException, IOException {
 
         final File testProject = new File("test-projects/invalid/trivial/");
-        final CheckstyleRunner runner = new CheckstyleRunner(testProject);
+        final CheckstyleRunner runner = new CheckstyleRunner(testProject, Locale.ROOT);
 
         final File outputFile = new File("target/output.txt");
         runner.run(outputFile);

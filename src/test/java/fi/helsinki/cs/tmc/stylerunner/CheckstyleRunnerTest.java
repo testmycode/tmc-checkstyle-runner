@@ -15,6 +15,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.List;
+import java.util.Locale;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -73,7 +74,7 @@ public class CheckstyleRunnerTest {
         method.setAccessible(true);
 
         try {
-            method.invoke(new CheckstyleRunner(tmp), tmp);
+            method.invoke(new CheckstyleRunner(tmp, Locale.ROOT), tmp);
         } catch (CheckstyleException exception) {
             fail();
         }
@@ -88,7 +89,7 @@ public class CheckstyleRunnerTest {
         method.setAccessible(true);
 
         try {
-            method.invoke(new CheckstyleRunner(tmp), tmp);
+            method.invoke(new CheckstyleRunner(tmp, Locale.ROOT), tmp);
         } catch (CheckstyleException e) {
             fail();
         }
@@ -108,7 +109,7 @@ public class CheckstyleRunnerTest {
         publicThrown.expect(CheckstyleException.class);
         publicThrown.expectMessage("Path does not contain a testable project.");
 
-        method.invoke(new CheckstyleRunner(tmp), tmp);
+        method.invoke(new CheckstyleRunner(tmp, Locale.ROOT), tmp);
     }
 
     @Test
@@ -117,34 +118,34 @@ public class CheckstyleRunnerTest {
         publicThrown.expect(CheckstyleException.class);
         publicThrown.expectMessage("Path does not contain a testable project.");
 
-        new CheckstyleRunner(new File("src/"));
+        new CheckstyleRunner(new File("src/"), Locale.ROOT);
     }
 
     @Test
     public void shouldRunOnValidProjectDirectory() throws CheckstyleException {
 
-        final CheckstyleResult result = new CheckstyleRunner(new File(".")).run();
+        final CheckstyleResult result = new CheckstyleRunner(new File("."), Locale.ROOT).run();
         assertNotNull(result);
     }
 
     @Test
     public void shouldNotHaveValidationErrors() throws CheckstyleException {
 
-        final CheckstyleResult result = new CheckstyleRunner(new File("test-projects/valid/trivial/")).run();
+        final CheckstyleResult result = new CheckstyleRunner(new File("test-projects/valid/trivial/"), Locale.ROOT).run();
         assertTrue(result.getValidationErrors().isEmpty());
     }
 
     @Test
     public void shouldNotHaveValidationErrorsOnAntTestProject() throws CheckstyleException {
 
-        final CheckstyleResult result = new CheckstyleRunner(new File("test-projects/valid/trivial/")).run();
+        final CheckstyleResult result = new CheckstyleRunner(new File("test-projects/valid/trivial/"), Locale.ROOT).run();
         assertTrue(result.getValidationErrors().isEmpty());
     }
 
     @Test
     public void shouldHaveValidationErrorsOnAntTestProject() throws CheckstyleException {
 
-        final CheckstyleResult result = new CheckstyleRunner(new File("test-projects/invalid/trivial/")).run();
+        final CheckstyleResult result = new CheckstyleRunner(new File("test-projects/invalid/trivial/"), Locale.ROOT).run();
         assertFalse(result.getValidationErrors().isEmpty());
     }
 
@@ -152,7 +153,7 @@ public class CheckstyleRunnerTest {
     public void shouldHaveErroneousClassOnAntTestProject() throws CheckstyleException {
 
         final File testProject = new File("test-projects/invalid/trivial/");
-        final CheckstyleResult result = new CheckstyleRunner(testProject).run();
+        final CheckstyleResult result = new CheckstyleRunner(testProject, Locale.ROOT).run();
 
         final List<ValidationError> errors = result.getValidationErrors().get(new File("Trivial.java"));
 
@@ -177,14 +178,14 @@ public class CheckstyleRunnerTest {
     @Test
     public void shouldNotHaveValidationErrorsOnMavenTestProject() throws CheckstyleException {
 
-        final CheckstyleResult result = new CheckstyleRunner(new File("test-projects/valid/maven_exercise/")).run();
+        final CheckstyleResult result = new CheckstyleRunner(new File("test-projects/valid/maven_exercise/"), Locale.ROOT).run();
         assertTrue(result.getValidationErrors().isEmpty());
     }
 
     @Test
     public void shouldHaveValidationErrorsOnMavenTestProject() throws CheckstyleException {
 
-        final CheckstyleResult result = new CheckstyleRunner(new File("test-projects/invalid/maven_exercise/")).run();
+        final CheckstyleResult result = new CheckstyleRunner(new File("test-projects/invalid/maven_exercise/"), Locale.ROOT).run();
         assertFalse(result.getValidationErrors().isEmpty());
     }
 
@@ -192,7 +193,7 @@ public class CheckstyleRunnerTest {
     public void shouldHaveErroneousClassOnMavenTestProject() throws CheckstyleException {
 
         final File testProject = new File("test-projects/invalid/maven_exercise/");
-        final CheckstyleResult result = new CheckstyleRunner(testProject).run();
+        final CheckstyleResult result = new CheckstyleRunner(testProject, Locale.ROOT).run();
 
         final List<ValidationError> errors = result.getValidationErrors().get(new File("fi/helsinki/cs/maventest/App.java"));
 
@@ -210,7 +211,7 @@ public class CheckstyleRunnerTest {
     @Test
     public void shouldReturnEmptyCheckstyleResultWhenCheckstyleIsDisabled() throws CheckstyleException {
 
-        final CheckstyleResult result = new CheckstyleRunner(new File("test-projects/invalid/trivial_with_configuration/")).run();
+        final CheckstyleResult result = new CheckstyleRunner(new File("test-projects/invalid/trivial_with_configuration/"), Locale.ROOT).run();
         assertTrue(result.getValidationErrors().isEmpty());
     }
 
@@ -219,7 +220,7 @@ public class CheckstyleRunnerTest {
 
         setFinalStatic(TMCCheckstyleConfigurationBuilder.class.getDeclaredField("TMC_CONFIGURATION"), "tmc-enabled.json");
 
-        final CheckstyleResult result = new CheckstyleRunner(new File("test-projects/invalid/trivial_with_configuration/")).run();
+        final CheckstyleResult result = new CheckstyleRunner(new File("test-projects/invalid/trivial_with_configuration/"), Locale.ROOT).run();
 
         final List<ValidationError> errors = result.getValidationErrors().get(new File("Trivial.java"));
 
