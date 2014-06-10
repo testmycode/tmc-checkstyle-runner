@@ -1,8 +1,7 @@
 package fi.helsinki.cs.tmc.stylerunner.validation;
 
-import fi.helsinki.cs.tmc.stylerunner.exception.TMCCheckstyleException;
-
 import fi.helsinki.cs.tmc.stylerunner.CheckstyleRunner;
+import fi.helsinki.cs.tmc.stylerunner.exception.TMCCheckstyleException;
 
 import java.io.File;
 import java.io.IOException;
