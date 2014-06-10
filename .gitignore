@@ -8,8 +8,7 @@
 
 # Project
 
-target/
 build/
 private/
+target/
 *.class
-
