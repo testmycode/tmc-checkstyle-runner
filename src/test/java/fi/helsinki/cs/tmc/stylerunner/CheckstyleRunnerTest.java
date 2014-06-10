@@ -2,9 +2,8 @@ package fi.helsinki.cs.tmc.stylerunner;
 
 import com.google.common.io.Files;
 
-import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
-
 import fi.helsinki.cs.tmc.stylerunner.configuration.TMCCheckstyleConfigurationBuilder;
+import fi.helsinki.cs.tmc.stylerunner.exception.TMCCheckstyleException;
 import fi.helsinki.cs.tmc.stylerunner.validation.CheckstyleResult;
 import fi.helsinki.cs.tmc.stylerunner.validation.ValidationError;
 
@@ -75,7 +74,7 @@ public class CheckstyleRunnerTest {
 
         try {
             method.invoke(new CheckstyleRunner(tmp, Locale.ROOT), tmp);
-        } catch (CheckstyleException exception) {
+        } catch (TMCCheckstyleException exception) {
             fail();
         }
     }
@@ -90,7 +89,7 @@ public class CheckstyleRunnerTest {
 
         try {
             method.invoke(new CheckstyleRunner(tmp, Locale.ROOT), tmp);
-        } catch (CheckstyleException e) {
+        } catch (TMCCheckstyleException exception) {
             fail();
         }
     }
@@ -99,58 +98,58 @@ public class CheckstyleRunnerTest {
     public void shouldNotWorkWhenDirectoryNotInCorrectFormat() throws IllegalAccessException,
                                                                       InvocationTargetException,
                                                                       NoSuchMethodException,
-                                                                      CheckstyleException {
+                                                                      TMCCheckstyleException {
 
         final File tmp = Files.createTempDir();
 
         final Method method = CheckstyleRunner.class.getDeclaredMethod("getSourceDirectory", File.class);
         method.setAccessible(true);
 
-        publicThrown.expect(CheckstyleException.class);
+        publicThrown.expect(TMCCheckstyleException.class);
         publicThrown.expectMessage("Path does not contain a testable project.");
 
         method.invoke(new CheckstyleRunner(tmp, Locale.ROOT), tmp);
     }
 
     @Test
-    public void shouldThrowExceptionOnInvalidProjectDirectory() throws CheckstyleException {
+    public void shouldThrowExceptionOnInvalidProjectDirectory() throws TMCCheckstyleException {
 
-        publicThrown.expect(CheckstyleException.class);
+        publicThrown.expect(TMCCheckstyleException.class);
         publicThrown.expectMessage("Path does not contain a testable project.");
 
         new CheckstyleRunner(new File("src/"), Locale.ROOT);
     }
 
     @Test
-    public void shouldRunOnValidProjectDirectory() throws CheckstyleException {
+    public void shouldRunOnValidProjectDirectory() throws TMCCheckstyleException {
 
         final CheckstyleResult result = new CheckstyleRunner(new File("."), Locale.ROOT).run();
         assertNotNull(result);
     }
 
     @Test
-    public void shouldNotHaveValidationErrors() throws CheckstyleException {
+    public void shouldNotHaveValidationErrors() throws TMCCheckstyleException {
 
         final CheckstyleResult result = new CheckstyleRunner(new File("test-projects/valid/trivial/"), Locale.ROOT).run();
         assertTrue(result.getValidationErrors().isEmpty());
     }
 
     @Test
-    public void shouldNotHaveValidationErrorsOnAntTestProject() throws CheckstyleException {
+    public void shouldNotHaveValidationErrorsOnAntTestProject() throws TMCCheckstyleException {
 
         final CheckstyleResult result = new CheckstyleRunner(new File("test-projects/valid/trivial/"), Locale.ROOT).run();
         assertTrue(result.getValidationErrors().isEmpty());
     }
 
     @Test
-    public void shouldHaveValidationErrorsOnAntTestProject() throws CheckstyleException {
+    public void shouldHaveValidationErrorsOnAntTestProject() throws TMCCheckstyleException {
 
         final CheckstyleResult result = new CheckstyleRunner(new File("test-projects/invalid/trivial/"), Locale.ROOT).run();
         assertFalse(result.getValidationErrors().isEmpty());
     }
 
     @Test
-    public void shouldHaveErroneousClassOnAntTestProject() throws CheckstyleException {
+    public void shouldHaveErroneousClassOnAntTestProject() throws TMCCheckstyleException {
 
         final File testProject = new File("test-projects/invalid/trivial/");
         final CheckstyleResult result = new CheckstyleRunner(testProject, Locale.ROOT).run();
@@ -176,21 +175,21 @@ public class CheckstyleRunnerTest {
     }
 
     @Test
-    public void shouldNotHaveValidationErrorsOnMavenTestProject() throws CheckstyleException {
+    public void shouldNotHaveValidationErrorsOnMavenTestProject() throws TMCCheckstyleException {
 
         final CheckstyleResult result = new CheckstyleRunner(new File("test-projects/valid/maven_exercise/"), Locale.ROOT).run();
         assertTrue(result.getValidationErrors().isEmpty());
     }
 
     @Test
-    public void shouldHaveValidationErrorsOnMavenTestProject() throws CheckstyleException {
+    public void shouldHaveValidationErrorsOnMavenTestProject() throws TMCCheckstyleException {
 
         final CheckstyleResult result = new CheckstyleRunner(new File("test-projects/invalid/maven_exercise/"), Locale.ROOT).run();
         assertFalse(result.getValidationErrors().isEmpty());
     }
 
     @Test
-    public void shouldHaveErroneousClassOnMavenTestProject() throws CheckstyleException {
+    public void shouldHaveErroneousClassOnMavenTestProject() throws TMCCheckstyleException {
 
         final File testProject = new File("test-projects/invalid/maven_exercise/");
         final CheckstyleResult result = new CheckstyleRunner(testProject, Locale.ROOT).run();
@@ -209,14 +208,14 @@ public class CheckstyleRunnerTest {
     }
 
     @Test
-    public void shouldReturnEmptyCheckstyleResultWhenCheckstyleIsDisabled() throws CheckstyleException {
+    public void shouldReturnEmptyCheckstyleResultWhenCheckstyleIsDisabled() throws TMCCheckstyleException {
 
         final CheckstyleResult result = new CheckstyleRunner(new File("test-projects/invalid/trivial_with_configuration/"), Locale.ROOT).run();
         assertTrue(result.getValidationErrors().isEmpty());
     }
 
     @Test
-    public void shouldReturnValidationErrorsWhenCheckstyleIsEnabled() throws CheckstyleException, NoSuchFieldException, IllegalAccessException {
+    public void shouldReturnValidationErrorsWhenCheckstyleIsEnabled() throws TMCCheckstyleException, NoSuchFieldException, IllegalAccessException {
 
         setFinalStatic(TMCCheckstyleConfigurationBuilder.class.getDeclaredField("TMC_CONFIGURATION"), "tmc-enabled.json");
 

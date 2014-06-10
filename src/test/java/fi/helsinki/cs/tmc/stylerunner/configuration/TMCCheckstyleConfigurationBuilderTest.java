@@ -1,6 +1,6 @@
 package fi.helsinki.cs.tmc.stylerunner.configuration;
 
-import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
+import fi.helsinki.cs.tmc.stylerunner.exception.TMCCheckstyleException;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -20,6 +20,7 @@ import org.slf4j.LoggerFactory;
 import static org.junit.Assert.*;
 
 import static org.mockito.Mockito.verify;
+
 import static org.powermock.api.mockito.PowerMockito.mock;
 
 @RunWith(PowerMockRunner.class)
@@ -41,7 +42,7 @@ public class TMCCheckstyleConfigurationBuilderTest {
     }
 
     @Test
-    public void shouldReturnDefaultTMCConfigurationOnNonexistentConfiguration() throws CheckstyleException {
+    public void shouldReturnDefaultTMCConfigurationOnNonexistentConfiguration() throws TMCCheckstyleException {
 
         final TMCCheckstyleConfiguration config = TMCCheckstyleConfigurationBuilder.build(new File("test-projects/valid/trivial/"));
 
@@ -49,7 +50,7 @@ public class TMCCheckstyleConfigurationBuilderTest {
     }
 
     @Test
-    public void shouldReturnTMCConfiguration() throws CheckstyleException, FileNotFoundException {
+    public void shouldReturnTMCConfiguration() throws TMCCheckstyleException, FileNotFoundException {
 
         final File projectDirectory = new File("test-projects/valid/trivial_with_configuration/");
         final TMCCheckstyleConfiguration config = TMCCheckstyleConfigurationBuilder.build(projectDirectory);
@@ -61,7 +62,7 @@ public class TMCCheckstyleConfigurationBuilderTest {
     }
 
     @Test
-    public void shouldNotFailOnAdditionalAndInvalidJSONProperties() throws CheckstyleException {
+    public void shouldNotFailOnAdditionalAndInvalidJSONProperties() throws TMCCheckstyleException {
 
         final TMCCheckstyleConfiguration config = TMCCheckstyleConfigurationBuilder.build(new File("test-projects/invalid/trivial_with_configuration/"));
 
@@ -71,7 +72,7 @@ public class TMCCheckstyleConfigurationBuilderTest {
     }
 
     @Test
-    public void shouldNotFailOnAdditionalJSONRootProperties() throws CheckstyleException {
+    public void shouldNotFailOnAdditionalJSONRootProperties() throws TMCCheckstyleException {
 
         final TMCCheckstyleConfiguration config = TMCCheckstyleConfigurationBuilder.build(new File("test-projects/invalid/maven_exercise_with_configuration/"));
 
@@ -81,7 +82,7 @@ public class TMCCheckstyleConfigurationBuilderTest {
     }
 
     @Test
-    public void shouldReturnDefaultTMCConfigurationIfConfigurationIsInvalid() throws CheckstyleException {
+    public void shouldReturnDefaultTMCConfigurationIfConfigurationIsInvalid() throws TMCCheckstyleException {
 
         final TMCCheckstyleConfiguration config = TMCCheckstyleConfigurationBuilder.build(new File("test-projects/invalid/maven_with_configuration/"));
 
@@ -90,7 +91,7 @@ public class TMCCheckstyleConfigurationBuilderTest {
     }
 
     @Test
-    public void shouldReturnDefaultConfigurationOnInvalidJSONPropertyValue() throws CheckstyleException, IllegalAccessException {
+    public void shouldReturnDefaultConfigurationOnInvalidJSONPropertyValue() throws TMCCheckstyleException, IllegalAccessException {
 
         final TMCCheckstyleConfiguration config = TMCCheckstyleConfigurationBuilder.build(new File("test-projects/invalid/trivial_with_configuration2/"));
 

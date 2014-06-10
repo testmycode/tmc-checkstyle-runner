@@ -1,6 +1,7 @@
 package fi.helsinki.cs.tmc.stylerunner.configuration;
 
-import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
+import fi.helsinki.cs.tmc.stylerunner.exception.TMCCheckstyleException;
+
 import java.io.File;
 
 import org.junit.Test;
@@ -15,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import static org.junit.Assert.assertEquals;
 
 import static org.mockito.Mockito.verify;
+
 import static org.powermock.api.mockito.PowerMockito.mock;
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
 import static org.powermock.api.mockito.PowerMockito.when;
@@ -24,7 +26,7 @@ import static org.powermock.api.mockito.PowerMockito.when;
 public class TMCCheckstyleConfigurationTest {
 
     @Test
-    public void shouldReturnDefaultConfigurationOnNonExistentConfigurationFile() throws CheckstyleException {
+    public void shouldReturnDefaultConfigurationOnNonExistentConfigurationFile() throws TMCCheckstyleException {
 
         mockStatic(LoggerFactory.class);
         final Logger logger = mock(Logger.class);

@@ -4,8 +4,6 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
-
 import java.io.File;
 import java.io.IOException;
 
@@ -34,7 +32,7 @@ public final class TMCCheckstyleConfigurationBuilder {
         return matchingFile;
     }
 
-    public static TMCCheckstyleConfiguration build(final File projectDirectory) throws CheckstyleException {
+    public static TMCCheckstyleConfiguration build(final File projectDirectory) {
 
         final File configurationFile = getConfigurationFile(projectDirectory);
 

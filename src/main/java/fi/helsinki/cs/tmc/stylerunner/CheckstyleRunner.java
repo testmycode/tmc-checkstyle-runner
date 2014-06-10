@@ -4,12 +4,12 @@ import com.puppycrawl.tools.checkstyle.Checker;
 import com.puppycrawl.tools.checkstyle.ConfigurationLoader;
 import com.puppycrawl.tools.checkstyle.PropertiesExpander;
 import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
-import com.puppycrawl.tools.checkstyle.api.Configuration;
 import com.puppycrawl.tools.checkstyle.api.LocalizedMessage;
 
 import fi.helsinki.cs.tmc.stylerunner.configuration.TMCCheckstyleConfiguration;
 import fi.helsinki.cs.tmc.stylerunner.configuration.TMCCheckstyleConfigurationBuilder;
 import fi.helsinki.cs.tmc.stylerunner.configuration.TMCCheckstyleLocaleResolver;
+import fi.helsinki.cs.tmc.stylerunner.exception.TMCCheckstyleException;
 import fi.helsinki.cs.tmc.stylerunner.listener.CheckstyleResultListener;
 import fi.helsinki.cs.tmc.stylerunner.validation.CheckstyleResult;
 
@@ -25,34 +25,43 @@ import org.xml.sax.InputSource;
 public final class CheckstyleRunner {
 
     private final TMCCheckstyleConfiguration checkstyleConfiguration;
-    private final Checker checker = new Checker();
+    private final Checker checker;
     private final List<File> files;
 
-    public CheckstyleRunner(final File projectDirectory, final Locale locale) throws CheckstyleException {
+    public CheckstyleRunner(final File projectDirectory, final Locale locale) throws TMCCheckstyleException {
 
         // Get source directory and check that the project is testable
         final File sourceDirectory = getSourceDirectory(projectDirectory);
 
+        // TMC configuration
         checkstyleConfiguration = TMCCheckstyleConfigurationBuilder.build(projectDirectory);
-        final InputSource inputSource = checkstyleConfiguration.getInputSource(projectDirectory);
 
-        final Configuration config = ConfigurationLoader.loadConfiguration(inputSource,
-                                                                           new PropertiesExpander(System.getProperties()),
-                                                                           false);
+        // Initialisation
+        try {
+
+            checker = new Checker();
+            final InputSource inputSource = checkstyleConfiguration.getInputSource(projectDirectory);
+
+            // Configuration
+            checker.setModuleClassLoader(Checker.class.getClassLoader());
+            checker.configure(ConfigurationLoader.loadConfiguration(inputSource,
+                                                                    new PropertiesExpander(System.getProperties()),
+                                                                    false));
+        } catch (CheckstyleException exception) {
+            throw new TMCCheckstyleException("Checkstyle failed.", exception);
+        }
 
         // Get all .java files from project’s source directory
         files = (List<File>) FileUtils.listFiles(sourceDirectory, new String[]{ "java" }, true);
 
-        // Configuration
-        checker.setModuleClassLoader(Checker.class.getClassLoader());
-        checker.configure(config);
+        // Set base directory
         checker.setBasedir(sourceDirectory.getAbsolutePath());
 
         // Configure localisation locale
         LocalizedMessage.setLocale(TMCCheckstyleLocaleResolver.get(locale));
     }
 
-    private File getSourceDirectory(final File projectDirectory) throws CheckstyleException {
+    private File getSourceDirectory(final File projectDirectory) throws TMCCheckstyleException {
 
         // Ant-project
         File sourceDirectory = new File(projectDirectory, "src/");
@@ -64,7 +73,7 @@ public final class CheckstyleRunner {
 
         // Invalid directory
         if (!sourceDirectory.exists() || !sourceDirectory.isDirectory()) {
-            throw new CheckstyleException("Path does not contain a testable project.");
+            throw new TMCCheckstyleException("Path does not contain a testable project.");
         }
 
         return sourceDirectory;
@@ -90,18 +99,18 @@ public final class CheckstyleRunner {
         return listener.getResult();
     }
 
-    public void run(final File outputFile) throws CheckstyleException {
+    public void run(final File outputFile) throws TMCCheckstyleException {
 
         final CheckstyleResult result = run();
 
         if (outputFile.exists()) {
-            throw new CheckstyleException("Output file already exists.");
+            throw new TMCCheckstyleException("Output file already exists.");
         }
 
         try {
             result.writeToFile(outputFile);
         } catch (IOException exception) {
-            throw new CheckstyleException("Exception while writing to output file.", exception);
+            throw new TMCCheckstyleException("Exception while writing to output file.", exception);
         }
     }
 }

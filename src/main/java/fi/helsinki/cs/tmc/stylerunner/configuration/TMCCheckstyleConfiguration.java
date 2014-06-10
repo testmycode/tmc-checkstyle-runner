@@ -1,6 +1,6 @@
 package fi.helsinki.cs.tmc.stylerunner.configuration;
 
-import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
+import fi.helsinki.cs.tmc.stylerunner.exception.TMCCheckstyleException;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -37,7 +37,7 @@ public final class TMCCheckstyleConfiguration {
         return rule;
     }
 
-    public InputSource getInputSource(final File projectDirectory) throws CheckstyleException {
+    public InputSource getInputSource(final File projectDirectory) throws TMCCheckstyleException {
 
         // Find Checkstyle-configuration from project
         final File configuration = new File(projectDirectory, rule);
@@ -58,7 +58,7 @@ public final class TMCCheckstyleConfiguration {
         try {
             return new InputSource(new FileInputStream(configuration));
         } catch (FileNotFoundException exception) {
-            throw new CheckstyleException("Exception while loading Checkstyle-configuration.", exception);
+            throw new TMCCheckstyleException("Exception while loading Checkstyle-configuration.", exception);
         }
     }
 }

@@ -1,6 +1,6 @@
 package fi.helsinki.cs.tmc.stylerunner.validation;
 
-import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
+import fi.helsinki.cs.tmc.stylerunner.exception.TMCCheckstyleException;
 
 import fi.helsinki.cs.tmc.stylerunner.CheckstyleRunner;
 
@@ -17,7 +17,7 @@ import static org.junit.Assert.*;
 public class CheckstyleResultTest {
 
     @Test
-    public void shouldConvertJsonToCheckstyleResult() throws CheckstyleException, IOException {
+    public void shouldConvertJsonToCheckstyleResult() throws TMCCheckstyleException, IOException {
 
         final File testProject = new File("test-projects/invalid/trivial/");
         final CheckstyleRunner runner = new CheckstyleRunner(testProject, Locale.ROOT);

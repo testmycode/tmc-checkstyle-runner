@@ -1,6 +1,6 @@
 package fi.helsinki.cs.tmc.stylerunner;
 
-import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
+import fi.helsinki.cs.tmc.stylerunner.exception.TMCCheckstyleException;
 
 import java.io.File;
 import java.util.Locale;
@@ -45,7 +45,7 @@ public final class Main {
 
         try {
             new CheckstyleRunner(projectDirectory, locale).run(output);
-        } catch (CheckstyleException exception) {
+        } catch (TMCCheckstyleException exception) {
             exitWithException(exception);
         }
     }
