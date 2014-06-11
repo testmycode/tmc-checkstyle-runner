@@ -14,13 +14,19 @@ Test the project with `mvn test`.
 
 ## Usage
 
-Add the dependency to your project’s `pom.xml`.
+Add the dependency to your project’s `pom.xml`. Exclude `checkstyle`-dependency to avoid translation files to be overwritten.
 
 ```xml
 <dependency>
     <groupId>fi.helsinki.cs.tmc</groupId>
     <artifactId>tmc-checkstyle-runner</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <exclusions>
+        <exclusion>
+            <groupId>com.puppycrawl.tools</groupId>
+            <artifactId>checkstyle</artifactId>
+        </exclusion>
+    </exclusions>
 </dependency>
 ```
 
