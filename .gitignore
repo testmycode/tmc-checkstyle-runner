@@ -12,3 +12,4 @@ build/
 private/
 target/
 *.class
+*.ser
