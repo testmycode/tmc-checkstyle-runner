@@ -8,7 +8,7 @@
 
     <groupId>fi.helsinki.cs.tmc</groupId>
     <artifactId>tmc-checkstyle-runner</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <description>Custom Checkstyle runner for TMC</description>
