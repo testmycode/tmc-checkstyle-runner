@@ -16,6 +16,7 @@ public final class Main {
         System.out.println("  tmc.project_dir — The path for the project directory.");
         System.out.println("  tmc.validations_file — A path to a file to write the validation results.");
         System.out.println("  tmc.locale — Locale for validation messages (ISO 639 standard).");
+        System.out.println("  tmc.overwrite_validations_file — Overwrite an existing validation results file (optional).");
     }
 
     private static void exitWithException(final Exception exception) {
@@ -42,9 +43,10 @@ public final class Main {
         final File projectDirectory = new File(requireProperty("tmc.project_dir"));
         final File output = new File(requireProperty("tmc.validations_file"));
         final Locale locale = new Locale(requireProperty("tmc.locale"));
+        final Boolean overwrite = Boolean.valueOf(System.getProperty("tmc.overwrite_validations_file"));
 
         try {
-            new CheckstyleRunner(projectDirectory, locale).run(output);
+            new CheckstyleRunner(projectDirectory, locale).run(output, overwrite);
         } catch (TMCCheckstyleException exception) {
             exitWithException(exception);
         }

@@ -23,6 +23,8 @@ public final class MainTest {
     private static final String PROJECT_DIRECTORY_PROPERTY = "tmc.project_dir";
     private static final String VALIDATIONS_FILE_PROPERTY = "tmc.validations_file";
     private static final String LOCALE_PROPERTY = "tmc.locale";
+    private static final String OVERWRITE_PROPERTY = "tmc.overwrite_validations_file";
+    private static final String OUTPUT_FILE = "target/output.txt";
 
     @Rule
     public final ExpectedSystemExit publicExit = ExpectedSystemExit.none();
@@ -54,6 +56,11 @@ public final class MainTest {
 
         System.setOut(outputStream);
         System.setErr(errorStream);
+
+        System.setProperty(OVERWRITE_PROPERTY, "");
+
+        final File output = new File(OUTPUT_FILE);
+        output.delete();
     }
 
     private Assertion createAssertionForUsage() {
@@ -67,7 +74,8 @@ public final class MainTest {
                                         "Properties (java -Dproperty=value)\n" +
                                         "  tmc.project_dir — The path for the project directory.\n" +
                                         "  tmc.validations_file — A path to a file to write the validation results.\n" +
-                                        "  tmc.locale — Locale for validation messages (ISO 639 standard).\n";
+                                        "  tmc.locale — Locale for validation messages (ISO 639 standard).\n" +
+                                        "  tmc.overwrite_validations_file — Overwrite an existing validation results file (optional).\n";
 
                 assertEquals(expected, stdout.toString());
             }
@@ -76,7 +84,7 @@ public final class MainTest {
 
     private void readAndDeleteOutputFile() throws FileNotFoundException {
 
-        final File file = new File("target/output.txt");
+        final File file = new File(OUTPUT_FILE);
 
         assertTrue(file.exists());
 
@@ -126,7 +134,7 @@ public final class MainTest {
     public void shouldCreateJsonFileWithCorrectProperties() throws FileNotFoundException {
 
         System.setProperty(PROJECT_DIRECTORY_PROPERTY, "test-projects/valid/trivial/");
-        System.setProperty(VALIDATIONS_FILE_PROPERTY, "target/output.txt");
+        System.setProperty(VALIDATIONS_FILE_PROPERTY, OUTPUT_FILE);
         System.setProperty(LOCALE_PROPERTY, "fi");
 
         Main.main(new String[0]);
@@ -138,7 +146,7 @@ public final class MainTest {
     public void shouldCreateJsonFileOnAdditionalInvalidProperties() throws FileNotFoundException {
 
         System.setProperty(PROJECT_DIRECTORY_PROPERTY, "test-projects/valid/trivial/");
-        System.setProperty(VALIDATIONS_FILE_PROPERTY, "target/output.txt");
+        System.setProperty(VALIDATIONS_FILE_PROPERTY, OUTPUT_FILE);
         System.setProperty(LOCALE_PROPERTY, "en");
         System.setProperty("tmc.invalid", "valid");
 
@@ -164,9 +172,25 @@ public final class MainTest {
         });
 
         System.setProperty(PROJECT_DIRECTORY_PROPERTY, "nonexistent");
-        System.setProperty(VALIDATIONS_FILE_PROPERTY, "target/output.txt");
+        System.setProperty(VALIDATIONS_FILE_PROPERTY, OUTPUT_FILE);
         System.setProperty(LOCALE_PROPERTY, "en");
 
+        Main.main(new String[0]);
+    }
+
+    @Test
+    public void shouldNotThrowExceptionWithExistingValidationsFilePathWithOverwriteEnabled() {
+
+        System.setProperty(PROJECT_DIRECTORY_PROPERTY, ".");
+        System.setProperty(VALIDATIONS_FILE_PROPERTY, OUTPUT_FILE);
+        System.setProperty(LOCALE_PROPERTY, "en");
+
+        // Run
+        Main.main(new String[0]);
+
+        System.setProperty(OVERWRITE_PROPERTY, "true");
+
+        // Overwrite
         Main.main(new String[0]);
     }
 

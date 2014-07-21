@@ -99,11 +99,11 @@ public final class CheckstyleRunner {
         return listener.getResult();
     }
 
-    public void run(final File outputFile) throws TMCCheckstyleException {
+    public void run(final File outputFile, final boolean overwrite) throws TMCCheckstyleException {
 
         final CheckstyleResult result = run();
 
-        if (outputFile.exists()) {
+        if (!overwrite && outputFile.exists()) {
             throw new TMCCheckstyleException("Output file already exists.");
         }
 
