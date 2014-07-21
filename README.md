@@ -21,7 +21,7 @@ Add the dependency to your project’s `pom.xml`. Exclude `checkstyle`-dependenc
 <dependency>
     <groupId>fi.helsinki.cs.tmc</groupId>
     <artifactId>tmc-checkstyle-runner</artifactId>
-    <version>1.0</version>
+    <version>1.0.1</version>
     <exclusions>
         <exclusion>
             <groupId>com.puppycrawl.tools</groupId>
@@ -49,7 +49,7 @@ The API also provides methods for writing the results to a file as JSON or deser
 
 Running Checkstyle validations from the command-line can be accomplished by passing the project directory path to be tested, output file path and locale (ISO 639) for validation messages as properties. The output file can be overwritten with the `tmc.overwrite_validations_file`-property which defaults to false. The output file will contain the `CheckstyleResult` serialised as JSON.
 
-    java -Dtmc.project_dir=[PROJECT-DIRECTORY-PATH] -Dtmc.validations_file=[OUTPUT-FILE-PATH] -Dtmc.locale=[LOCALE] -Dtmc.overwrite_validations_file=[BOOLEAN] -jar tmc-checkstyle-runner-1.0.jar
+    java -Dtmc.project_dir=[PROJECT-DIRECTORY-PATH] -Dtmc.validations_file=[OUTPUT-FILE-PATH] -Dtmc.locale=[LOCALE] -Dtmc.overwrite_validations_file=[BOOLEAN] -jar tmc-checkstyle-runner-1.0.1.jar
 
 ## Configuration
 
