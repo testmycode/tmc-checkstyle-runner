@@ -47,9 +47,9 @@ The API also provides methods for writing the results to a file as JSON or deser
 
 ### CLI
 
-Running Checkstyle validations from the command-line can be accomplished by passing the project directory path to be tested, output file path and locale (ISO 639) for validation messages as properties. The output file will contain the `CheckstyleResult` serialised as JSON.
+Running Checkstyle validations from the command-line can be accomplished by passing the project directory path to be tested, output file path and locale (ISO 639) for validation messages as properties. The output file can be overwritten with the `tmc.overwrite_validations_file`-property which defaults to false. The output file will contain the `CheckstyleResult` serialised as JSON.
 
-    java -Dtmc.project_dir=[PROJECT-DIRECTORY-PATH] -Dtmc.validations_file=[OUTPUT-FILE-PATH] -Dtmc.locale=[LOCALE] -jar tmc-checkstyle-runner-1.0.jar
+    java -Dtmc.project_dir=[PROJECT-DIRECTORY-PATH] -Dtmc.validations_file=[OUTPUT-FILE-PATH] -Dtmc.locale=[LOCALE] -Dtmc.overwrite_validations_file=[BOOLEAN] -jar tmc-checkstyle-runner-1.0.jar
 
 ## Configuration
 
