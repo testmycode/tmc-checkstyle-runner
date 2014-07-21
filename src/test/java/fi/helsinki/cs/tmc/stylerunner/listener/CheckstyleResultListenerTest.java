@@ -46,6 +46,22 @@ public class CheckstyleResultListenerTest {
         resultListener = new CheckstyleResultListener();
     }
 
+    private AuditEvent createNewAuditEvent(final String filename,
+                                           final int lineNumber,
+                                           final int columnNumber,
+                                           final String message,
+                                           final String sourceName) {
+
+        return new AuditEvent(sourceName, filename, new LocalizedMessage(lineNumber,
+                                                                         columnNumber,
+                                                                         null,
+                                                                         null,
+                                                                         null,
+                                                                         null,
+                                                                         String.class,
+                                                                         message));
+    }
+
     private void containsErrors(final AuditEvent... errors) {
 
         final Map<File, List<ValidationError>> validationErrors = this.resultListener.getResult().getValidationErrors();
@@ -142,21 +158,5 @@ public class CheckstyleResultListenerTest {
         new CheckstyleResultListener().addException(audit, new Throwable("error"));
 
         verify(logger).error("Exception while audit: {}", "error");
-    }
-
-    private AuditEvent createNewAuditEvent(final String filename,
-                                             final int lineNumber,
-                                             final int columnNumber,
-                                             final String message,
-                                             final String sourceName) {
-
-        return new AuditEvent(sourceName, filename, new LocalizedMessage(lineNumber,
-                                                                         columnNumber,
-                                                                         null,
-                                                                         null,
-                                                                         null,
-                                                                         null,
-                                                                         String.class,
-                                                                         message));
     }
 }

@@ -27,6 +27,18 @@ public class CheckstyleRunnerTest {
     @Rule
     public ExpectedException publicThrown = ExpectedException.none();
 
+    private static void setFinalStatic(final Field field, final Object newValue) throws IllegalAccessException,
+                                                                                        NoSuchFieldException {
+
+        field.setAccessible(true);
+
+        final Field modifiersField = Field.class.getDeclaredField("modifiers");
+        modifiersField.setAccessible(true);
+        modifiersField.setInt(field, field.getModifiers() & ~Modifier.FINAL);
+
+        field.set(null, newValue);
+    }
+
     private File createAntProjectMock() {
 
         try {
@@ -235,16 +247,5 @@ public class CheckstyleRunnerTest {
         assertEquals("'{' is not preceded with whitespace.", errors.get(1).getMessage());
 
         setFinalStatic(TMCCheckstyleConfigurationBuilder.class.getDeclaredField("TMC_CONFIGURATION"), "tmc.json");
-    }
-
-    private static void setFinalStatic(final Field field, final Object newValue) throws IllegalAccessException, NoSuchFieldException {
-
-        field.setAccessible(true);
-
-        final Field modifiersField = Field.class.getDeclaredField("modifiers");
-        modifiersField.setAccessible(true);
-        modifiersField.setInt(field, field.getModifiers() & ~Modifier.FINAL);
-
-        field.set(null, newValue);
     }
 }
