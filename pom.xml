@@ -12,12 +12,12 @@
     <packaging>jar</packaging>
 
     <description>Custom Checkstyle runner for TMC</description>
-    <url>https://github.com/kesapojat/tmc-checkstyle-runner/</url>
+    <url>https://github.com/testmycode/tmc-checkstyle-runner/</url>
 
     <scm>
-        <connection>scm:git:https://github.com/kesapojat/tmc-checkstyle-runner.git</connection>
-        <developerConnection>scm:git:git@github.com:kesapojat/tmc-checkstyle-runner.git</developerConnection>
-        <url>https://github.com/kesapojat/tmc-checkstyle-runner/</url>
+        <connection>scm:git:https://github.com/testmycode/tmc-checkstyle-runner.git</connection>
+        <developerConnection>scm:git:git@github.com:testmycode/tmc-checkstyle-runner.git</developerConnection>
+        <url>https://github.com/testmycode/tmc-checkstyle-runner/</url>
         <tag>HEAD</tag>
     </scm>
 
