@@ -22,7 +22,7 @@ public class CheckstyleResultTest {
         final CheckstyleRunner runner = new CheckstyleRunner(testProject, Locale.ROOT);
 
         final File outputFile = new File("target/output.txt");
-        runner.run(outputFile);
+        runner.run(outputFile, false);
 
         final Scanner scanner = new Scanner(outputFile);
 
