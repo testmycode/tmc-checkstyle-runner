@@ -29,23 +29,6 @@ public final class CheckstyleResult implements ValidationResult {
         return mapper.readValue(json, CheckstyleResult.class);
     }
 
-    public void addError(final AuditEvent auditEvent) {
-
-        final File file = new File(auditEvent.getFileName());
-
-        if (!validationErrors.containsKey(file)) {
-            validationErrors.put(file, new ArrayList<ValidationError>());
-        }
-
-        validationErrors.get(file).add(new CheckstyleError(auditEvent));
-    }
-
-    @Override
-    public Map<File, List<ValidationError>> getValidationErrors() {
-
-        return validationErrors;
-    }
-
     public void setStrategy(final Strategy strategy) {
 
         this.strategy = strategy;
@@ -55,6 +38,23 @@ public final class CheckstyleResult implements ValidationResult {
     public Strategy getStrategy() {
 
         return strategy;
+    }
+
+    @Override
+    public Map<File, List<ValidationError>> getValidationErrors() {
+
+        return validationErrors;
+    }
+
+    public void addError(final AuditEvent auditEvent) {
+
+        final File file = new File(auditEvent.getFileName());
+
+        if (!validationErrors.containsKey(file)) {
+            validationErrors.put(file, new ArrayList<ValidationError>());
+        }
+
+        validationErrors.get(file).add(new CheckstyleError(auditEvent));
     }
 
     @JsonIgnore
