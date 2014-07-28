@@ -1,7 +1,7 @@
 # tmc-checkstyle-runner
 
-[![Build Status](https://travis-ci.org/kesapojat/tmc-checkstyle-runner.svg?branch=master)](https://travis-ci.org/kesapojat/tmc-checkstyle-runner/)
-[![Coverage Status](https://img.shields.io/coveralls/kesapojat/tmc-checkstyle-runner.svg)](https://coveralls.io/r/kesapojat/tmc-checkstyle-runner/)
+[![Build Status](https://travis-ci.org/testmycode/tmc-checkstyle-runner.svg?branch=master)](https://travis-ci.org/testmycode/tmc-checkstyle-runner/)
+[![Coverage Status](https://img.shields.io/coveralls/testmycode/tmc-checkstyle-runner.svg)](https://coveralls.io/r/testmycode/tmc-checkstyle-runner/)
 
 tmc-checkstyle-runner is a stand-alone Java-software for running Checkstyle coding style validations on Java-code. It’s developed as an extension for [TMC](https://github.com/testmycode/), but also works separately. The extension is used in the [tmc-netbeans](https://github.com/testmycode/tmc-netbeans/) and [tmc-server](https://github.com/testmycode/tmc-server/) projects.
 
