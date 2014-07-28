@@ -1,14 +1,12 @@
 package fi.helsinki.cs.tmc.stylerunner.configuration;
 
 import fi.helsinki.cs.tmc.stylerunner.exception.TMCCheckstyleException;
-
+import fi.helsinki.cs.tmc.stylerunner.validation.Strategy;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.xml.sax.InputSource;
 
 public final class TMCCheckstyleConfiguration {
@@ -17,24 +15,29 @@ public final class TMCCheckstyleConfiguration {
 
     private final Logger logger = LoggerFactory.getLogger(TMCCheckstyleConfiguration.class);
 
-    private final boolean enabled;
     private final String rule;
+    private final Strategy strategy;
 
     public TMCCheckstyleConfiguration() {
 
         // Default configuration
-        enabled = true;
         rule = DEFAULT_CHECKSTYLE_CONFIGURATION;
+        strategy = Strategy.DISABLED;
     }
 
     public boolean isEnabled() {
 
-        return enabled;
+        return strategy != Strategy.DISABLED;
     }
 
     public String getRule() {
 
         return rule;
+    }
+
+    public Strategy getStrategy() {
+
+        return strategy;
     }
 
     public InputSource getInputSource(final File projectDirectory) throws TMCCheckstyleException {

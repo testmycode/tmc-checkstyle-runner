@@ -1,6 +1,6 @@
 {
 	"checkstyle": {
-		"enabled": true,
-		"rule": "mooc-checkstyle.xml"
+		"rule": "mooc-checkstyle.xml",
+        "strategy": "warn"
 	}
 }

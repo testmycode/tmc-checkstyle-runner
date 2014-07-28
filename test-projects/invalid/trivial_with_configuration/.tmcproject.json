@@ -1,7 +1,7 @@
 {
 	"checkstyle": {
-		"enabled": false,
 		"ruale": "mooc-checkstyle.xml",
+        "strategy": "fail",
 		"extra": "fail"
 	}
 }

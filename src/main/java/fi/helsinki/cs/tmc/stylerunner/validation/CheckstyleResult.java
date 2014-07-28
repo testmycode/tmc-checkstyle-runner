@@ -15,7 +15,7 @@ import java.util.Map;
 
 public final class CheckstyleResult implements ValidationResult {
 
-    private String strategy = "fail";
+    private Strategy strategy = Strategy.DISABLED;
     private final Map<File, List<ValidationError>> validationErrors = new HashMap<File, List<ValidationError>>();
 
     public static CheckstyleResult build(final String json) throws IOException {
@@ -46,12 +46,13 @@ public final class CheckstyleResult implements ValidationResult {
         return validationErrors;
     }
 
-    public void setStrategy(final String strategy) {
+    public void setStrategy(final Strategy strategy) {
 
         this.strategy = strategy;
     }
 
-    public String getStrategy() {
+    @Override
+    public Strategy getStrategy() {
 
         return strategy;
     }

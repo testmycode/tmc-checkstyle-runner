@@ -92,7 +92,7 @@ public final class MainTest {
         final String line = scanner.nextLine();
 
         try {
-            assertEquals("{\"strategy\":\"fail\",\"validationErrors\":{}}", line);
+            assertEquals("{\"strategy\":\"DISABLED\",\"validationErrors\":{}}", line);
         } finally {
             scanner.close();
             file.delete();

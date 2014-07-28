@@ -18,7 +18,7 @@ public class CheckstyleResultTest {
     @Test
     public void shouldConvertJsonToCheckstyleResult() throws TMCCheckstyleException, IOException {
 
-        final File testProject = new File("test-projects/invalid/trivial/");
+        final File testProject = new File("test-projects/invalid/trivial_with_configuration/");
         final CheckstyleRunner runner = new CheckstyleRunner(testProject, Locale.ROOT);
 
         final File outputFile = new File("target/output.txt");
@@ -40,20 +40,18 @@ public class CheckstyleResultTest {
         final List<ValidationError> errors = result.getValidationErrors().get(new File("Trivial.java"));
 
         assertFalse(result.getValidationErrors().isEmpty());
+        assertEquals(3, errors.size());
 
-        assertFalse(result.getValidationErrors().isEmpty());
-        assertEquals(2, errors.size());
+        String expected = "Indentation incorrect. Expected 0, but was 1.";
 
-        String expected = "Indentation incorrect. Expected 4, but was 5.";
-
-        assertEquals(4, errors.get(0).getLine());
+        assertEquals(2, errors.get(0).getLine());
         assertEquals(0, errors.get(0).getColumn());
         assertEquals(expected, errors.get(0).getMessage());
 
-        expected = "Indentation incorrect. Expected 8, but was 9.";
+        expected = "'{' is not preceded with whitespace.";
 
-        assertEquals(5, errors.get(1).getLine());
-        assertEquals(0, errors.get(1).getColumn());
+        assertEquals(2, errors.get(1).getLine());
+        assertEquals(22, errors.get(1).getColumn());
         assertEquals(expected, errors.get(1).getMessage());
     }
 }

@@ -1,6 +1,6 @@
 {
 	"checkstyle": {
-		"enabled": "true",
-		"rule": "unknown-checkstyle.xml"
+		"rule": "unknown-checkstyle.xml",
+        "strategy": "fail"
 	}
 }

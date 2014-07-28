@@ -68,7 +68,7 @@ public class TMCCheckstyleConfigurationBuilderTest {
 
         assertNotNull(config);
         assertEquals("default-checkstyle.xml", config.getRule());
-        assertFalse(config.isEnabled());
+        assertTrue(config.isEnabled());
     }
 
     @Test
@@ -78,7 +78,7 @@ public class TMCCheckstyleConfigurationBuilderTest {
 
         assertNotNull(config);
         assertEquals("mooc-checkstyle.xml", config.getRule());
-        assertFalse(config.isEnabled());
+        assertTrue(config.isEnabled());
     }
 
     @Test
@@ -87,7 +87,7 @@ public class TMCCheckstyleConfigurationBuilderTest {
         final TMCCheckstyleConfiguration config = TMCCheckstyleConfigurationBuilder.build(new File("test-projects/invalid/maven_with_configuration/"));
 
         assertEquals("default-checkstyle.xml", config.getRule());
-        assertTrue(config.isEnabled());
+        assertFalse(config.isEnabled());
     }
 
     @Test

@@ -1,7 +1,7 @@
 {
 	"checkstyle": {
-		"enabled": false,
 		"rule": "mooc-checkstyle.xml",
+        "strategy": "warn",
 		"extra": "fail"
 	},
 	"unknown": "something"
