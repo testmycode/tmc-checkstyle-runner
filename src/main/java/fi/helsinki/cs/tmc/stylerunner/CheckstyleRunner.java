@@ -30,11 +30,16 @@ public final class CheckstyleRunner {
 
     public CheckstyleRunner(final File projectDirectory, final Locale locale) throws TMCCheckstyleException {
 
+        this(projectDirectory, TMCCheckstyleConfigurationBuilder.build(projectDirectory), locale);
+    }
+
+    public CheckstyleRunner(final File projectDirectory, final TMCCheckstyleConfiguration checkstyleConfiguration, final Locale locale) throws TMCCheckstyleException {
+
         // Get source directory and check that the project is testable
         final File sourceDirectory = getSourceDirectory(projectDirectory);
 
         // TMC configuration
-        checkstyleConfiguration = TMCCheckstyleConfigurationBuilder.build(projectDirectory);
+        this.checkstyleConfiguration = checkstyleConfiguration;
 
         // Initialisation
         try {

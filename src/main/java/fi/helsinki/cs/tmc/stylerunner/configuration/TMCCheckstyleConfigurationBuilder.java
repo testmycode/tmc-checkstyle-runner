@@ -15,7 +15,7 @@ public final class TMCCheckstyleConfigurationBuilder {
     private static final Logger LOGGER = LoggerFactory.getLogger(TMCCheckstyleConfigurationBuilder.class);
 
     // Create string as object instead of literal for testing purposes
-    private static final String TMC_CONFIGURATION = new String("tmc.json");
+    private static final String TMC_CONFIGURATION = new String(".tmcproject.json");
 
     private TMCCheckstyleConfigurationBuilder() {}
 

@@ -34,7 +34,7 @@ public class TMCCheckstyleConfigurationBuilderTest {
     @Before
     public void setUp() {
 
-        configuration = new String("tmc.json");
+        configuration = new String(".tmcproject.json");
         Whitebox.setInternalState(TMCCheckstyleConfigurationBuilder.class, configuration);
 
         logger = mock(Logger.class);
