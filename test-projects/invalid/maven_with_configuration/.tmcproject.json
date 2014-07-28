@@ -1,4 +1,4 @@
 {
-	"rule": "mooc-checkstyle.xml",
-	"strategy": "fail"
+    "rule": "mooc-checkstyle.xml",
+    "strategy": "fail"
 }

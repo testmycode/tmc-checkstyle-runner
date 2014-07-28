@@ -1,8 +1,8 @@
 {
-	"checkstyle": {
-		"rule": "mooc-checkstyle.xml",
+    "checkstyle": {
+        "rule": "mooc-checkstyle.xml",
         "strategy": "warn",
-		"extra": "fail"
-	},
-	"unknown": "something"
+        "extra": "fail"
+    },
+    "unknown": "something"
 }
