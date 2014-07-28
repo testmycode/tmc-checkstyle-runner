@@ -103,7 +103,10 @@ public final class CheckstyleRunner {
         // Clean up
         checker.destroy();
 
-        return listener.getResult();
+        final CheckstyleResult result = listener.getResult();
+        result.setStrategy(checkstyleConfiguration.getStrategy());
+
+        return result;
     }
 
     public void run(final File outputFile, final boolean overwrite) throws TMCCheckstyleException {
