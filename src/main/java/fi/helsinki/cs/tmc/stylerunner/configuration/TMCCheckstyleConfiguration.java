@@ -28,11 +28,6 @@ public final class TMCCheckstyleConfiguration {
         strategy = Strategy.DISABLED;
     }
 
-    public boolean isEnabled() {
-
-        return strategy != Strategy.DISABLED;
-    }
-
     public String getRule() {
 
         return rule;
@@ -41,6 +36,11 @@ public final class TMCCheckstyleConfiguration {
     public Strategy getStrategy() {
 
         return strategy;
+    }
+
+    public boolean isEnabled() {
+
+        return strategy != Strategy.DISABLED;
     }
 
     public InputSource getInputSource(final File projectDirectory) throws TMCCheckstyleException {
