@@ -35,7 +35,7 @@ Running Checkstyle validations can be accomplished programmatically or by runnin
 
 ### Programmatically
 
-Create a `CheckstyleRunner` and pass the project directory to be tested as a file and the locale for validation messages to the constructor. You may also pass a `TMCCheckstyleConfiguration` as a third parameter to configure the runner. Running will return a `CheckstyleResult`. `CheckstyleResult`’s implement the `ValidationResult`-interface.
+Create a `CheckstyleRunner` and pass the project directory to be tested as a file and the locale for validation messages to the constructor. You may also pass a `TMCCheckstyleConfiguration` as a third parameter to configure the runner. Running will return a `CheckstyleResult`. `CheckstyleResult`s implement the `ValidationResult`-interface.
 
 ```java
 File projectDirectory = new File("path/to/project-directory/");
