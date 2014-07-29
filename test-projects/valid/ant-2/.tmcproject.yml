@@ -1,4 +1,4 @@
- checkstyle: 
-   rule: mooc-checkstyle.xml
-   strategy: warn
+checkstyle:
 
+    rule: mooc-checkstyle.xml
+    strategy: warn
