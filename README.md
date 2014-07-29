@@ -53,7 +53,9 @@ Running Checkstyle validations from the command-line can be accomplished by pass
 
 ## Configuration
 
-Running Checkstyle validations is enabled when the strategy has been set to `fail` or `warn`. You can configure the runner by creating a `.tmcproject.json`-configuration file to the root of the project to be tested.
+Running Checkstyle validations is enabled when the strategy has been set to `fail` or `warn`. You can configure the runner by creating a `.tmcproject.json`-configuration file to the root of the project to be tested. You may also use YAML for configuration files (`.tmcproject.yml`).
+
+By default, a custom Checkstyle-configuration file `.checkstyle.xml` is searched from the project root. You can also specify a custom filename with the `rule`-option. If neither is found, the default bundled configuration will be used.
 
 ```json
 {
@@ -64,6 +66,13 @@ Running Checkstyle validations is enabled when the strategy has been set to `fai
 
     }
 }
+```
+
+```yaml
+checkstyle:
+
+    rule: mooc-checkstyle.xml
+    strategy: warn
 ```
 
 ### Options
