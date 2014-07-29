@@ -57,6 +57,8 @@ Running Checkstyle validations is enabled when the strategy has been set to `fai
 
 By default, a custom Checkstyle-configuration file `.checkstyle.xml` is searched from the project root. You can also specify a custom filename with the `rule`-option. If neither is found, the default bundled configuration will be used.
 
+**.tmcproject.json**
+
 ```json
 {
     "checkstyle": {
@@ -67,6 +69,8 @@ By default, a custom Checkstyle-configuration file `.checkstyle.xml` is searched
     }
 }
 ```
+
+**.tmcproject.yml**
 
 ```yaml
 checkstyle:
