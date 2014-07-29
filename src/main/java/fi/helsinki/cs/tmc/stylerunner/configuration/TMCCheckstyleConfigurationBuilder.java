@@ -51,7 +51,7 @@ public final class TMCCheckstyleConfigurationBuilder {
             if (configurationFileJson == null) {
 
                 mapper = new ObjectMapper(new YAMLFactory());
-                LOGGER.info("JSON configuration file not found, using YAML configuration.");
+                LOGGER.info("JSON configuration not found, using YAML configuration.");
             }
 
             mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);

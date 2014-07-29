@@ -24,7 +24,7 @@ import static org.mockito.Mockito.verify;
 import static org.powermock.api.mockito.PowerMockito.mock;
 
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({TMCCheckstyleConfigurationBuilder.class, LoggerFactory.class })
+@PrepareForTest({ TMCCheckstyleConfigurationBuilder.class, LoggerFactory.class })
 public class TMCCheckstyleConfigurationBuilderTest {
 
     private Logger logger;
@@ -101,6 +101,6 @@ public class TMCCheckstyleConfigurationBuilderTest {
         assertEquals("mooc-checkstyle.xml", config.getRule());
         assertEquals(Strategy.WARN, config.getStrategy());
 
-        verify(logger).info("JSON configuration file not found, using YAML configuration.");
+        verify(logger).info("JSON configuration not found, using YAML configuration.");
     }
 }

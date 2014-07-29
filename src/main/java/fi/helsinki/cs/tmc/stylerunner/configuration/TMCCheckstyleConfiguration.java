@@ -15,6 +15,7 @@ import org.xml.sax.InputSource;
 public final class TMCCheckstyleConfiguration {
 
     private static final String DEFAULT_CHECKSTYLE_CONFIGURATION = "default-checkstyle.xml";
+    private static final String CUSTOM_DEFAULT_CHECKSTYLE_CONFIGURATION = ".checkstyle.xml";
 
     private final Logger logger = LoggerFactory.getLogger(TMCCheckstyleConfiguration.class);
 
@@ -46,14 +47,23 @@ public final class TMCCheckstyleConfiguration {
     public InputSource getInputSource(final File projectDirectory) throws TMCCheckstyleException {
 
         // Find Checkstyle-configuration from project
-        final File configuration = new File(projectDirectory, rule);
+        final File customDefaultConfiguration = new File(projectDirectory, CUSTOM_DEFAULT_CHECKSTYLE_CONFIGURATION);
+
+        File configuration = new File(projectDirectory, rule);
 
         if (!configuration.exists()) {
-            logger.error("Configuration file not found, using default configuration.");
+
+            logger.info("Configuration file not found, searching for custom default configuration.");
+
+            if (customDefaultConfiguration.exists()) {
+                configuration = customDefaultConfiguration;
+            }
         }
 
         // Use default Checkstyle-configuration
         if (!configuration.exists() || rule.equals(DEFAULT_CHECKSTYLE_CONFIGURATION)) {
+
+            logger.info("Custom configuration not found, using default configuration.");
 
             // Default configuration
             return new InputSource(this.getClass()

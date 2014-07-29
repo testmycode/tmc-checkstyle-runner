@@ -33,7 +33,7 @@ import static org.powermock.api.mockito.PowerMockito.mockStatic;
 import static org.powermock.api.mockito.PowerMockito.when;
 
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({CheckstyleResultListener.class, LoggerFactory.class })
+@PrepareForTest(LoggerFactory.class)
 public class CheckstyleResultListenerTest {
 
     private CheckstyleResultListener resultListener;
