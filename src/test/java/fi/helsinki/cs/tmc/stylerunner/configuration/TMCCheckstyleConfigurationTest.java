@@ -32,7 +32,7 @@ public class TMCCheckstyleConfigurationTest {
         final Logger logger = mock(Logger.class);
         when(LoggerFactory.getLogger(TMCCheckstyleConfiguration.class)).thenReturn(logger);
 
-        final File projectDirectory = new File("test-projects/invalid/trivial_with_configuration3/");
+        final File projectDirectory = new File("test-projects/invalid/ant-3/");
 
         final TMCCheckstyleConfiguration configuration = TMCCheckstyleConfigurationBuilder.build(projectDirectory);
 

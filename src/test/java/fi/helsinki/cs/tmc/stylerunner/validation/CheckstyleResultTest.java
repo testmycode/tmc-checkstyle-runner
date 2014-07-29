@@ -18,7 +18,7 @@ public class CheckstyleResultTest {
     @Test
     public void shouldConvertJsonToCheckstyleResult() throws TMCCheckstyleException, IOException {
 
-        final File testProject = new File("test-projects/invalid/trivial_with_configuration/");
+        final File testProject = new File("test-projects/invalid/ant/");
         final CheckstyleRunner runner = new CheckstyleRunner(testProject, Locale.ROOT);
 
         final File outputFile = new File("target/output.txt");

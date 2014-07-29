@@ -142,28 +142,28 @@ public class CheckstyleRunnerTest {
     @Test
     public void shouldNotHaveValidationErrors() throws TMCCheckstyleException {
 
-        final CheckstyleResult result = new CheckstyleRunner(new File("test-projects/valid/trivial/"), Locale.ROOT).run();
+        final CheckstyleResult result = new CheckstyleRunner(new File("test-projects/valid/ant-without-configuration/"), Locale.ROOT).run();
         assertTrue(result.getValidationErrors().isEmpty());
     }
 
     @Test
     public void shouldNotHaveValidationErrorsOnAntTestProject() throws TMCCheckstyleException {
 
-        final CheckstyleResult result = new CheckstyleRunner(new File("test-projects/valid/trivial/"), Locale.ROOT).run();
+        final CheckstyleResult result = new CheckstyleRunner(new File("test-projects/valid/ant-without-configuration/"), Locale.ROOT).run();
         assertTrue(result.getValidationErrors().isEmpty());
     }
 
     @Test
     public void shouldHaveValidationErrorsOnAntTestProject() throws TMCCheckstyleException {
 
-        final CheckstyleResult result = new CheckstyleRunner(new File("test-projects/invalid/trivial_with_configuration/"), Locale.ROOT).run();
+        final CheckstyleResult result = new CheckstyleRunner(new File("test-projects/invalid/ant/"), Locale.ROOT).run();
         assertFalse(result.getValidationErrors().isEmpty());
     }
 
     @Test
     public void shouldHaveErroneousClassOnAntTestProject() throws TMCCheckstyleException {
 
-        final File testProject = new File("test-projects/invalid/trivial_with_configuration/");
+        final File testProject = new File("test-projects/invalid/ant/");
         final CheckstyleResult result = new CheckstyleRunner(testProject, Locale.ROOT).run();
 
         final List<ValidationError> errors = result.getValidationErrors().get(new File("Trivial.java"));
@@ -189,21 +189,21 @@ public class CheckstyleRunnerTest {
     @Test
     public void shouldNotHaveValidationErrorsOnMavenTestProject() throws TMCCheckstyleException {
 
-        final CheckstyleResult result = new CheckstyleRunner(new File("test-projects/valid/maven_exercise/"), Locale.ROOT).run();
+        final CheckstyleResult result = new CheckstyleRunner(new File("test-projects/valid/maven-without-configuration/"), Locale.ROOT).run();
         assertTrue(result.getValidationErrors().isEmpty());
     }
 
     @Test
     public void shouldHaveValidationErrorsOnMavenTestProject() throws TMCCheckstyleException {
 
-        final CheckstyleResult result = new CheckstyleRunner(new File("test-projects/invalid/maven_exercise_with_configuration/"), Locale.ROOT).run();
+        final CheckstyleResult result = new CheckstyleRunner(new File("test-projects/invalid/maven/"), Locale.ROOT).run();
         assertFalse(result.getValidationErrors().isEmpty());
     }
 
     @Test
     public void shouldHaveErroneousClassOnMavenTestProject() throws TMCCheckstyleException {
 
-        final CheckstyleResult result = new CheckstyleRunner(new File("test-projects/invalid/maven_exercise_with_configuration/"), Locale.ROOT).run();
+        final CheckstyleResult result = new CheckstyleRunner(new File("test-projects/invalid/maven/"), Locale.ROOT).run();
         final List<ValidationError> errors = result.getValidationErrors().get(new File("fi/helsinki/cs/maventest/App.java"));
 
         assertFalse(result.getValidationErrors().isEmpty());
@@ -220,16 +220,16 @@ public class CheckstyleRunnerTest {
     @Test
     public void shouldReturnEmptyCheckstyleResultWhenCheckstyleIsDisabled() throws TMCCheckstyleException {
 
-        final CheckstyleResult result = new CheckstyleRunner(new File("test-projects/invalid/trivial"), Locale.ROOT).run();
+        final CheckstyleResult result = new CheckstyleRunner(new File("test-projects/invalid/ant-without-configuration/"), Locale.ROOT).run();
         assertTrue(result.getValidationErrors().isEmpty());
     }
 
     @Test
     public void shouldReturnValidationErrorsWhenCheckstyleIsEnabled() throws TMCCheckstyleException, NoSuchFieldException, IllegalAccessException {
 
-        setFinalStatic(TMCCheckstyleConfigurationBuilder.class.getDeclaredField("TMC_CONFIGURATION"), "tmc-enabled.json");
+        setFinalStatic(TMCCheckstyleConfigurationBuilder.class.getDeclaredField("TMC_CONFIGURATION"), ".tmcproject-enabled.json");
 
-        final CheckstyleResult result = new CheckstyleRunner(new File("test-projects/invalid/trivial_with_configuration/"), Locale.ROOT).run();
+        final CheckstyleResult result = new CheckstyleRunner(new File("test-projects/invalid/ant/"), Locale.ROOT).run();
 
         final List<ValidationError> errors = result.getValidationErrors().get(new File("Trivial.java"));
 
