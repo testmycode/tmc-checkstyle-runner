@@ -227,7 +227,7 @@ public class CheckstyleRunnerTest {
     @Test
     public void shouldReturnValidationErrorsWhenCheckstyleIsEnabled() throws TMCCheckstyleException, NoSuchFieldException, IllegalAccessException {
 
-        setFinalStatic(TMCCheckstyleConfigurationBuilder.class.getDeclaredField("TMC_CONFIGURATION"), ".tmcproject-enabled.json");
+        setFinalStatic(TMCCheckstyleConfigurationBuilder.class.getDeclaredField("TMC_CONFIGURATION_JSON"), ".tmcproject-enabled.json");
 
         final CheckstyleResult result = new CheckstyleRunner(new File("test-projects/invalid/ant/"), Locale.ROOT).run();
 
@@ -244,6 +244,6 @@ public class CheckstyleRunnerTest {
         assertEquals(22, errors.get(1).getColumn());
         assertEquals("'{' is not preceded with whitespace.", errors.get(1).getMessage());
 
-        setFinalStatic(TMCCheckstyleConfigurationBuilder.class.getDeclaredField("TMC_CONFIGURATION"), ".tmcproject.json");
+        setFinalStatic(TMCCheckstyleConfigurationBuilder.class.getDeclaredField("TMC_CONFIGURATION_JSON"), ".tmcproject.json");
     }
 }

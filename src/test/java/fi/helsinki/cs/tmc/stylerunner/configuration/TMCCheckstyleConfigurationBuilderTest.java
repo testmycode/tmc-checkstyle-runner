@@ -1,6 +1,7 @@
 package fi.helsinki.cs.tmc.stylerunner.configuration;
 
 import fi.helsinki.cs.tmc.stylerunner.exception.TMCCheckstyleException;
+import fi.helsinki.cs.tmc.stylerunner.validation.Strategy;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -10,7 +11,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.core.classloader.annotations.SuppressStaticInitializationFor;
 import org.powermock.modules.junit4.PowerMockRunner;
 import org.powermock.reflect.Whitebox;
 
@@ -24,18 +24,13 @@ import static org.mockito.Mockito.verify;
 import static org.powermock.api.mockito.PowerMockito.mock;
 
 @RunWith(PowerMockRunner.class)
-@SuppressStaticInitializationFor("fi.helsinki.cs.tmc.stylerunner.configuration.TMCCheckstyleConfigurationBuilder")
 @PrepareForTest({TMCCheckstyleConfigurationBuilder.class, LoggerFactory.class })
 public class TMCCheckstyleConfigurationBuilderTest {
 
     private Logger logger;
-    private String configuration;
 
     @Before
     public void setUp() {
-
-        configuration = new String(".tmcproject.json");
-        Whitebox.setInternalState(TMCCheckstyleConfigurationBuilder.class, configuration);
 
         logger = mock(Logger.class);
         Whitebox.setInternalState(TMCCheckstyleConfigurationBuilder.class, logger);
@@ -96,5 +91,16 @@ public class TMCCheckstyleConfigurationBuilderTest {
         final TMCCheckstyleConfiguration config = TMCCheckstyleConfigurationBuilder.build(new File("test-projects/invalid/ant-2/"));
 
         verify(logger).error("Exception while deserialising TMCConfiguration.");
+    }
+
+    @Test
+    public void shouldUseYAMLConfiguration() {
+
+        final TMCCheckstyleConfiguration config = TMCCheckstyleConfigurationBuilder.build(new File("test-projects/valid/ant-2/"));
+
+        assertEquals("mooc-checkstyle.xml", config.getRule());
+        assertEquals(Strategy.WARN, config.getStrategy());
+
+        verify(logger).info("JSON configuration file not found, using YAML configuration.");
     }
 }
