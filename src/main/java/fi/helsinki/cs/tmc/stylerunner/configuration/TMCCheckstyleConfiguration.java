@@ -61,7 +61,7 @@ public final class TMCCheckstyleConfiguration {
         }
 
         // Use default Checkstyle-configuration
-        if (!configuration.exists() || rule.equals(DEFAULT_CHECKSTYLE_CONFIGURATION)) {
+        if (!configuration.exists()) {
 
             logger.info("Custom configuration not found, using default configuration.");
 
