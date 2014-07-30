@@ -55,7 +55,7 @@ Running Checkstyle validations from the command-line can be accomplished by pass
 
 Running Checkstyle validations is enabled when the strategy has been set to `fail` or `warn`. You can configure the runner by creating a `.tmcproject.json`-configuration file to the root of the project to be tested. You may also use YAML for configuration files (`.tmcproject.yml`).
 
-By default, a custom Checkstyle-configuration file `.checkstyle.xml` is searched from the project root. You can also specify a custom filename with the `rule`-option. If neither is found, the default bundled configuration will be used.
+By default, a custom Checkstyle-configuration file `.checkstyle.xml` is searched from the project root. You can also specify a custom filename with the `rule`-option. A custom filename must end with `checkstyle.xml`. If neither is found, the default bundled configuration will be used.
 
 **.tmcproject.json**
 
@@ -81,7 +81,7 @@ checkstyle:
 
 ### Options
 
-* `rule` — the name of a custom [Checkstyle-configuration](http://checkstyle.sourceforge.net/config.html) file. Should be in the root of the project. See [default-checkstyle.xml](src/main/resources/default-checkstyle.xml) for the default configuration.
+* `rule` — the name of a custom [Checkstyle-configuration](http://checkstyle.sourceforge.net/config.html) file. Should be in the root of the project and must end with `checkstyle.xml`. See [default-checkstyle.xml](src/main/resources/default-checkstyle.xml) for the default configuration.
 * `strategy` — the strategy that is used to run Checkstyle-validations (`fail`, `warn` or `disabled`), `disabled` by default.
 
 ## Credits
