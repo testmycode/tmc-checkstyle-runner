@@ -1,6 +1,7 @@
 package fi.helsinki.cs.tmc.stylerunner.configuration;
 
 import fi.helsinki.cs.tmc.stylerunner.exception.TMCCheckstyleException;
+import fi.helsinki.cs.tmc.stylerunner.validation.Strategy;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -14,22 +15,18 @@ import org.xml.sax.InputSource;
 public final class TMCCheckstyleConfiguration {
 
     private static final String DEFAULT_CHECKSTYLE_CONFIGURATION = "default-checkstyle.xml";
+    private static final String CUSTOM_DEFAULT_CHECKSTYLE_CONFIGURATION = ".checkstyle.xml";
 
     private final Logger logger = LoggerFactory.getLogger(TMCCheckstyleConfiguration.class);
 
-    private final boolean enabled;
     private final String rule;
+    private final Strategy strategy;
 
     public TMCCheckstyleConfiguration() {
 
         // Default configuration
-        enabled = true;
         rule = DEFAULT_CHECKSTYLE_CONFIGURATION;
-    }
-
-    public boolean isEnabled() {
-
-        return enabled;
+        strategy = Strategy.DISABLED;
     }
 
     public String getRule() {
@@ -37,17 +34,36 @@ public final class TMCCheckstyleConfiguration {
         return rule;
     }
 
+    public Strategy getStrategy() {
+
+        return strategy;
+    }
+
+    public boolean isEnabled() {
+
+        return strategy != Strategy.DISABLED;
+    }
+
     public InputSource getInputSource(final File projectDirectory) throws TMCCheckstyleException {
 
         // Find Checkstyle-configuration from project
-        final File configuration = new File(projectDirectory, rule);
+        final File customDefaultConfiguration = new File(projectDirectory, CUSTOM_DEFAULT_CHECKSTYLE_CONFIGURATION);
+
+        File configuration = new File(projectDirectory, rule);
 
         if (!configuration.exists()) {
-            logger.error("Configuration file not found, using default configuration.");
+
+            logger.info("Configuration file not found, searching for custom default configuration.");
+
+            if (customDefaultConfiguration.exists()) {
+                configuration = customDefaultConfiguration;
+            }
         }
 
         // Use default Checkstyle-configuration
-        if (!configuration.exists() || rule.equals(DEFAULT_CHECKSTYLE_CONFIGURATION)) {
+        if (!configuration.exists() || !rule.endsWith("checkstyle.xml")) {
+
+            logger.info("Custom configuration not found, using default configuration.");
 
             // Default configuration
             return new InputSource(this.getClass()

@@ -6,6 +6,7 @@ import java.util.Map;
 
 public interface ValidationResult {
 
+    Strategy getStrategy();
     Map<File, List<ValidationError>> getValidationErrors();
 
 }

@@ -1,7 +1,0 @@
-{
-	"checkstyle": {
-		"enabled": false,
-		"ruale": "mooc-checkstyle.xml",
-		"extra": "fail"
-	}
-}

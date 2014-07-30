@@ -1,6 +1,0 @@
-{
-	"checkstyle": {
-		"enabled": "true",
-		"rule": "unknown-checkstyle.xml"
-	}
-}

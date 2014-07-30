@@ -1,8 +1,0 @@
-{
-	"checkstyle": {
-		"enabled": false,
-		"rule": "mooc-checkstyle.xml",
-		"extra": "fail"
-	},
-	"unknown": "something"
-}

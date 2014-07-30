@@ -21,7 +21,7 @@ Add the dependency to your project’s `pom.xml`. Exclude `checkstyle`-dependenc
 <dependency>
     <groupId>fi.helsinki.cs.tmc</groupId>
     <artifactId>tmc-checkstyle-runner</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.1</version>
     <exclusions>
         <exclusion>
             <groupId>com.puppycrawl.tools</groupId>
@@ -35,11 +35,11 @@ Running Checkstyle validations can be accomplished programmatically or by runnin
 
 ### Programmatically
 
-Create a `CheckstyleRunner` and pass the project directory to be tested as a file to the constructor. Running will return a `CheckstyleResult`. `CheckstyleResult`’s implement the `ValidationResult`-interface.
+Create a `CheckstyleRunner` and pass the project directory to be tested as a file and the locale for validation messages to the constructor. You may also pass a `TMCCheckstyleConfiguration` as a third parameter to configure the runner. Running will return a `CheckstyleResult`. `CheckstyleResult`s implement the `ValidationResult`-interface.
 
 ```java
 File projectDirectory = new File("path/to/project-directory/");
-CheckstyleRunner runner = new CheckstyleRunner(projectDirectory);
+CheckstyleRunner runner = new CheckstyleRunner(projectDirectory, Locale.ENGLISH);
 CheckstyleResult result = runner.run();
 ```
 
@@ -47,29 +47,42 @@ The API also provides methods for writing the results to a file as JSON or deser
 
 ### CLI
 
-Running Checkstyle validations from the command-line can be accomplished by passing the project directory path to be tested, output file path and locale (ISO 639) for validation messages as properties. The output file will contain the `CheckstyleResult` serialised as JSON.
+Running Checkstyle validations from the command-line can be accomplished by passing the project directory path to be tested, output file path and locale (ISO 639) for validation messages as properties. The output file can be overwritten with the `tmc.overwrite_validations_file`-property which defaults to false. The output file will contain the `CheckstyleResult` serialised as JSON.
 
-    java -Dtmc.project_dir=[PROJECT-DIRECTORY-PATH] -Dtmc.validations_file=[OUTPUT-FILE-PATH] -Dtmc.locale=[LOCALE] -jar tmc-checkstyle-runner-1.0-SNAPSHOT.jar
+    java -Dtmc.project_dir=[PROJECT-DIRECTORY-PATH] -Dtmc.validations_file=[OUTPUT-FILE-PATH] -Dtmc.locale=[LOCALE] -Dtmc.overwrite_validations_file=[BOOLEAN] -jar tmc-checkstyle-runner-1.0.1.jar
 
 ## Configuration
 
-Running Checkstyle validations work as is — with default settings. No configuration is needed. However, you can configure the runner by creating a `tmc.json`-configuration file to the root of the project to be tested.
+Running Checkstyle validations is enabled when the strategy has been set to `fail` or `warn`. You can configure the runner by creating a `.tmcproject.json`-configuration file to the root of the project to be tested. You may also use YAML for configuration files (`.tmcproject.yml`).
+
+By default, a custom Checkstyle-configuration file `.checkstyle.xml` is searched from the project root. You can also specify a custom filename with the `rule`-option. A custom filename must end with `checkstyle.xml`. If neither is found, the default bundled configuration will be used.
+
+**.tmcproject.json**
 
 ```json
 {
     "checkstyle": {
 
-        "enabled": false,
-        "rule": "mooc-checkstyle.xml"
+        "rule": "mooc-checkstyle.xml",
+        "strategy": "fail"
 
     }
 }
 ```
 
+**.tmcproject.yml**
+
+```yaml
+checkstyle:
+
+    rule: mooc-checkstyle.xml
+    strategy: warn
+```
+
 ### Options
 
-* `enabled` — whether running Checkstyle validations is enabled, `true` by default.
-* `rule` — the name of a custom [Checkstyle-configuration](http://checkstyle.sourceforge.net/config.html) file. Should be in the root of the project. See [default-checkstyle.xml](src/main/resources/default-checkstyle.xml) for the default configuration.
+* `rule` — the name of a custom [Checkstyle-configuration](http://checkstyle.sourceforge.net/config.html) file. Should be in the root of the project and must end with `checkstyle.xml`. See [default-checkstyle.xml](src/main/resources/default-checkstyle.xml) for the default configuration.
+* `strategy` — the strategy that is used to run Checkstyle-validations (`fail`, `warn` or `disabled`), `disabled` by default.
 
 ## Credits
 

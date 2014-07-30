@@ -33,7 +33,7 @@ import static org.powermock.api.mockito.PowerMockito.mockStatic;
 import static org.powermock.api.mockito.PowerMockito.when;
 
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({CheckstyleResultListener.class, LoggerFactory.class })
+@PrepareForTest(LoggerFactory.class)
 public class CheckstyleResultListenerTest {
 
     private CheckstyleResultListener resultListener;
@@ -44,6 +44,22 @@ public class CheckstyleResultListenerTest {
     public void setUp() {
 
         resultListener = new CheckstyleResultListener();
+    }
+
+    private AuditEvent createNewAuditEvent(final String filename,
+                                           final int lineNumber,
+                                           final int columnNumber,
+                                           final String message,
+                                           final String sourceName) {
+
+        return new AuditEvent(sourceName, filename, new LocalizedMessage(lineNumber,
+                                                                         columnNumber,
+                                                                         null,
+                                                                         null,
+                                                                         null,
+                                                                         null,
+                                                                         String.class,
+                                                                         message));
     }
 
     private void containsErrors(final AuditEvent... errors) {
@@ -142,21 +158,5 @@ public class CheckstyleResultListenerTest {
         new CheckstyleResultListener().addException(audit, new Throwable("error"));
 
         verify(logger).error("Exception while audit: {}", "error");
-    }
-
-    private AuditEvent createNewAuditEvent(final String filename,
-                                             final int lineNumber,
-                                             final int columnNumber,
-                                             final String message,
-                                             final String sourceName) {
-
-        return new AuditEvent(sourceName, filename, new LocalizedMessage(lineNumber,
-                                                                         columnNumber,
-                                                                         null,
-                                                                         null,
-                                                                         null,
-                                                                         null,
-                                                                         String.class,
-                                                                         message));
     }
 }

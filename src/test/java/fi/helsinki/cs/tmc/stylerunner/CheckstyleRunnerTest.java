@@ -27,6 +27,18 @@ public class CheckstyleRunnerTest {
     @Rule
     public ExpectedException publicThrown = ExpectedException.none();
 
+    private static void setFinalStatic(final Field field, final Object newValue) throws IllegalAccessException,
+                                                                                        NoSuchFieldException {
+
+        field.setAccessible(true);
+
+        final Field modifiersField = Field.class.getDeclaredField("modifiers");
+        modifiersField.setAccessible(true);
+        modifiersField.setInt(field, field.getModifiers() & ~Modifier.FINAL);
+
+        field.set(null, newValue);
+    }
+
     private File createAntProjectMock() {
 
         try {
@@ -130,96 +142,94 @@ public class CheckstyleRunnerTest {
     @Test
     public void shouldNotHaveValidationErrors() throws TMCCheckstyleException {
 
-        final CheckstyleResult result = new CheckstyleRunner(new File("test-projects/valid/trivial/"), Locale.ROOT).run();
+        final CheckstyleResult result = new CheckstyleRunner(new File("test-projects/valid/ant-without-configuration/"), Locale.ROOT).run();
         assertTrue(result.getValidationErrors().isEmpty());
     }
 
     @Test
     public void shouldNotHaveValidationErrorsOnAntTestProject() throws TMCCheckstyleException {
 
-        final CheckstyleResult result = new CheckstyleRunner(new File("test-projects/valid/trivial/"), Locale.ROOT).run();
+        final CheckstyleResult result = new CheckstyleRunner(new File("test-projects/valid/ant-without-configuration/"), Locale.ROOT).run();
         assertTrue(result.getValidationErrors().isEmpty());
     }
 
     @Test
     public void shouldHaveValidationErrorsOnAntTestProject() throws TMCCheckstyleException {
 
-        final CheckstyleResult result = new CheckstyleRunner(new File("test-projects/invalid/trivial/"), Locale.ROOT).run();
+        final CheckstyleResult result = new CheckstyleRunner(new File("test-projects/invalid/ant/"), Locale.ROOT).run();
         assertFalse(result.getValidationErrors().isEmpty());
     }
 
     @Test
     public void shouldHaveErroneousClassOnAntTestProject() throws TMCCheckstyleException {
 
-        final File testProject = new File("test-projects/invalid/trivial/");
+        final File testProject = new File("test-projects/invalid/ant/");
         final CheckstyleResult result = new CheckstyleRunner(testProject, Locale.ROOT).run();
 
         final List<ValidationError> errors = result.getValidationErrors().get(new File("Trivial.java"));
 
         assertFalse(result.getValidationErrors().isEmpty());
-        assertEquals(2, errors.size());
+        assertEquals(3, errors.size());
 
-        String expected = "Indentation incorrect. Expected 4, but was 5.";
+        String expected = "Indentation incorrect. Expected 0, but was 1.";
 
         assertEquals("com.puppycrawl.tools.checkstyle.checks.indentation.IndentationCheck", errors.get(0).getSourceName());
-        assertEquals(4, errors.get(0).getLine());
+        assertEquals(2, errors.get(0).getLine());
         assertEquals(0, errors.get(0).getColumn());
         assertEquals(expected, errors.get(0).getMessage());
 
-        expected = "Indentation incorrect. Expected 8, but was 9.";
+        expected = "'{' is not preceded with whitespace.";
 
-        assertEquals("com.puppycrawl.tools.checkstyle.checks.indentation.IndentationCheck", errors.get(1).getSourceName());
-        assertEquals(5, errors.get(1).getLine());
-        assertEquals(0, errors.get(1).getColumn());
+        assertEquals("com.puppycrawl.tools.checkstyle.checks.whitespace.WhitespaceAroundCheck", errors.get(1).getSourceName());
+        assertEquals(2, errors.get(1).getLine());
+        assertEquals(22, errors.get(1).getColumn());
         assertEquals(expected, errors.get(1).getMessage());
     }
 
     @Test
     public void shouldNotHaveValidationErrorsOnMavenTestProject() throws TMCCheckstyleException {
 
-        final CheckstyleResult result = new CheckstyleRunner(new File("test-projects/valid/maven_exercise/"), Locale.ROOT).run();
+        final CheckstyleResult result = new CheckstyleRunner(new File("test-projects/valid/maven-without-configuration/"), Locale.ROOT).run();
         assertTrue(result.getValidationErrors().isEmpty());
     }
 
     @Test
     public void shouldHaveValidationErrorsOnMavenTestProject() throws TMCCheckstyleException {
 
-        final CheckstyleResult result = new CheckstyleRunner(new File("test-projects/invalid/maven_exercise/"), Locale.ROOT).run();
+        final CheckstyleResult result = new CheckstyleRunner(new File("test-projects/invalid/maven/"), Locale.ROOT).run();
         assertFalse(result.getValidationErrors().isEmpty());
     }
 
     @Test
     public void shouldHaveErroneousClassOnMavenTestProject() throws TMCCheckstyleException {
 
-        final File testProject = new File("test-projects/invalid/maven_exercise/");
-        final CheckstyleResult result = new CheckstyleRunner(testProject, Locale.ROOT).run();
-
+        final CheckstyleResult result = new CheckstyleRunner(new File("test-projects/invalid/maven/"), Locale.ROOT).run();
         final List<ValidationError> errors = result.getValidationErrors().get(new File("fi/helsinki/cs/maventest/App.java"));
 
         assertFalse(result.getValidationErrors().isEmpty());
-        assertEquals(1, errors.size());
+        assertEquals(4, errors.size());
 
-        final String expected = "Indentation incorrect. Expected 4, but was 5.";
+        final String expected = "Utility classes should not have a public or default constructor. Declare the constructor as private.";
 
-        assertEquals("com.puppycrawl.tools.checkstyle.checks.indentation.IndentationCheck", errors.get(0).getSourceName());
-        assertEquals(4, errors.get(0).getLine());
-        assertEquals(0, errors.get(0).getColumn());
+        assertEquals("com.puppycrawl.tools.checkstyle.checks.design.HideUtilityClassConstructorCheck", errors.get(0).getSourceName());
+        assertEquals(3, errors.get(0).getLine());
+        assertEquals(1, errors.get(0).getColumn());
         assertEquals(expected, errors.get(0).getMessage());
     }
 
     @Test
     public void shouldReturnEmptyCheckstyleResultWhenCheckstyleIsDisabled() throws TMCCheckstyleException {
 
-        final CheckstyleResult result = new CheckstyleRunner(new File("test-projects/invalid/trivial_with_configuration/"), Locale.ROOT).run();
+        final CheckstyleResult result = new CheckstyleRunner(new File("test-projects/invalid/ant-without-configuration/"), Locale.ROOT).run();
         assertTrue(result.getValidationErrors().isEmpty());
     }
 
     @Test
     public void shouldReturnValidationErrorsWhenCheckstyleIsEnabled() throws TMCCheckstyleException, NoSuchFieldException, IllegalAccessException {
 
-        setFinalStatic(TMCCheckstyleConfigurationBuilder.class.getDeclaredField("TMC_CONFIGURATION"), "tmc-enabled.json");
+        setFinalStatic(TMCCheckstyleConfigurationBuilder.class.getDeclaredField("TMC_CONFIGURATION_JSON"), ".tmcproject-enabled.json");
 
-        final CheckstyleResult result = new CheckstyleRunner(new File("test-projects/invalid/trivial_with_configuration/"), Locale.ROOT).run();
+        final CheckstyleResult result = new CheckstyleRunner(new File("test-projects/invalid/ant/"), Locale.ROOT).run();
 
         final List<ValidationError> errors = result.getValidationErrors().get(new File("Trivial.java"));
 
@@ -234,17 +244,6 @@ public class CheckstyleRunnerTest {
         assertEquals(22, errors.get(1).getColumn());
         assertEquals("'{' is not preceded with whitespace.", errors.get(1).getMessage());
 
-        setFinalStatic(TMCCheckstyleConfigurationBuilder.class.getDeclaredField("TMC_CONFIGURATION"), "tmc.json");
-    }
-
-    private static void setFinalStatic(final Field field, final Object newValue) throws IllegalAccessException, NoSuchFieldException {
-
-        field.setAccessible(true);
-
-        final Field modifiersField = Field.class.getDeclaredField("modifiers");
-        modifiersField.setAccessible(true);
-        modifiersField.setInt(field, field.getModifiers() & ~Modifier.FINAL);
-
-        field.set(null, newValue);
+        setFinalStatic(TMCCheckstyleConfigurationBuilder.class.getDeclaredField("TMC_CONFIGURATION_JSON"), ".tmcproject.json");
     }
 }

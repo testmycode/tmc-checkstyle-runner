@@ -92,7 +92,7 @@ public final class MainTest {
         final String line = scanner.nextLine();
 
         try {
-            assertEquals("{\"strategy\":\"fail\",\"validationErrors\":{}}", line);
+            assertEquals("{\"strategy\":\"DISABLED\",\"validationErrors\":{}}", line);
         } finally {
             scanner.close();
             file.delete();
@@ -133,7 +133,7 @@ public final class MainTest {
     @Test
     public void shouldCreateJsonFileWithCorrectProperties() throws FileNotFoundException {
 
-        System.setProperty(PROJECT_DIRECTORY_PROPERTY, "test-projects/valid/trivial/");
+        System.setProperty(PROJECT_DIRECTORY_PROPERTY, "test-projects/valid/ant-without-configuration/");
         System.setProperty(VALIDATIONS_FILE_PROPERTY, OUTPUT_FILE);
         System.setProperty(LOCALE_PROPERTY, "fi");
 
@@ -145,7 +145,7 @@ public final class MainTest {
     @Test
     public void shouldCreateJsonFileOnAdditionalInvalidProperties() throws FileNotFoundException {
 
-        System.setProperty(PROJECT_DIRECTORY_PROPERTY, "test-projects/valid/trivial/");
+        System.setProperty(PROJECT_DIRECTORY_PROPERTY, "test-projects/valid/ant-without-configuration/");
         System.setProperty(VALIDATIONS_FILE_PROPERTY, OUTPUT_FILE);
         System.setProperty(LOCALE_PROPERTY, "en");
         System.setProperty("tmc.invalid", "valid");
@@ -211,7 +211,7 @@ public final class MainTest {
         });
 
         System.setProperty(PROJECT_DIRECTORY_PROPERTY, ".");
-        System.setProperty(VALIDATIONS_FILE_PROPERTY, "test-projects/valid/maven_exercise/pom.xml");
+        System.setProperty(VALIDATIONS_FILE_PROPERTY, "test-projects/valid/maven-without-configuration/pom.xml");
         System.setProperty(LOCALE_PROPERTY, "en");
 
         Main.main(new String[0]);
