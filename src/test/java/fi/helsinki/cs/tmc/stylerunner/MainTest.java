@@ -165,7 +165,7 @@ public final class MainTest {
             @Override
             public void checkAssertion() {
 
-                final String expected = "Path does not contain a testable project.\n";
+                final String expected = "fi.helsinki.cs.tmc.stylerunner.exception.TMCCheckstyleException: Path does not contain a testable project.\n";
 
                 assertEquals(expected, stderr.toString());
             }
@@ -204,7 +204,7 @@ public final class MainTest {
             @Override
             public void checkAssertion() {
 
-                final String expected = "Output file already exists.\n";
+                final String expected = "fi.helsinki.cs.tmc.stylerunner.exception.TMCCheckstyleException: Output file already exists.\n";
 
                 assertEquals(expected, stderr.toString());
             }
@@ -227,9 +227,9 @@ public final class MainTest {
             @Override
             public void checkAssertion() {
 
-                final String expected = "Exception while writing to output file.\n";
+                final String expected = "fi.helsinki.cs.tmc.stylerunner.exception.TMCCheckstyleException: Exception while writing to output file.\n";
 
-                assertEquals(expected, stderr.toString());
+                assertTrue(stderr.toString().startsWith(expected));
             }
         });
 

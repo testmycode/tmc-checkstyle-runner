@@ -19,10 +19,14 @@ public final class Main {
         System.out.println("  tmc.overwrite_validations_file — Overwrite an existing validation results file (optional).");
     }
 
-    private static void exitWithException(final Exception exception) {
+    private static void reportException(final Throwable initialException) {
 
-        System.err.println(exception.getMessage());
-        System.exit(1);
+        System.err.println(initialException.getClass().getName() + ": " + initialException.getMessage());
+        Throwable ex = initialException;
+        while (ex.getCause() != null) {
+            ex = ex.getCause();
+            System.err.println("Caused by: " + ex.getClass().getName() + ": " + ex.getMessage());
+        }
     }
 
     private static String requireProperty(final String name) {
@@ -48,7 +52,8 @@ public final class Main {
         try {
             new CheckstyleRunner(projectDirectory, locale).run(output, overwrite);
         } catch (TMCCheckstyleException exception) {
-            exitWithException(exception);
+            reportException(exception);
+            System.exit(1);
         }
     }
 }
