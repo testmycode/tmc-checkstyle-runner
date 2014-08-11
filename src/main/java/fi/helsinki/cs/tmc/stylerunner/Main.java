@@ -22,10 +22,11 @@ public final class Main {
     private static void reportException(final Throwable initialException) {
 
         System.err.println(initialException.getClass().getName() + ": " + initialException.getMessage());
-        Throwable ex = initialException;
-        while (ex.getCause() != null) {
-            ex = ex.getCause();
-            System.err.println("Caused by: " + ex.getClass().getName() + ": " + ex.getMessage());
+        Throwable exception = initialException;
+
+        while (exception.getCause() != null) {
+            exception = exception.getCause();
+            System.err.println("Caused by: " + exception.getClass().getName() + ": " + exception.getMessage());
         }
     }
 
