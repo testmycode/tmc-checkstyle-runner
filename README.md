@@ -89,7 +89,7 @@ checkstyle:
 This project has been developed at the University of Helsinki’s [Department of Computer Science](http://cs.helsinki.fi/en/) by:
 
 * Kenny Heinonen ([kennyhei](https://github.com/kennyhei/))
-* Kasper Hirvikoski ([kasperhirvikoski](https://github.com/kasperhirvikoski/))
+* Kasper Hirvikoski ([kasper](https://github.com/kasper/))
 * Jarmo Isotalo ([jamox](https://github.com/jamox/))
 * Joni Salmi ([josalmi](https://github.com/josalmi/))
 
