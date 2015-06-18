@@ -2,10 +2,10 @@ package fi.helsinki.cs.tmc.stylerunner;
 
 import com.google.common.io.Files;
 
+import fi.helsinki.cs.tmc.langs.abstraction.ValidationError;
+import fi.helsinki.cs.tmc.langs.abstraction.ValidationResult;
 import fi.helsinki.cs.tmc.stylerunner.configuration.TMCCheckstyleConfigurationBuilder;
 import fi.helsinki.cs.tmc.stylerunner.exception.TMCCheckstyleException;
-import fi.helsinki.cs.tmc.stylerunner.validation.CheckstyleResult;
-import fi.helsinki.cs.tmc.stylerunner.validation.ValidationError;
 
 import java.io.File;
 import java.io.IOException;
@@ -135,28 +135,28 @@ public class CheckstyleRunnerTest {
     @Test
     public void shouldRunOnValidProjectDirectory() throws TMCCheckstyleException {
 
-        final CheckstyleResult result = new CheckstyleRunner(new File("."), Locale.ROOT).run();
+        final ValidationResult result = new CheckstyleRunner(new File("."), Locale.ROOT).run();
         assertNotNull(result);
     }
 
     @Test
     public void shouldNotHaveValidationErrors() throws TMCCheckstyleException {
 
-        final CheckstyleResult result = new CheckstyleRunner(new File("test-projects/valid/ant-without-configuration/"), Locale.ROOT).run();
+        final ValidationResult result = new CheckstyleRunner(new File("test-projects/valid/ant-without-configuration/"), Locale.ROOT).run();
         assertTrue(result.getValidationErrors().isEmpty());
     }
 
     @Test
     public void shouldNotHaveValidationErrorsOnAntTestProject() throws TMCCheckstyleException {
 
-        final CheckstyleResult result = new CheckstyleRunner(new File("test-projects/valid/ant-without-configuration/"), Locale.ROOT).run();
+        final ValidationResult result = new CheckstyleRunner(new File("test-projects/valid/ant-without-configuration/"), Locale.ROOT).run();
         assertTrue(result.getValidationErrors().isEmpty());
     }
 
     @Test
     public void shouldHaveValidationErrorsOnAntTestProject() throws TMCCheckstyleException {
 
-        final CheckstyleResult result = new CheckstyleRunner(new File("test-projects/invalid/ant/"), Locale.ROOT).run();
+        final ValidationResult result = new CheckstyleRunner(new File("test-projects/invalid/ant/"), Locale.ROOT).run();
         assertFalse(result.getValidationErrors().isEmpty());
     }
 
@@ -164,7 +164,7 @@ public class CheckstyleRunnerTest {
     public void shouldHaveErroneousClassOnAntTestProject() throws TMCCheckstyleException {
 
         final File testProject = new File("test-projects/invalid/ant/");
-        final CheckstyleResult result = new CheckstyleRunner(testProject, Locale.ROOT).run();
+        final ValidationResult result = new CheckstyleRunner(testProject, Locale.ROOT).run();
 
         final List<ValidationError> errors = result.getValidationErrors().get(new File("Trivial.java"));
 
@@ -189,21 +189,21 @@ public class CheckstyleRunnerTest {
     @Test
     public void shouldNotHaveValidationErrorsOnMavenTestProject() throws TMCCheckstyleException {
 
-        final CheckstyleResult result = new CheckstyleRunner(new File("test-projects/valid/maven-without-configuration/"), Locale.ROOT).run();
+        final ValidationResult result = new CheckstyleRunner(new File("test-projects/valid/maven-without-configuration/"), Locale.ROOT).run();
         assertTrue(result.getValidationErrors().isEmpty());
     }
 
     @Test
     public void shouldHaveValidationErrorsOnMavenTestProject() throws TMCCheckstyleException {
 
-        final CheckstyleResult result = new CheckstyleRunner(new File("test-projects/invalid/maven/"), Locale.ROOT).run();
+        final ValidationResult result = new CheckstyleRunner(new File("test-projects/invalid/maven/"), Locale.ROOT).run();
         assertFalse(result.getValidationErrors().isEmpty());
     }
 
     @Test
     public void shouldHaveErroneousClassOnMavenTestProject() throws TMCCheckstyleException {
 
-        final CheckstyleResult result = new CheckstyleRunner(new File("test-projects/invalid/maven/"), Locale.ROOT).run();
+        final ValidationResult result = new CheckstyleRunner(new File("test-projects/invalid/maven/"), Locale.ROOT).run();
         final List<ValidationError> errors = result.getValidationErrors().get(new File("fi/helsinki/cs/maventest/App.java"));
 
         assertFalse(result.getValidationErrors().isEmpty());
@@ -218,9 +218,9 @@ public class CheckstyleRunnerTest {
     }
 
     @Test
-    public void shouldReturnEmptyCheckstyleResultWhenCheckstyleIsDisabled() throws TMCCheckstyleException {
+    public void shouldReturnEmptyValidationResultWhenCheckstyleIsDisabled() throws TMCCheckstyleException {
 
-        final CheckstyleResult result = new CheckstyleRunner(new File("test-projects/invalid/ant-without-configuration/"), Locale.ROOT).run();
+        final ValidationResult result = new CheckstyleRunner(new File("test-projects/invalid/ant-without-configuration/"), Locale.ROOT).run();
         assertTrue(result.getValidationErrors().isEmpty());
     }
 
@@ -229,7 +229,7 @@ public class CheckstyleRunnerTest {
 
         setFinalStatic(TMCCheckstyleConfigurationBuilder.class.getDeclaredField("TMC_CONFIGURATION_JSON"), ".tmcproject-enabled.json");
 
-        final CheckstyleResult result = new CheckstyleRunner(new File("test-projects/invalid/ant/"), Locale.ROOT).run();
+        final ValidationResult result = new CheckstyleRunner(new File("test-projects/invalid/ant/"), Locale.ROOT).run();
 
         final List<ValidationError> errors = result.getValidationErrors().get(new File("Trivial.java"));
 

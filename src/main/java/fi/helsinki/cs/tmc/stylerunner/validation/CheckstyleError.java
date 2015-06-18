@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.puppycrawl.tools.checkstyle.api.AuditEvent;
 
+import fi.helsinki.cs.tmc.langs.abstraction.ValidationError;
+
 public final class CheckstyleError implements ValidationError {
 
     private final int column;

@@ -1,5 +1,6 @@
 package fi.helsinki.cs.tmc.stylerunner.validation;
 
+import fi.helsinki.cs.tmc.langs.abstraction.ValidationError;
 import fi.helsinki.cs.tmc.stylerunner.CheckstyleRunner;
 import fi.helsinki.cs.tmc.stylerunner.exception.TMCCheckstyleException;
 
