@@ -6,6 +6,7 @@ import com.puppycrawl.tools.checkstyle.PropertiesExpander;
 import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
 import com.puppycrawl.tools.checkstyle.api.LocalizedMessage;
 
+import fi.helsinki.cs.tmc.langs.abstraction.ValidationResult;
 import fi.helsinki.cs.tmc.stylerunner.configuration.TMCCheckstyleConfiguration;
 import fi.helsinki.cs.tmc.stylerunner.configuration.TMCCheckstyleConfigurationBuilder;
 import fi.helsinki.cs.tmc.stylerunner.configuration.TMCCheckstyleLocaleResolver;
@@ -86,7 +87,7 @@ public final class CheckstyleRunner {
         return sourceDirectory;
     }
 
-    public CheckstyleResult run() {
+    public ValidationResult run() {
 
         // Checkstyle disabled, return empty result
         if (!checkstyleConfiguration.isEnabled()) {
@@ -111,7 +112,7 @@ public final class CheckstyleRunner {
 
     public void run(final File outputFile, final boolean overwrite) throws TMCCheckstyleException {
 
-        final CheckstyleResult result = run();
+        final CheckstyleResult result = (CheckstyleResult) run();
 
         if (!overwrite && outputFile.exists()) {
             throw new TMCCheckstyleException("Output file already exists.");

@@ -1,7 +1,7 @@
 package fi.helsinki.cs.tmc.stylerunner.configuration;
 
+import fi.helsinki.cs.tmc.langs.abstraction.Strategy;
 import fi.helsinki.cs.tmc.stylerunner.exception.TMCCheckstyleException;
-import fi.helsinki.cs.tmc.stylerunner.validation.Strategy;
 
 import java.io.File;
 import java.io.FileNotFoundException;

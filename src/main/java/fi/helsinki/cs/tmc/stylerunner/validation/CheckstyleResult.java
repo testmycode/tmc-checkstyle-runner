@@ -6,6 +6,10 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 
 import com.puppycrawl.tools.checkstyle.api.AuditEvent;
 
+import fi.helsinki.cs.tmc.langs.abstraction.Strategy;
+import fi.helsinki.cs.tmc.langs.abstraction.ValidationError;
+import fi.helsinki.cs.tmc.langs.abstraction.ValidationResult;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;

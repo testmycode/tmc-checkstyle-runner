@@ -3,7 +3,7 @@ package fi.helsinki.cs.tmc.stylerunner.listener;
 import com.puppycrawl.tools.checkstyle.api.AuditEvent;
 import com.puppycrawl.tools.checkstyle.api.LocalizedMessage;
 
-import fi.helsinki.cs.tmc.stylerunner.validation.ValidationError;
+import fi.helsinki.cs.tmc.langs.abstraction.ValidationError;
 
 import java.io.File;
 import java.util.Collection;
