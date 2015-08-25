@@ -5,7 +5,7 @@
 
     <groupId>fi.helsinki.cs.tmc</groupId>
     <artifactId>tmc-checkstyle-runner</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
+    <version>1.0.1</version>
     <packaging>jar</packaging>
 
     <description>Custom Checkstyle runner for TMC</description>
@@ -15,7 +15,7 @@
         <connection>scm:git:https://github.com/testmycode/tmc-checkstyle-runner.git</connection>
         <developerConnection>scm:git:git@github.com:testmycode/tmc-checkstyle-runner.git</developerConnection>
         <url>https://github.com/testmycode/tmc-checkstyle-runner/</url>
-        <tag>HEAD</tag>
+        <tag>tmc-checkstyle-runner-1.0.1</tag>
     </scm>
 
     <organization>
