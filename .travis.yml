@@ -1,27 +1,14 @@
 language: java
 
 jdk:
-    - oraclejdk8
-    - oraclejdk7
-    - openjdk7
-    - openjdk6
+  - oraclejdk8
+  - oraclejdk7
+  - openjdk7
 
 notifications:
-
-    email: false
-
-    irc:
-        channels:
-            - 'ircnet.eversible.com#kesapojat-ci'
-        on_success: change
-        use_notice: true
-        skip_join: true
-        template:
-            - '**'
-            - '%{message}'
-            - '%{repository}#%{build_number} (%{branch} - %{commit} : %{author}): %{commit_message}'
-            - 'Build details : %{build_url}'
-            - '**'
+  email:
+    on_success: change
+    on_failure: always
 
 after_success:
-    - mvn clean cobertura:cobertura coveralls:cobertura
+  - mvn clean cobertura:cobertura coveralls:cobertura
