@@ -102,7 +102,7 @@
         <dependency>
             <groupId>com.puppycrawl.tools</groupId>
             <artifactId>checkstyle</artifactId>
-            <version>6.9</version>
+            <version>6.17</version>
         </dependency>
 
         <!-- Jackson -->
@@ -158,6 +158,14 @@
         </dependency>
 
     </dependencies>
+
+    <repositories>
+        <repository>
+            <id>testmycode.net</id>
+            <url>http://maven.testmycode.net/nexus/content/repositories/releases/</url>
+        </repository>
+    </repositories>
+
 
     <build>
 

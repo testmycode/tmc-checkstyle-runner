@@ -98,8 +98,14 @@ public final class CheckstyleRunner {
         final CheckstyleResultListener listener = new CheckstyleResultListener();
         checker.addListener(listener);
 
-        // Process
-        checker.process(files);
+        try {
+            // Process
+            checker.process(files);
+        } catch (CheckstyleException ex) {
+            throw new RuntimeException(
+                    new TMCCheckstyleException(
+                            "This is a system error while checking code style.", ex));
+        }
 
         // Clean up
         checker.destroy();
