@@ -13,3 +13,4 @@ private/
 target/
 *.class
 *.ser
+.idea
