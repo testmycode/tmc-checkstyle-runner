@@ -7,6 +7,7 @@ import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
 import com.puppycrawl.tools.checkstyle.api.LocalizedMessage;
 
 import fi.helsinki.cs.tmc.langs.abstraction.ValidationResult;
+
 import fi.helsinki.cs.tmc.stylerunner.configuration.TMCCheckstyleConfiguration;
 import fi.helsinki.cs.tmc.stylerunner.configuration.TMCCheckstyleConfigurationBuilder;
 import fi.helsinki.cs.tmc.stylerunner.configuration.TMCCheckstyleLocaleResolver;
@@ -15,9 +16,12 @@ import fi.helsinki.cs.tmc.stylerunner.listener.CheckstyleResultListener;
 import fi.helsinki.cs.tmc.stylerunner.validation.CheckstyleResult;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.apache.commons.io.FileUtils;
 
@@ -35,8 +39,8 @@ public final class CheckstyleRunner {
     }
 
     public CheckstyleRunner(final File projectDirectory,
-                            final TMCCheckstyleConfiguration configuration,
-                            final Locale locale) throws TMCCheckstyleException {
+            final TMCCheckstyleConfiguration configuration,
+            final Locale locale) throws TMCCheckstyleException {
 
         // Get source directory and check that the project is testable
         final File sourceDirectory = getSourceDirectory(projectDirectory);
@@ -53,14 +57,14 @@ public final class CheckstyleRunner {
             // Configuration
             checker.setModuleClassLoader(Checker.class.getClassLoader());
             checker.configure(ConfigurationLoader.loadConfiguration(inputSource,
-                                                                    new PropertiesExpander(System.getProperties()),
-                                                                    false));
+                    new PropertiesExpander(System.getProperties()),
+                    false));
         } catch (CheckstyleException exception) {
             throw new TMCCheckstyleException("Checkstyle failed.", exception);
         }
 
         // Get all .java files from project’s source directory
-        files = (List<File>) FileUtils.listFiles(sourceDirectory, new String[]{ "java" }, true);
+        files = (List<File>) FileUtils.listFiles(sourceDirectory, new String[]{"java"}, true);
 
         // Set base directory
         checker.setBasedir(sourceDirectory.getAbsolutePath());
