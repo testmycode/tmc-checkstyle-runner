@@ -16,12 +16,9 @@ import fi.helsinki.cs.tmc.stylerunner.listener.CheckstyleResultListener;
 import fi.helsinki.cs.tmc.stylerunner.validation.CheckstyleResult;
 
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import org.apache.commons.io.FileUtils;
 
