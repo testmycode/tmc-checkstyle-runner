@@ -5,7 +5,7 @@
 
     <groupId>fi.helsinki.cs.tmc</groupId>
     <artifactId>tmc-checkstyle-runner</artifactId>
-    <version>3.0.2-SNAPSHOT</version>
+    <version>3.0.3-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <description>Custom Checkstyle runner for TMC</description>
@@ -102,7 +102,7 @@
         <dependency>
             <groupId>com.puppycrawl.tools</groupId>
             <artifactId>checkstyle</artifactId>
-            <version>6.17</version>
+            <version>6.17-tmc-SNAPSHOT</version>
         </dependency>
 
         <!-- Jackson -->
@@ -163,6 +163,11 @@
         <repository>
             <id>testmycode.net</id>
             <url>http://maven.testmycode.net/nexus/content/repositories/releases/</url>
+        </repository>
+        <repository>
+            <id>tmc-snapshots</id>
+            <name>TMC Snapshots</name>
+            <url>http://maven.testmycode.net/nexus/content/repositories/snapshots/</url>
         </repository>
     </repositories>
 
@@ -301,4 +306,3 @@
     </distributionManagement>
 
 </project>
-
